@@ -9,7 +9,13 @@ class Search extends Component {
   render() {
     return (
       <>
-        <input type="text" name="search-bar" placeholder="Search by title, genre, year" /><button>🔍</button>
+        <input 
+          type="text" 
+          name="search-bar" 
+          placeholder="Search by title, genre, year" />
+        <button>
+          🔍
+        </button>
       </>
     )
   }

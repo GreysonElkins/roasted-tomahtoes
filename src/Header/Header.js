@@ -13,6 +13,7 @@ class Header extends Component {
       <>
         <span>🍅 Roasted Tomahtoes </span>
         <Search />
+        <Nav />
       </>
     )
   }

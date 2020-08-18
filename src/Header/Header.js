@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Search from '../Search/Search'
 
 class Header extends Component {
   constructor() {
@@ -10,7 +11,7 @@ class Header extends Component {
     return (
       <>
         <span>🍅 Roasted Tomahtoes </span>
-        <span><input type="text" name="search-bar" placeholder="Search by title, genre, year"/><button>🔍</button></span>
+        <Search />
       </>
     )
   }

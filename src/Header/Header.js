@@ -8,9 +8,10 @@ class Header extends Component {
 
   render() {
     return (
-      <div>
-
-      </div>
+      <>
+        <span>🍅Roasted Tomahtoes </span>
+        <span><input type="text" name="search-bar" placeholder="Search by title, genre, year"/><button>Search</button></span>
+      </>
     )
   }
 }

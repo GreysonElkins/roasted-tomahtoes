@@ -21,4 +21,6 @@ describe('Header', () => {
     const {getAllByRole} = render(<Nav />)
     expect(getAllByRole('button')).toHaveLength(4)
   });
+
+  //check if props are being passed
 })

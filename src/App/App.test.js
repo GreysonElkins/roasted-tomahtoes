@@ -22,5 +22,8 @@ describe('App', () => {
     expect(getByText('Logout').className).toBe('hidden')
   })
 
+  //component did mount
+  // check that get all movies has been called
+  // states change after mount (error / movies) 
 
 })

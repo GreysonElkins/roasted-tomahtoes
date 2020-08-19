@@ -7,14 +7,17 @@
     box-shadow: 1px 1px 35px rgb(139, 138, 138);
   }
   h4 {
+    margin-right: 5px;
     overflow-wrap: normal;
   }
   img {
     width: 15em;
+    height: 20em;
   }
   .quick-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: left;
   }
 }

@@ -10,6 +10,7 @@ class App extends Component {
     this.state = {
       isLoggedIn: false,
       movies: [],
+      error: '',
     };
   }
 
@@ -18,7 +19,7 @@ class App extends Component {
       const movies = await api.getAllMovies();
       this.setState({ movies: movies });
     } catch (error) {
-      this.setState({ error: error });
+      this.setState({ error: 'Oops, something went wrong ☹️' });
     }
   }
 
@@ -26,6 +27,8 @@ class App extends Component {
     return (
       <div className="App">
         <Header isLoggedIn={this.state.isLoggedIn} />
+        {this.state.error &&
+          <h3 className="error">{this.state.error}</h3>}
         <Main movies={this.state.movies} />
       </div>
     );

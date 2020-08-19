@@ -4,7 +4,14 @@ import './Login.scss'
 class Login extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      emailInput: '',
+      passwordInput: ''
+    }
+  }
+
+  handleChange = (event) => {
+    this.setState({[event.target.name]: event.target.value})
   }
 
   render() {
@@ -12,12 +19,14 @@ class Login extends Component {
       <div className='login-modal'>
         <input
           type="text"
-          name="Email-input"
-          placeholder="Email" />
+          name="emailInput"
+          placeholder="Email" 
+          onChange={this.handleChange}/>
         <input
           type="text"
-          name="password-input"
-          placeholder="Password" />
+          name="passwordInput"
+          placeholder="Password" 
+          onChange={this.handleChange}/>
         <button 
         id='login-btn'
         onClick={this.props.login}>

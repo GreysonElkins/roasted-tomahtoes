@@ -11,7 +11,8 @@ class App extends Component {
     this.state = {
       isLoggedIn: false,
       movies: [],
-      showLoginPage: false
+      showLoginPage: false,
+      userID: ''
     };
   }
 
@@ -25,11 +26,16 @@ class App extends Component {
   }
 
   showLoginPage = () => {
-    this.setState({showLoginPage: !this.state.showLoginPage})
+    this.setState({showLoginPage: true})
   }
 
   login = (event) => {
     event.preventDefault()
+    // take the inputs 
+    // use post request
+    // get returned an id
+    // this.setState({showLoginPage: false, isLoggedIn:true, userID: response.id})
+    // store that id dynamically
   }
 
 

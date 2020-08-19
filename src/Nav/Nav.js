@@ -1,8 +1,9 @@
 import React from 'react'
+import './Nav.scss'
 
 const Nav = (props) => {
   return (
-    <>
+    <nav>
     <button id='home-btn'>
       Home
     </button>
@@ -21,7 +22,7 @@ const Nav = (props) => {
       id='logout-btn'>
       Logout
     </button>
-    </>
+    </nav>
   )
 }
 

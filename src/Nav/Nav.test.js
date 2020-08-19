@@ -14,7 +14,7 @@ describe('Nav', () => {
 
   it('should have four buttons', () => {
     const {getAllByRole} = render(<Nav />)
-    expect(getAllByRole('button').length).toBe(4)
+    expect(getAllByRole('button')).toHaveLength(4)
   })
 
   it('should have a Home button', () => {

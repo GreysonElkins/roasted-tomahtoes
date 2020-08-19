@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   width: 300px;
+
   input {
     background: #121212;
     border-radius: 6px 0px 0px 6px;
@@ -11,14 +12,15 @@
     width: 250px;
     padding: 2%;
   }
+  
   #search-btn {
     background: #121221;
     border-radius: 0px 6px 6px 0px;
     border: none;
     height: 30px;
-          &:hover {
-             box-shadow: 1px 1px 35px rgb(255, 255, 255);
-          }
+    &:hover {
+      box-shadow: 1px 1px 35px rgb(255, 255, 255);
+    }
 
   }
 }

@@ -1,11 +1,26 @@
 .card {
+  margin: 1.5em;
+  width: 15em;
+  
   h4 {
+    color: white;
+    margin-right: 10px;
     overflow-wrap: normal;
   }
 
   img {
     width: 15em;
+    height: 20em;
+     &:hover {
+      border-radius: 4px;
+      box-shadow: 1px 1px 35px rgb(139, 138, 138);
+    }
   }
-  margin: 2em;
-  width: 15em;
+  .quick-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    text-align: left;
+  }
 }

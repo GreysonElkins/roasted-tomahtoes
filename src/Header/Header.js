@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Search from '../Search/Search'
 import Nav from '../Nav/Nav'
+import './Header.scss'
 
 class Header extends Component {
   constructor(props) {
@@ -10,11 +11,11 @@ class Header extends Component {
 
   render() {
     return (
-      <>
-        <span>🍅 Roasted Tomahtoes </span>
+      <header>
+        <h2>R🍅asted<br/> T🍅mahtoes</h2>
         <Search />
         <Nav isLoggedIn={this.props.isLoggedIn}/>
-      </>
+      </header>
     )
   }
 }

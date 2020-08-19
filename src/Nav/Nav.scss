@@ -1,0 +1,15 @@
+nav {
+  display: flex;
+  align-items: center;
+  height: 50%;
+  margin-right: 20px;
+  button {
+    border-radius: 6px;
+    background: #121212;
+    color: white;
+    margin: 2.5px;
+    &:hover {
+       box-shadow: 1px 1px 35px rgb(255, 255, 255);
+    }
+  }
+}

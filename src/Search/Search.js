@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import './Search.scss'
 class Search extends Component {
   constructor() {
     super()
@@ -8,7 +8,7 @@ class Search extends Component {
 
   render() {
     return (
-      <>
+      <div className='search-box'>
         <input 
           type="text" 
           name="search-bar" 
@@ -16,7 +16,7 @@ class Search extends Component {
         <button id='search-btn'>
           🔍
         </button>
-      </>
+      </div>
     )
   }
 }

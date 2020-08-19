@@ -25,11 +25,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-
         <Header isLoggedIn={this.state.isLoggedIn} />
-
         <Main movies={this.state.movies} />
-
       </div>
     );
   }

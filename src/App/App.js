@@ -7,8 +7,8 @@ class App extends Component {
     super()
     this.state = {}
   }
-
-  App() {
+  
+  render() {
     return (
       <div className="App">
         <Header />

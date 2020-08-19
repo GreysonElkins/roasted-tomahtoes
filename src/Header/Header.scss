@@ -1,10 +1,14 @@
 header {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   background: red;
   position: fixed;
   height: 7em;
   width: 100%;
+  h2 {
+    margin: 0;
+    margin-left: 20px;
+  }
 }

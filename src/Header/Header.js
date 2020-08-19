@@ -12,7 +12,7 @@ class Header extends Component {
   render() {
     return (
       <header>
-        <h2>R🍅asted<br/> T🍅mahtoes </h2>
+        <h2>R🍅asted<br/> T🍅mahtoes</h2>
         <Search />
         <Nav isLoggedIn={this.props.isLoggedIn}/>
       </header>

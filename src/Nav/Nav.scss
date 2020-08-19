@@ -7,5 +7,8 @@ nav {
     border-radius: 6px;
     background: #121212;
     margin: 2.5px;
+    &:hover {
+       box-shadow: 1px 1px 35px rgb(255, 255, 255);
+    }
   }
 }

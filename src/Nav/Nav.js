@@ -14,7 +14,8 @@ const Nav = (props) => {
       </button> 
       <button 
         className={props.isLoggedIn ? 'hidden' : ''}
-        id='login-btn'>
+        id='login-btn'
+        onClick={props.showLoginPage}>
         Login
       </button>
       <button 

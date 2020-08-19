@@ -1,10 +1,26 @@
 import React from 'react'
-import { render } from '@testing-library/react'
-import App from './App/App'
+import { render, getByPlaceholderText, getAllByRole } from '@testing-library/react'
+import App from './App'
+import Header from '../Header/Header'
 import '@testing-library/jest-dom'
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+describe('App', () => {
+
+  it('should start with default login state', () => {
+    const defaultApp = new App()
+    expect(defaultApp.state.isLoggedIn).toBe(false)
+  })
+
+  it('should render header', () => {
+    const {getByPlaceholderText} = render(<App />)
+    expect(getByPlaceholderText('Search by title, genre, year')).toBeInTheDocument()
+  })
+
+  it('should hide some header elements in default state', () => {
+    const {getByText} = render(<App/>)
+    expect(getByText("Your Ratings").className).toBe("hidden");
+    expect(getByText('Logout').className).toBe('hidden')
+  })
+
+
+})

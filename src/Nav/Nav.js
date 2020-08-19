@@ -12,8 +12,8 @@ const Nav = (props) => {
       Your Ratings
     </button> 
     <button 
-    className={props.isLoggedIn ? 'hidden' : ''}
-    id='login-btn'>
+      className={props.isLoggedIn ? 'hidden' : ''}
+      id='login-btn'>
       Login
     </button>
     <button 

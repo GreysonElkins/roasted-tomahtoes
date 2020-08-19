@@ -1,5 +1,11 @@
 .card {
+  margin: 1.5em;
   width: 15em;
+  
+  &:hover {
+    border-radius: 4px;
+    box-shadow: 1px 1px 35px rgb(139, 138, 138);
+  }
   h4 {
     overflow-wrap: normal;
   }

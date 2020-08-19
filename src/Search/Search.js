@@ -13,7 +13,7 @@ class Search extends Component {
           type="text" 
           name="search-bar" 
           placeholder="Search by title, genre, year" />
-        <button>
+        <button id='search-btn'>
           🔍
         </button>
       </>

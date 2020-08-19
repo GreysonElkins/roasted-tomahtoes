@@ -7,7 +7,7 @@ const Nav = (props) => {
       Home
     </button>
     <button 
-      // className={props.isLoggedIn ? '' : 'hidden'} 
+      className={props.isLoggedIn ? '' : 'hidden'} 
       id='ratings-header-btn'>
       Your Ratings
     </button> 

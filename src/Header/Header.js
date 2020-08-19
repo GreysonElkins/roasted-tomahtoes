@@ -3,8 +3,8 @@ import Search from '../Search/Search'
 import Nav from '../Nav/Nav'
 
 class Header extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {}
   }
 
@@ -13,7 +13,7 @@ class Header extends Component {
       <>
         <span>🍅 Roasted Tomahtoes </span>
         <Search />
-        <Nav />
+        <Nav isLoggedIn={this.props.isLoggedIn}/>
       </>
     )
   }

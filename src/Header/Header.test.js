@@ -18,7 +18,7 @@ describe('Header', () => {
   });
 
   it('should render the nav section', () => {
-    const {getAllByRole} = render(<Nav/>)
+    const {getAllByRole} = render(<Nav />)
     expect(getAllByRole('button')).toHaveLength(4)
   });
 })

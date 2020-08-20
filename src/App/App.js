@@ -73,10 +73,10 @@ class App extends Component {
       <div className="App">
         <Header 
           isLoggedIn={this.state.isLoggedIn} 
+          pageView={this.pageView} 
           logout={this.logout} 
           showLoginPage={this.showLoginPage}
           showHomePage={this.showHomePage}
-          user={this.state.user}
         />
         {page === 'Login' && 
           <Login login={this.login} />}

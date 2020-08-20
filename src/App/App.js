@@ -58,7 +58,7 @@ class App extends Component {
         });
       } else {
         this.setState({
-          error: "Incorrect email or password. Please try again",
+          error: "Incorrect email or password. Please try again.",
         });
       }
   }

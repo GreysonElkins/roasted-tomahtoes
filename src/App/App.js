@@ -4,6 +4,7 @@ import Header from '../Header/Header'
 import Login from '../Login/Login'
 import Main from '../Main/Main'
 import api from '../API/API'
+import Error from '../Error/Error'
 
 class App extends Component {
   constructor() {
@@ -22,7 +23,7 @@ class App extends Component {
       const movies = await api.getAllMovies();
       this.setState({ movies: movies });
     } catch (error) {
-      this.setState({ error: 'Oops, something went wrong! 😟' });
+      this.setState({ error: 'Oops, something went wrong! 🙁 Please try again.'});
     }
   }
 
@@ -35,7 +36,7 @@ class App extends Component {
       const user = await api.postLogin(loginState);
       this.setState({ pageView: 'Home', isLoggedIn: true, user: user });
     } catch (error) {
-      this.setState({ error: error.message });
+      this.setState({ error: 'Incorrect email or password. Please try again'});
     }
   }
 
@@ -46,10 +47,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header isLoggedIn={this.state.isLoggedIn} pageView={this.pageView} logout={this.logout} />
+        <Header 
+          isLoggedIn={this.state.isLoggedIn} 
+          pageView={this.state.pageView} 
+          logout={this.logout} 
+        />
         {this.state.pageView === 'Login' && <Login login={this.login} />}
         {this.state.pageView === 'Home' && <Main movies={this.state.movies} />}
-        {this.state.error && <h2 className='error'>{this.state.error.message}</h2>}
+        {this.state.error && <Error error={this.state.error} />}
       </div>
     );
   }

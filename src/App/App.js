@@ -12,7 +12,7 @@ class App extends Component {
       isLoggedIn: false,
       movies: [],
       showLoginPage: false,
-      userID: ''
+      user: ''
     };
   }
 
@@ -29,15 +29,14 @@ class App extends Component {
     this.setState({showLoginPage: true})
   }
 
-  login = (event) => {
-    event.preventDefault()
-    // take the inputs 
-    // use post request
-    // get returned an id
-    // this.setState({showLoginPage: false, isLoggedIn:true, userID: response.id})
-    // store that id dynamically
+  login = async (loginState) => {
+    try {
+      const user = await api.postLogin(loginState);
+      this.setState({ showLoginPage: false, isLoggedIn: true, user: user });
+    } catch (error) {
+      this.setState({ error: error.message });
+    }
   }
-
 
   render() {
    let pageToShow;
@@ -50,10 +49,13 @@ class App extends Component {
     return (
       <div className="App">
         <Header isLoggedIn={this.state.isLoggedIn} showLoginPage={this.showLoginPage} />
+        {this.state.error && <h2>${this.state.error.message}</h2>}
         {pageToShow}
       </div>
     );
   }
+
+  // error component for login, data errors-- modal -- had header, body, buttons to take action
 }
 
 export default App

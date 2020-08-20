@@ -14,6 +14,11 @@ class Login extends Component {
     this.setState({[event.target.name]: event.target.value})
   }
 
+  login = (event) => {
+    event.preventDefault()
+    this.props.login(this.state)
+  }
+
   render() {
     return (
       <div className='login-modal'>
@@ -29,7 +34,7 @@ class Login extends Component {
           onChange={this.handleChange}/>
         <button 
         id='login-btn'
-        onClick={this.props.login}>
+        onClick={this.login}>
           Login
         </button>
       </div>

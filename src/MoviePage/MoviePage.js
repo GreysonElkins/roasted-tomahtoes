@@ -13,14 +13,22 @@ const MoviePage = (props) => {
     <h1 className='movieTitle'>{movieInfo.title}</h1>
         <h3 className='movieRating'>🍅 {movieInfo.average_rating * 10}% </h3>
     <p className='movieInformation'>
-      <b>Release Date:</b> {movieInfo.release_date} <br /> <br />
-      <b>Overview:</b> {movieInfo.overview} <br /> <br />
-      <b>Genre(s):</b> {movieInfo.genres.map(genre=>genre + ' ')} <br /> <br />
-      <b>Budget:</b> ${movieInfo.budget} <br /> <br />
-      <b>Revenue:</b> ${movieInfo.revenue} <br /> <br />
-      <b>Runtime:</b> {movieInfo.runtime} minutes<br /> <br />
+      <b>Release Date:</b> {movieInfo.release_date} <br /> 
+      <b>Overview:</b> {movieInfo.overview} <br /> 
+      <b>Genre(s):</b> {movieInfo.genres.map(genre=>genre + ' ')} <br />
+      <b>Budget:</b> ${movieInfo.budget} <br /> 
+      <b>Revenue:</b> ${movieInfo.revenue} <br /> 
+      <b>Runtime:</b> {movieInfo.runtime} minutes<br /> 
       <b>Tagline:</b> {movieInfo.tagline ? movieInfo.tagline : 'None'}
     </p>
+    <input
+      label='rate-movie'
+      type='number'
+      max='10'
+      min='0'
+      placeholder='Your 🍅 Rating'
+    />
+    <button className='submit-rating-btn'>Submit Rating</button>
     </div>  
 
     </section>

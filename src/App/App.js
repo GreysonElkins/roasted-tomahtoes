@@ -48,8 +48,11 @@ class App extends Component {
   }
 
   login = async (loginState) => {
-      const user = await api.postLogin(loginState);
-      if (user.status === 201) {
+    const response = await api.postLogin(loginState)
+    const user = await response.json()
+    debugger
+      if (response.status === 201) {
+        // user = user.json()
         this.setState({
           pageView: "Home",
           isLoggedIn: true,

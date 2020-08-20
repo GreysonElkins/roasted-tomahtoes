@@ -8,6 +8,16 @@ const api = {
     return data.movies
   },
 
+  getAMovie: async id => {
+    try {
+      const response = await fetch(`${apiHead}/movies/${id}`)
+      const data = await response.json()
+      return data.movie
+    } catch (error) {
+      return error
+    }
+  },
+
   postLogin: async (loginInfo) => {
     try {
       const response = await fetch(`${apiHead}/login`, {

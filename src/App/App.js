@@ -3,6 +3,7 @@ import './App.scss'
 import Header from '../Header/Header'
 import Login from '../Login/Login'
 import Main from '../Main/Main'
+import MoviePage from '../MoviePage/MoviePage'
 import api from '../API/API'
 import Error from '../Error/Error'
 
@@ -14,7 +15,8 @@ class App extends Component {
       movies: [],
       error: '',
       pageView: 'Home',
-      user: {id: '', email: '', name: ''}
+      user: {id: '', email: '', name: ''},
+      singleMovie: {}
     };
   }
 
@@ -33,6 +35,16 @@ class App extends Component {
   
   showHomePage = () => {
     this.setState({pageView: 'Home'})
+  }
+
+  showMoviePage = async (id) => {
+    try {
+      const movie = await api.getAMovie(id)
+      this.setState({pageView: "MoviePage", singleMovie: movie, error: ''})
+      console.log(this.state)
+    } catch(error) {
+      this.setState({pageView: "MoviePage", error: error})
+    }
   }
 
   login = async (loginState) => {
@@ -56,6 +68,7 @@ class App extends Component {
   }
 
   render() {
+    const page = this.state.pageView;
     return (
       <div className="App">
         <Header 
@@ -65,8 +78,15 @@ class App extends Component {
           showLoginPage={this.showLoginPage}
           showHomePage={this.showHomePage}
         />
-        {this.state.pageView === 'Login' && <Login login={this.login} />}
-        {this.state.pageView === 'Home' && <Main movies={this.state.movies} />}
+        {page === 'Login' && 
+          <Login login={this.login} />}
+        {page === 'Home' && 
+          <Main 
+            movies={this.state.movies} 
+            showMoviePage={this.showMoviePage} 
+          />}
+        {page === 'MoviePage' && 
+          <MoviePage movie={this.state.singleMovie}/>}
         {this.state.error && <Error error={this.state.error} />}
       </div>
     );

@@ -38,10 +38,14 @@ class App extends Component {
     }
   }
 
+  logout = () => {
+    this.setState({ showLoginPage: false, isLoggedIn: false, user: '' });
+  }
+
   render() {
     return (
       <div className="App">
-        <Header isLoggedIn={this.state.isLoggedIn} showLoginPage={this.showLoginPage} />
+        <Header isLoggedIn={this.state.isLoggedIn} showLoginPage={this.showLoginPage} logout={this.logout} />
         {this.state.showLoginPage 
           ? <Login login={this.login} />
           : <Main movies={this.state.movies} />}

@@ -14,7 +14,7 @@ class Header extends Component {
       <header>
         <h2>R🍅asted<br/> T🍅mahtoes</h2>
         <Search />
-        <Nav isLoggedIn={this.props.isLoggedIn} showLoginPage={this.props.showLoginPage}/>
+        <Nav isLoggedIn={this.props.isLoggedIn} showLoginPage={this.props.showLoginPage} logout={this.props.logout}/>
       </header>
     )
   }

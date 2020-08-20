@@ -36,12 +36,19 @@ class App extends Component {
   }
 
   login = async (loginState) => {
-    try {
       const user = await api.postLogin(loginState);
-      this.setState({ pageView: 'Home', isLoggedIn: true, user: user });
-    } catch (error) {
-      this.setState({ error: 'Incorrect email or password. Please try again'});
-    }
+      if (user.status === 201) {
+        this.setState({
+          pageView: "Home",
+          isLoggedIn: true,
+          user: user,
+          error: "",
+        });
+      } else {
+        this.setState({
+          error: "Incorrect email or password. Please try again",
+        });
+      }
   }
 
   logout = () => {

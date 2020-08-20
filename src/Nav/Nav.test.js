@@ -4,14 +4,6 @@ import Nav from './Nav'
 import '@testing-library/jest-dom'
 
 describe('Nav', () => {
-  // let buttons, nav
-  // beforeEach(() => {
-  //   nav = getAllByRole
-  //   // const getByText = render(<Nav/>)
-  //   buttons = getAllByRole('buttons')
-  // })
-
-
   it('should have four buttons', () => {
     const {getAllByRole} = render(<Nav />)
     expect(getAllByRole('button')).toHaveLength(4)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, getByPlaceholderText, getAllByRole } from '@testing-library/react'
+import { render, getByPlaceholderText, getAllByRole, getAllByLabelText } from '@testing-library/react'
 import App from './App'
 import Header from '../Header/Header'
 import '@testing-library/jest-dom'

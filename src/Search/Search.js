@@ -10,6 +10,7 @@ class Search extends Component {
     return (
       <div className='search-box'>
         <input 
+          aria-label='search-input'
           type="text" 
           name="search-bar" 
           placeholder="Search by title, genre, year" />

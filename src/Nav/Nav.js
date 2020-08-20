@@ -14,12 +14,14 @@ const Nav = (props) => {
       </button> 
       <button 
         className={props.isLoggedIn ? 'hidden' : ''}
-        id='login-btn'>
+        id='login-btn'
+        onClick={props.pageView}>
         Login
       </button>
       <button 
         className={props.isLoggedIn ? '' : 'hidden'} 
-        id='logout-btn'>
+        id='logout-btn'
+        onClick={props.logout}>
         Logout
       </button>
     </nav>

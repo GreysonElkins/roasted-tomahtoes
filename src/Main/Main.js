@@ -9,14 +9,17 @@ const Main = (props) => {
   return (
     <main>
       {props.error && <Error error={props.error} />}
-      {
-        props.movies.map(movie => {
-          return <MovieCard 
-            movie={movie} 
-            showMoviePage={props.showMoviePage}
-        />
-      })
-    }
+      <h2 className='all-movies-header'>All Movies</h2><br/>
+      <section class='gallery'>
+        {
+          props.movies.map(movie => {
+            return <MovieCard 
+              movie={movie} 
+              showMoviePage={props.showMoviePage}
+          />
+        })
+      }
+      </section>
     </main>
   )
 }

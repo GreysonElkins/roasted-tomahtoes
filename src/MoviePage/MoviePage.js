@@ -1,12 +1,11 @@
 import React from 'react'
-import '../Error/Error.scss'
+import Error from '../Error/Error.scss'
 
 const MoviePage = (props) => {
   return (
-    <div className="error-box">
-      {props.movie.id} is called {props.movie.title} it was relased on 
-      {props.movie.release_date} and is about {props.movie.overview}.
-    </div>
+    <section className="moviePage">
+      {props.error && <Error error={props.error} /> }
+    </section>
   ) 
 }
 

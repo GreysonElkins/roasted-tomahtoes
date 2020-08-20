@@ -35,13 +35,13 @@ class Login extends Component {
           name="passwordInput"
           placeholder="Password" 
           onChange={this.handleChange}/>
+        {this.props.error && <Error error={this.props.error} />}
         <button 
           id='login-btn'
           onClick={this.login}>
           Login
         </button>
-        {this.props.error && <Error error={this.props.error} />}
-        <h3>R🍅asted<br /> T🍅mahtoes</h3>
+        <h2>R🍅asted<br /> T🍅mahtoes</h2>
         <h4 className='login-message'>Rate Movies. View Trailers. Enjoy Cinema.</h4>
       </div>
     )

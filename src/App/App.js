@@ -87,7 +87,9 @@ class App extends Component {
             error={this.state.error}
           />}
         {page === 'MoviePage' && 
-          <MoviePage movie={this.state.singleMovie}/>}
+          <MoviePage 
+          movie={this.state.singleMovie}
+          error={this.state.error}/>}
       </div>
     );
   }

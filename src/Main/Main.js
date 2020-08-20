@@ -14,7 +14,6 @@ const Main = (props) => {
           return <MovieCard 
             movie={movie} 
             showMoviePage={props.showMoviePage}
-          // props.goToMovieShowPage(movie.id)
         />
       })
     }

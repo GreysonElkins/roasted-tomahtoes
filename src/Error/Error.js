@@ -3,10 +3,7 @@ import './Error.scss'
 
 const Error = (props) => {
   return (
-    <div className='error-box'>
-      <p className='error-text'>{props.error}</p>
-    </div>
-
+    <p className='error-text'>{props.error}</p>
   )
 }
 

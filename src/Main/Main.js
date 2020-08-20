@@ -4,11 +4,11 @@ import './Main.scss'
 
 const Main = (props) => {
   return (
-    <div className="gallery">
+    <main>
       {props.movies.map(movie => {
-        return <MovieCard movie={movie}/>
+        return <MovieCard id={movie.id} movie={movie}/>
       })}
-    </div>
+    </main>
   )
 }
 

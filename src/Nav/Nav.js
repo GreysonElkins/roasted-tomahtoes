@@ -4,7 +4,10 @@ import './Nav.scss'
 const Nav = (props) => {
   return (
     <nav>
-      <button id='home-btn'>
+      <button 
+        id='home-btn'
+        onClick={props.showHomePage}
+      >
         Home
       </button>
       <button 
@@ -14,12 +17,14 @@ const Nav = (props) => {
       </button> 
       <button 
         className={props.isLoggedIn ? 'hidden' : ''}
-        id='login-btn'>
+        id='login-btn'
+        onClick={props.showLoginPage}>
         Login
       </button>
       <button 
         className={props.isLoggedIn ? '' : 'hidden'} 
-        id='logout-btn'>
+        id='logout-btn'
+        onClick={props.logout}>
         Logout
       </button>
     </nav>

@@ -7,7 +7,7 @@ const MovieCard = (props) => {
     <div className='card' id={props.movie.id}>
       <img src={props.movie.poster_path} alt={altText} />  
       <span className='quick-info'>
-      <h4>{props.movie.title}</h4>
+      <h3 id='movie-title'>{props.movie.title}</h3>
       <h3 id="rating">{`${props.movie.average_rating * 10}%`}</h3>
       </span>
     </div>

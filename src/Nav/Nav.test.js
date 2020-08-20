@@ -4,14 +4,10 @@ import Nav from './Nav'
 import '@testing-library/jest-dom'
 
 describe('Nav', () => {
-  // let buttons, nav
-  // beforeEach(() => {
-  //   nav = getAllByRole
-  //   // const getByText = render(<Nav/>)
-  //   buttons = getAllByRole('buttons')
-  // })
+<<<<<<< HEAD
 
-
+=======
+>>>>>>> 767c91cff9d43cee894c0511d17b624b68d2981f
   it('should have four buttons', () => {
     const {getAllByRole} = render(<Nav />)
     expect(getAllByRole('button')).toHaveLength(4)
@@ -40,7 +36,5 @@ describe('Nav', () => {
    expect(getByText('Logout')).toBeInTheDocument()
    expect(getAllByRole('button')[3].id).toBe('logout-btn');
   });
-
-
 
 })

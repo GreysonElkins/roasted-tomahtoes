@@ -10,12 +10,12 @@
 
   img {
     // border: 1px solid rgb(139, 138, 138);
-    width: 15em;
-    height: 20em;
     border-radius: 6px 6px 0px 0px;
+    height: 20em;
+    width: 15em;
     &:hover {
       border-radius: 4px;
-      box-shadow: 2px 2px 15px rgb(139, 138, 138);
+      box-shadow: 2px 2px 25px whitesmoke;
     }
   }
 

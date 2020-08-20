@@ -8,19 +8,33 @@ const api = {
     return data.movies
   },
 
-  postLogin: (loginInfo) => {
-    return fetch(`${apiHead}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: loginInfo.emailInput, password: loginInfo.passwordInput}),
-    })
-    .then(response => response.json())
-    .then(data => data.user)
-    .catch(error => console.log(error))
+  getAMovie: async id => {
+    try {
+      const response = await fetch(`${apiHead}/movies/${id}`)
+      const data = await response.json()
+      return data.movie
+    } catch (error) {
+      return error
+    }
   },
+
+  postLogin: async (loginInfo) => {
+    try {
+      const response = await fetch(`${apiHead}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: loginInfo.emailInput,
+          password: loginInfo.passwordInput,
+        }),
+      })
+      return response
+    } catch (error) {
+      return error
+    }
+  }
 
 }
 

@@ -12,8 +12,8 @@ class App extends Component {
       isLoggedIn: false,
       movies: [],
       error: '',
-      showLoginPage: false,
-      user: {}
+      pageView: 'Home',
+      user: {id: '', email: '', name: ''}
     };
   }
 
@@ -27,30 +27,28 @@ class App extends Component {
   }
 
   showLoginPage = () => {
-    this.setState({showLoginPage: true})
+    this.setState({pageView: 'Login'})
   }
 
   login = async (loginState) => {
     try {
       const user = await api.postLogin(loginState);
-      this.setState({ showLoginPage: false, isLoggedIn: true, user: user });
+      this.setState({ pageView: 'Home', isLoggedIn: true, user: user });
     } catch (error) {
       this.setState({ error: error.message });
     }
   }
 
   logout = () => {
-    this.setState({ showLoginPage: false, isLoggedIn: false, user: '' });
+    this.setState({ pageView: 'Home', isLoggedIn: false, user: '' });
   }
-  // toggle?
 
   render() {
     return (
       <div className="App">
-        <Header isLoggedIn={this.state.isLoggedIn} showLoginPage={this.showLoginPage} logout={this.logout} />
-        {this.state.showLoginPage 
-          ? <Login login={this.login} />
-          : <Main movies={this.state.movies} />}
+        <Header isLoggedIn={this.state.isLoggedIn} pageView={this.pageView} logout={this.logout} />
+        {this.state.pageView === 'Login' && <Login login={this.login} />}
+        {this.state.pageView === 'Home' && <Main movies={this.state.movies} />}
         {this.state.error && <h2 className='error'>{this.state.error.message}</h2>}
       </div>
     );

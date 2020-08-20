@@ -35,8 +35,8 @@ class Login extends Component {
           placeholder="Password" 
           onChange={this.handleChange}/>
         <button 
-        id='login-btn'
-        onClick={this.login}>
+          id='login-btn'
+          onClick={this.login}>
           Login
         </button>
       </div>

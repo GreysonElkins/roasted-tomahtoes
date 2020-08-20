@@ -8,7 +8,7 @@ const MoviePage = (props) => {
   return (
     <section className="movie-page">
       {props.error && <Error error={props.error} /> }
-      <img src={movieInfo.poster_path} alt={altText} />  
+      <img className='movie-poster-img' src={movieInfo.poster_path} alt={altText} />  
       <div className='movie-content'>
         <h1 className='movie-title'>{movieInfo.title}</h1>
         <button className='movie-trailer-btn'>Play Trailer</button>

@@ -32,6 +32,7 @@ const Nav = (props) => {
           Logout
         </button>
       </div>
+
     </nav>
   )
 }

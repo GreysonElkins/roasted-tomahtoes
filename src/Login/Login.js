@@ -1,6 +1,5 @@
 import React, {component, Component} from 'react'
 import './Login.scss'
-import Error from '../Error/Error'
 
 class Login extends Component {
   constructor(props) {
@@ -22,7 +21,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className='login-box'>
+      <div className='login-modal'>
         <input
           aria-label='email-input'
           type="text"
@@ -35,14 +34,11 @@ class Login extends Component {
           name="passwordInput"
           placeholder="Password" 
           onChange={this.handleChange}/>
-        {this.props.error && <Error error={this.props.error} />}
         <button 
           id='login-btn'
           onClick={this.login}>
           Login
         </button>
-        <h2>R🍅asted<br /> T🍅mahtoes</h2>
-        <h4 className='login-message'>Rate Movies. View Trailers. Enjoy Cinema.</h4>
       </div>
     )
   }

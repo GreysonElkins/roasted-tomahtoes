@@ -1,11 +1,9 @@
 import React from 'react'
-import Error from '../Error/Error.scss'
-import './MoviePage.scss'
+import '../Error/Error.scss'
 
 const MoviePage = (props) => {
-  const movieInfo = props.movie;
-  const altText = `${movieInfo.title} movie poster`
   return (
+
     <section className="movie-page">
       {props.error && <Error error={props.error} /> }
       <img className='movie-poster-img' src={movieInfo.poster_path} alt={altText} />  

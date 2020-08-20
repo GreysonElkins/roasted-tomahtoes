@@ -1,41 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
-
-.login-box {
+.login-modal {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   color: white;
   text-align: left;
   margin-top: 20em;
-
-  h2 {
-    font-family: 'Bangers', cursive;
-    text-align: center;
-    margin-top: 100px;
-    margin-bottom: 10px;
-  }
-
-  h4 {
-    margin-top: 5px;
-  }
-
+  height: 10em;
   input {
-    border: none;
-    border-radius: 4px;
-    font-size: 18px;
-    font-weight: bold;
     margin: 10px;
-    width: 300px;
-    padding: .5%;
+    border-radius: 4px;
+    font-size: 20px;
   }
-
   button {
     color: white;
     background: red;
     border-radius: 4px;
     border: none;
-    font-family: 'Bangers', cursive;
-    font-size: 1.25em;
+    width: 5em;
     &:hover {
        box-shadow: 1px 1px 35px rgb(255, 255, 255);
     }

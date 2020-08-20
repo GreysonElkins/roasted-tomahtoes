@@ -13,7 +13,7 @@ class App extends Component {
       movies: [],
       error: '',
       showLoginPage: false,
-      user: ''
+      user: {}
     };
   }
 
@@ -42,7 +42,7 @@ class App extends Component {
   logout = () => {
     this.setState({ showLoginPage: false, isLoggedIn: false, user: '' });
   }
-  // toggle 
+  // toggle?
 
   render() {
     return (

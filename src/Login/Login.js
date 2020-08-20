@@ -30,7 +30,7 @@ class Login extends Component {
           onChange={this.handleChange}/>
         <input
           aria-label='password-input'
-          type="text"
+          type="password"
           name="passwordInput"
           placeholder="Password" 
           onChange={this.handleChange}/>

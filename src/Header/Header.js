@@ -17,6 +17,7 @@ class Header extends Component {
         <Nav 
           isLoggedIn={this.props.isLoggedIn} 
           showLoginPage={this.props.showLoginPage}
+          showHomePage={this.props.showHomePage}
           pageView={this.props.pageView} 
           logout={this.props.logout}
         />

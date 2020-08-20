@@ -30,6 +30,10 @@ class App extends Component {
   showLoginPage = () => {
     this.setState({pageView: 'Login'})
   }
+  
+  showHomePage = () => {
+    this.setState({pageView: 'Home'})
+  }
 
   login = async (loginState) => {
     try {
@@ -52,6 +56,7 @@ class App extends Component {
           pageView={this.pageView} 
           logout={this.logout} 
           showLoginPage={this.showLoginPage}
+          showHomePage={this.showHomePage}
         />
         {this.state.pageView === 'Login' && <Login login={this.login} />}
         {this.state.pageView === 'Home' && <Main movies={this.state.movies} />}

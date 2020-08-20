@@ -4,7 +4,10 @@ import './Nav.scss'
 const Nav = (props) => {
   return (
     <nav>
-      <button id='home-btn'>
+      <button 
+        id='home-btn'
+        onClick={props.showHomePage}
+      >
         Home
       </button>
       <button 

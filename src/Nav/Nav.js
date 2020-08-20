@@ -8,11 +8,11 @@ const Nav = (props) => {
         className={props.isLoggedIn ? '' : 'hidden'}>
         Welcome, Charlie!</h3>
       <div class='button-box'>
-        <button 
+        <button
           id='home-btn'
           onClick={props.showHomePage}
           >
-          Home
+          {props.showMoviePage ? 'All Movies' : 'Home'}
         </button>
         <button 
           className={props.isLoggedIn ? '' : 'hidden'} 

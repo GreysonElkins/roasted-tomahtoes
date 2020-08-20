@@ -39,18 +39,13 @@ class App extends Component {
   }
 
   render() {
-   let pageToShow;
-   if (this.state.showLoginPage) {
-     pageToShow = 
-     <Login login={this.login}/>
-   } else {
-     pageToShow = <Main movies={this.state.movies} />
-   }
     return (
       <div className="App">
         <Header isLoggedIn={this.state.isLoggedIn} showLoginPage={this.showLoginPage} />
+        {this.state.showLoginPage 
+          ? <Login login={this.login} />
+          : <Main movies={this.state.movies} />}
         {this.state.error && <h2>${this.state.error.message}</h2>}
-        {pageToShow}
       </div>
     );
   }

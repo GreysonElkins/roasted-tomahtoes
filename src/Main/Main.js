@@ -7,15 +7,18 @@ const Main = (props) => {
 
   return (
     <main>
-      {
-        props.movies.map(movie => {
-          return <MovieCard 
-            movie={movie} 
-            showMoviePage={props.showMoviePage}
-          // props.goToMovieShowPage(movie.id)
-        />
-      })
-    }
+      {props.error && <Error error={props.error} />}
+      {/* <h2 className='gallery-header'>All Movies</h2><br/> */}
+      <section class='gallery'>
+        {
+          props.movies.map(movie => {
+            return <MovieCard 
+              movie={movie} 
+              showMoviePage={props.showMoviePage}
+          />
+        })
+      }
+      </section>
     </main>
   )
 }

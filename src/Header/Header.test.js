@@ -9,7 +9,7 @@ describe('Header', () => {
 
   it('should render the logo', () => {
     const {getByText} = render(<Header />)
-    expect(getByText('🍅 Roasted Tomahtoes')).toBeInTheDocument()
+    expect(getByText('R🍅asted T🍅mahtoes')).toBeInTheDocument()
   });
 
   it('should render the search section', () => {

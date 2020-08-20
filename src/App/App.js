@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       isLoggedIn: false,
       movies: [],
+      error: '',
       showLoginPage: false,
       user: ''
     };
@@ -21,7 +22,7 @@ class App extends Component {
       const movies = await api.getAllMovies();
       this.setState({ movies: movies });
     } catch (error) {
-      this.setState({ error: error });
+      this.setState({ error: 'Oops, something went wrong! 😟' });
     }
   }
 
@@ -41,6 +42,7 @@ class App extends Component {
   logout = () => {
     this.setState({ showLoginPage: false, isLoggedIn: false, user: '' });
   }
+  // toggle 
 
   render() {
     return (
@@ -49,7 +51,7 @@ class App extends Component {
         {this.state.showLoginPage 
           ? <Login login={this.login} />
           : <Main movies={this.state.movies} />}
-        {this.state.error && <h2>${this.state.error.message}</h2>}
+        {this.state.error && <h2 className='error'>{this.state.error.message}</h2>}
       </div>
     );
   }

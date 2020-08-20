@@ -46,7 +46,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header isLoggedIn={this.state.isLoggedIn} pageView={this.pageView} logout={this.logout} />
+        <Header 
+          isLoggedIn={this.state.isLoggedIn} 
+          pageView={this.pageView} 
+          logout={this.logout} 
+          showLoginPage={this.showLoginPage}
+        />
         {this.state.pageView === 'Login' && <Login login={this.login} />}
         {this.state.pageView === 'Home' && <Main movies={this.state.movies} />}
         {this.state.error && <h2 className='error'>{this.state.error.message}</h2>}

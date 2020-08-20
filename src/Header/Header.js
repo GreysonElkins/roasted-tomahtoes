@@ -16,6 +16,7 @@ class Header extends Component {
         <Search />
         <Nav 
           isLoggedIn={this.props.isLoggedIn} 
+          showLoginPage={this.props.showLoginPage}
           pageView={this.props.pageView} 
           logout={this.props.logout}
         />

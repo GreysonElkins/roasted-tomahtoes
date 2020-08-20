@@ -12,7 +12,7 @@ const Nav = (props) => {
           id='home-btn'
           onClick={props.showHomePage}
           >
-          {props.showMoviePage ? 'All Movies' : 'Home'}
+          {props.pageView === 'MoviePage' ? 'All Movies' : 'Home'}
         </button>
         <button 
           className={props.isLoggedIn ? '' : 'hidden'} 

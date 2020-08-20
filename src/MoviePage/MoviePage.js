@@ -1,10 +1,28 @@
 import React from 'react'
 import Error from '../Error/Error.scss'
+import './MoviePage.scss'
 
 const MoviePage = (props) => {
+  const movieInfo = props.movie;
+  const altText = `${movieInfo.title} movie poster`
   return (
     <section className="moviePage">
       {props.error && <Error error={props.error} /> }
+    <img src={movieInfo.poster_path} alt={altText} />  
+    <div className='movieContent'>
+    <h1 className='movieTitle'>{movieInfo.title}</h1>
+        <h3 className='movieRating'>🍅 {movieInfo.average_rating * 10}% </h3>
+    <p className='movieInformation'>
+      <b>Release Date:</b> {movieInfo.release_date} <br /> <br />
+      <b>Overview:</b> {movieInfo.overview} <br /> <br />
+      <b>Genre(s):</b> {movieInfo.genres.map(genre=>genre + ' ')} <br /> <br />
+      <b>Budget:</b> ${movieInfo.budget} <br /> <br />
+      <b>Revenue:</b> ${movieInfo.revenue} <br /> <br />
+      <b>Runtime:</b> {movieInfo.runtime} minutes<br /> <br />
+      <b>Tagline:</b> {movieInfo.tagline ? movieInfo.tagline : 'None'}
+    </p>
+    </div>  
+
     </section>
   ) 
 }

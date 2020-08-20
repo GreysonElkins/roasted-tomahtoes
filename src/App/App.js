@@ -88,6 +88,7 @@ class App extends Component {
           />}
         {page === 'MoviePage' && 
           <MoviePage 
+          pageView={this.state.pageView}
           movie={this.state.singleMovie}
           error={this.state.error}/>}
       </div>

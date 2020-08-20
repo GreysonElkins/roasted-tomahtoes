@@ -6,29 +6,31 @@ const MoviePage = (props) => {
   const movieInfo = props.movie;
   const altText = `${movieInfo.title} movie poster`
   return (
-    <section className="moviePage">
+    <section className="movie-page">
       {props.error && <Error error={props.error} /> }
-    <img src={movieInfo.poster_path} alt={altText} />  
-    <div className='movieContent'>
-    <h1 className='movieTitle'>{movieInfo.title}</h1>
-        <h3 className='movieRating'>🍅 {movieInfo.average_rating * 10}% </h3>
-    <p className='movieInformation'>
-      <b>Release Date:</b> {movieInfo.release_date} <br /> 
-      <b>Overview:</b> {movieInfo.overview} <br /> 
-      <b>Genre(s):</b> {movieInfo.genres.map(genre=>genre + ' ')} <br />
-      <b>Budget:</b> ${movieInfo.budget} <br /> 
-      <b>Revenue:</b> ${movieInfo.revenue} <br /> 
-      <b>Runtime:</b> {movieInfo.runtime} minutes<br /> 
-      <b>Tagline:</b> {movieInfo.tagline ? movieInfo.tagline : 'None'}
-    </p>
-    <input
-      label='rate-movie'
-      type='number'
-      max='10'
-      min='0'
-      placeholder='Your 🍅 Rating'
-    />
-    <button className='submit-rating-btn'>Submit Rating</button>
+      <img src={movieInfo.poster_path} alt={altText} />  
+      <div className='movie-content'>
+      <h1 className='movie-title'>{movieInfo.title}</h1>
+      <p className='movie-information'>
+        <b>Avg Rating:</b> 🍅 {movieInfo.average_rating * 10}% <br />
+        <b>Release Date:</b> {movieInfo.release_date} <br /> 
+        <b>Overview:</b> {movieInfo.overview} <br /> 
+        <b>Genre(s):</b> {movieInfo.genres.map(genre=>genre + ' ')} <br />
+        <b>Budget:</b> ${movieInfo.budget} <br /> 
+        <b>Revenue:</b> ${movieInfo.revenue} <br /> 
+        <b>Runtime:</b> {movieInfo.runtime} minutes<br /> 
+        <b>Tagline:</b> {movieInfo.tagline ? movieInfo.tagline : 'None'}
+      </p>
+      <span className='rating-input'>
+        <input
+          label='rate-movie'
+          type='number'
+          max='10'
+          min='0'
+          placeholder='Your 🍅 Rating'
+          />
+        <button className='submit-rating-btn'>Submit Rating</button>
+      </span>
     </div>  
 
     </section>

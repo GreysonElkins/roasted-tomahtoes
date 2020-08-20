@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-.moviePage {
+.movie-page {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -32,16 +32,23 @@
   }
 }
 
-.movieContent {
+.movie-content {
   display: flex;
   flex-direction: column;
   width: 30em;
   margin: 20px;
   text-align: left;
   line-height: 25px;
+  .rating-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   input {
     border: none;
     border-radius: 4px;
+    font-size: 14px;
     font-weight: bold;
     padding: 1%;
     margin-bottom: 5px;

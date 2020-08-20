@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
 header {
   display: flex;
   flex-direction: row;
@@ -5,10 +7,12 @@ header {
   align-items: center;
   background: red;
   color: white;
+  font-family: 'Bangers', cursive;
   position: fixed;
   height: 7em;
   width: 100%;
-  h2 {
+  h1 {
+    text-shadow: 2px 2px 0px #000;
     margin-left: 40px;
   }
 }

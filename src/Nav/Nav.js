@@ -6,13 +6,13 @@ const Nav = (props) => {
     <nav>
       <h3
         className={props.isLoggedIn ? '' : 'hidden'}>
-        Welcome, Charlie!</h3>
+        Welcome, {props.user.name}</h3>
       <div class='button-box'>
         <button
           id='home-btn'
           onClick={props.showHomePage}
           >
-          {props.pageView === 'MoviePage' ? 'All Movies' : 'Home'}
+          Home
         </button>
         <button 
           className={props.isLoggedIn ? '' : 'hidden'} 

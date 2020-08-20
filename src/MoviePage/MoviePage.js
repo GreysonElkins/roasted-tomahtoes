@@ -1,12 +1,39 @@
 import React from 'react'
-import '../Error/Error.scss'
+import Error from '../Error/Error.scss'
+import './MoviePage.scss'
 
 const MoviePage = (props) => {
+  const movieInfo = props.movie;
+  const altText = `${movieInfo.title} movie poster`
   return (
-    <div className="error-box">
-      {props.movie.id} is called {props.movie.title} it was relased on 
-      {props.movie.release_date} and is about {props.movie.overview}.
-    </div>
+    <section className="movie-page">
+      {props.error && <Error error={props.error} /> }
+      <img src={movieInfo.poster_path} alt={altText} />  
+      <div className='movie-content'>
+        <h1 className='movie-title'>{movieInfo.title}</h1>
+        <button className='movie-trailer-btn'>Play Trailer</button>
+        <p className='movie-information'>
+          <b>Average Rating:</b> 🍅 {movieInfo.average_rating * 10}% <br />
+          <b>Release Date:</b> {movieInfo.release_date} <br /> 
+          <b>Overview:</b> {movieInfo.overview} <br /> 
+          <b>Genre(s):</b> {movieInfo.genres.map(genre=>genre + ' ')} <br />
+          <b>Budget:</b> ${movieInfo.budget} <br /> 
+          <b>Revenue:</b> ${movieInfo.revenue} <br /> 
+          <b>Runtime:</b> {movieInfo.runtime} minutes<br /> 
+          <b>Tagline:</b> {movieInfo.tagline ? movieInfo.tagline : 'None'}
+        </p>
+        <span className='rating-input'>
+          <input
+            label='rate-movie'
+            type='number'
+            max='10'
+            min='0'
+            placeholder='Your 🍅 Rating'
+            />
+          <button className='submit-rating-btn'>Submit Rating</button>
+        </span>
+      </div>  
+    </section>
   ) 
 }
 

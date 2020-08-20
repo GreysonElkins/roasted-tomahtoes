@@ -1,15 +1,18 @@
 .search-box {
   display: flex;
   align-items: center;
-  width: 300px;
-
+  width: 350px;
+  box-shadow: 2px 2px #000;
+  border-radius: 6px;
+  
   input {
-    background: #121212;
+    background: white;
     border-radius: 6px 0px 0px 6px;
     border: none;
+    color: black;
     font-size: 16px;
     font-weight: bold;
-    width: 250px;
+    width: 350px;
     padding: 2%;
   }
   
@@ -17,7 +20,8 @@
     background: #121221;
     border-radius: 0px 6px 6px 0px;
     border: none;
-    height: 30px;
+    font-size: 22px;
+
     &:hover {
       box-shadow: 1px 1px 35px rgb(255, 255, 255);
     }

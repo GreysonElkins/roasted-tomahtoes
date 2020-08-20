@@ -23,11 +23,13 @@ class Login extends Component {
     return (
       <div className='login-modal'>
         <input
+          aria-label='email-input'
           type="text"
           name="emailInput"
           placeholder="Email" 
           onChange={this.handleChange}/>
         <input
+          aria-label='password-input'
           type="text"
           name="passwordInput"
           placeholder="Password" 

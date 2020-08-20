@@ -12,7 +12,7 @@ const Header = (props) => {
           isLoggedIn={props.isLoggedIn} 
           showLoginPage={props.showLoginPage}
           showHomePage={props.showHomePage}
-          pageView={props.pageView} 
+          user={props.user} 
           logout={props.logout}
         />
       </header>

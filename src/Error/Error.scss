@@ -1,6 +1,5 @@
-.error-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: white;
+@import '../styles/_variables.scss';
+
+.error-text {
+  margin: 5px;
 }

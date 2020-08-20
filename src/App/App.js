@@ -48,8 +48,9 @@ class App extends Component {
   }
 
   login = async (loginState) => {
-      const user = await api.postLogin(loginState);
-      if (user.status === 201) {
+      const response = await api.postLogin(loginState)
+      const user = response.json()
+      if (response.status === 201) {
         this.setState({
           pageView: "Home",
           isLoggedIn: true,
@@ -73,10 +74,10 @@ class App extends Component {
       <div className="App">
         <Header 
           isLoggedIn={this.state.isLoggedIn} 
-          pageView={this.pageView} 
           logout={this.logout} 
           showLoginPage={this.showLoginPage}
           showHomePage={this.showHomePage}
+          user={this.state.user}
         />
         {page === 'Login' && 
           <Login login={this.login} error={this.state.error}/>}

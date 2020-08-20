@@ -3,7 +3,7 @@
 header {
   @include rowDisplay();
   justify-content: space-between;
-  background: $tomatoRed;
+  background: $tomahtoRed;
   @include fontStyle();
   position: fixed;
   height: 7em;

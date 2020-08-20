@@ -79,15 +79,15 @@ class App extends Component {
           showHomePage={this.showHomePage}
         />
         {page === 'Login' && 
-          <Login login={this.login} />}
+          <Login login={this.login} error={this.state.error}/>}
         {page === 'Home' && 
           <Main 
             movies={this.state.movies} 
             showMoviePage={this.showMoviePage} 
+            error={this.state.error}
           />}
         {page === 'MoviePage' && 
           <MoviePage movie={this.state.singleMovie}/>}
-        {this.state.error && <Error error={this.state.error} />}
       </div>
     );
   }

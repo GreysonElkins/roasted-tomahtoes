@@ -1,5 +1,6 @@
 import React, {component, Component} from 'react'
 import './Login.scss'
+import Error from '../Error/Error'
 
 class Login extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class Login extends Component {
           onClick={this.login}>
           Login
         </button>
+        {this.props.error && <Error error={this.props.error} />}
         <h3>R🍅asted<br /> T🍅mahtoes</h3>
         <h4 className='login-message'>Rate Movies. View Trailers. Enjoy Cinema.</h4>
       </div>

@@ -21,7 +21,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className='login-modal'>
+      <div className='login-box'>
         <input
           aria-label='email-input'
           type="text"
@@ -39,6 +39,8 @@ class Login extends Component {
           onClick={this.login}>
           Login
         </button>
+        <h3>R🍅asted<br /> T🍅mahtoes</h3>
+        <h4 className='login-message'>Rate Movies. View Trailers. Enjoy Cinema.</h4>
       </div>
     )
   }

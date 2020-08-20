@@ -16,7 +16,7 @@ const MoviePage = (props) => {
           <b>Average Rating:</b> 🍅 {movieInfo.average_rating * 10}% <br />
           <b>Release Date:</b> {movieInfo.release_date} <br /> 
           <b>Overview:</b> {movieInfo.overview} <br /> 
-          <b>Genre(s):</b> {movieInfo.genres.map(genre=>genre + ' ')} <br />
+          <b>Genre(s):</b> {movieInfo.genres.join(', ')} <br />
           <b>Budget:</b> ${movieInfo.budget} <br /> 
           <b>Revenue:</b> ${movieInfo.revenue} <br /> 
           <b>Runtime:</b> {movieInfo.runtime} minutes<br /> 

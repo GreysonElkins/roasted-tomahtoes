@@ -15,7 +15,7 @@ describe('Nav', () => {
    expect(getAllByRole('button')[0].id).toBe('home-btn')
   });
 
-  it('should have a Your Ratings button', () => {
+  it('should have a My Ratings button', () => {
    const { getByText, getAllByRole } = render(<Nav />)
    expect(getByText('My Ratings')).toBeInTheDocument()
    expect(getAllByRole('button')[1].id).toBe('ratings-header-btn')

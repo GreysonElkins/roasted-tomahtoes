@@ -2,9 +2,9 @@ import React from 'react'
 import './Error.scss'
 
 
-const Error = (props) => {
+const Error = ({error}) => {
   return (
-    <p className='error-text'>{props.error}</p>
+    <p className='error-text'>{error}</p>
   )
 }
 

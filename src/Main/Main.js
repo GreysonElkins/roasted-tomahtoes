@@ -1,16 +1,21 @@
 import React from 'react'
 import MovieCard from '../MovieCard/MovieCard'
 import './Main.scss'
-import api from '../API/API'
 import Error from '../Error/Error'
 
-const Main = (props) => {
-
+const Main = ({error, movies, showMoviePage}) => {
+  const movieCards = movies.map(movie => {
+      return <MovieCard 
+        movie={movie} 
+        showMoviePage={showMoviePage}
+    />
+  })
   return (
     <main>
-      {props.error && <Error error={props.error} />}
+      {error && <Error error={error} />}
       {/* <h2 className='all-movies-header'>All Movies</h2><br/> */}
       <section className='gallery'>
+<<<<<<< HEAD
         {
           props.movies.map(movie => {
             return <MovieCard 
@@ -19,6 +24,9 @@ const Main = (props) => {
           />
         })
       }
+=======
+        {movieCards}
+>>>>>>> master
       </section>
     </main>
   )

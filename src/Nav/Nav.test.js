@@ -1,36 +1,42 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import React from 'react'
 import Nav from './Nav'
 import '@testing-library/jest-dom'
 
 describe('Nav', () => {
+ beforeEach(() => {
+    render(<Nav
+    isLoggedIn={true}
+    showLoginPage={jest.fn()}
+    showHomePage={jest.fn()}
+    user={{id:1, name: 'John', email: 'john@turing.io' }}
+    logout={jest.fn()}
+    />);
+  })
+  
   it('should have four buttons', () => {
-    const {getAllByRole} = render(<Nav />)
-    expect(getAllByRole('button')).toHaveLength(4)
+    const buttons = screen.getAllByRole('button')
+    expect(buttons).toHaveLength(4)
   })
 
-  it('should have a Home button', () => {
-   const { getByText, getAllByRole } = render(<Nav />)
-   expect(getByText('Home')).toBeInTheDocument()
-   expect(getAllByRole('button')[0].id).toBe('home-btn')
+  it('should display a Home button', () => {
+   expect(screen.getByRole('button', {name:'Home'})).toBeInTheDocument()
   });
 
-  it('should have a Your Ratings button', () => {
-   const { getByText, getAllByRole } = render(<Nav />)
-   expect(getByText('My Ratings')).toBeInTheDocument()
-   expect(getAllByRole('button')[1].id).toBe('ratings-header-btn')
+  it('should display a Your Ratings button', () => {
+   expect(screen.getByRole('button', {name:'Your Ratings'})).toBeInTheDocument()
   });
 
-  it('should have a Login button', () => {
-    const { getByText, getAllByRole } = render(<Nav />)
-    expect(getByText('Login')).toBeInTheDocument()
-    expect(getAllByRole('button')[2].id).toBe('login-btn');
+  it('should display a Login button', () => {
+    expect(screen.getByRole('button', {name:'Login'})).toBeInTheDocument()
   });
 
-  it('should have a Logout button', () => {
-   const { getByText, getAllByRole } = render(<Nav />)
-   expect(getByText('Logout')).toBeInTheDocument()
-   expect(getAllByRole('button')[3].id).toBe('logout-btn');
+  it('should display a Logout button', () => {
+   expect(screen.getByRole('button', {name:'Logout'})).toBeInTheDocument()
   });
+
+  it('should greet the user after log in',() => {
+    expect(screen.getByText('Welcome, Charlie!')).toBeInTheDocument();
+  })
 
 })

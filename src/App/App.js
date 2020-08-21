@@ -5,7 +5,6 @@ import Login from '../Login/Login'
 import Main from '../Main/Main'
 import MoviePage from '../MoviePage/MoviePage'
 import api from '../API/API'
-import Error from '../Error/Error'
 
 class App extends Component {
   constructor() {
@@ -113,19 +112,18 @@ class App extends Component {
   login = async (loginState) => {
     const response = await api.postLogin(loginState)
     const user = await response.json()
-      if (response.status === 201) {
-        // user = user.json()
-        this.setState({
-          pageView: "Home",
-          isLoggedIn: true,
-          user: user,
-          error: "",
-        });
-      } else {
-        this.setState({
-          error: "Incorrect email or password. Please try again.",
-        });
-      }
+    if (response.status === 201) {
+      this.setState({
+        pageView: "Home",
+        isLoggedIn: true,
+        user: user.user,
+        error: "",
+      });
+    } else {
+      this.setState({
+        error: "Incorrect email or password. Please try again.",
+      });
+    }
   }
 
   logout = () => {
@@ -134,15 +132,16 @@ class App extends Component {
 
   render() {
     const page = this.state.pageView;
+    console.log('in app',this.state.user)
     return (
       <div className="App">
         <Header 
           isLoggedIn={this.state.isLoggedIn} 
-          pageView={this.pageView} 
           logout={this.logout} 
           showLoginPage={this.showLoginPage}
           showHomePage={this.showHomePage}
           searchMovies={this.searchMovies}
+          user={this.state.user}
         />
         {page === 'Login' && 
           <Login login={this.login} error={this.state.error}/>}
@@ -161,7 +160,6 @@ class App extends Component {
     );
   }
 
-  // error component for login, data errors-- modal -- had header, body, buttons to take action
 }
 
 export default App

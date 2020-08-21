@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import './Login.scss'
 import Error from '../Error/Error'
+import PropTypes from "prop-types";
 
 class Login extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class Login extends Component {
 
   login = (event) => {
     event.preventDefault()
+    console.log(typeof this.props.login)
     this.props.login(this.state)
   }
 
@@ -51,4 +53,7 @@ class Login extends Component {
 
 export default Login
 
-
+Login.propTypes = {
+  error: PropTypes.string,
+  login: PropTypes.func
+}

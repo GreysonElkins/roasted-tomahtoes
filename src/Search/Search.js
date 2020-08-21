@@ -1,9 +1,20 @@
 import React, { Component } from 'react'
 import './Search.scss'
 class Search extends Component {
-  constructor() {
-    super()
-    this.state = {}
+  constructor(props) {
+    super(props)
+    this.state = {
+      searchQuery: ''
+    }
+  }
+
+  handleChange = (event) => {
+    this.setState({searchQuery: event.target.value})
+  }
+
+  searchMovies = (event) => {
+    event.preventDefault() 
+    this.props.searchMovies(this.state.searchQuery)
   }
 
   render() {
@@ -13,8 +24,12 @@ class Search extends Component {
           aria-label='search-input'
           type="text" 
           name="search-bar" 
-          placeholder="Search by title, genre, year" />
-        <button id='search-btn'>
+          placeholder="Search by title, genre, year" 
+          onChange={this.handleChange}/>
+        <button 
+          id='search-btn'
+          onClick={this.searchMovies}
+        >
           🔍
         </button>
       </div>

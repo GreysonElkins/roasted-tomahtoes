@@ -19,10 +19,59 @@ class App extends Component {
     };
   }
 
+  searchMovies = async (query) => {
+    query = query.toLowerCase()
+    const searchQueries = query.split(' ')
+    const allMovies = await this.showSearchResultsPage()
+    const checkedMovies = []
+    await allMovies.forEach(async (movie) => {
+      let fullMovie
+      try {
+        fullMovie = await api.getAMovie(movie.id)
+        fullMovie.year = await fullMovie ? fullMovie.release_date.substring(0, 4) : null;
+        if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
+          checkedMovies.push(fullMovie)
+          this.setState({movies: checkedMovies})
+        }
+      } catch (error) {
+        console.log('You\'ve got the following error - you gotta program something to do with it bubbua:', error.message)
+      }
+      this.setState({movies: checkedMovies})
+    })
+  }
+
+  checkAllQueriesAgainstMovie(searchQueries, movie) {
+    debugger
+    movie = Object.values(movie)
+    let movieInfo = this.changeDataToLowerCase(movie)
+    if (searchQueries.every(query => movieInfo.some(
+    movieDetail => isNaN(movieDetail) && movieDetail.includes(query)))) {
+      return true 
+    } 
+  }
+
+  changeDataToLowerCase(data) {
+    let args = data
+    let changedData = []
+    args.map(info => {
+      if (isNaN(info) && Array.isArray(info) === false) {
+        changedData.push(info.toLowerCase())
+      } else if (Array.isArray(info)) {
+        // args.concat(info)
+        changedData = changedData.concat(this.changeDataToLowerCase(info))
+      } else {
+        changedData.push(info)
+      }
+    })
+    return changedData
+  }
+
   componentDidMount = async () => {
     try {
       const movies = await api.getAllMovies();
       this.setState({ movies: movies });
+      // for each movie fetch individual movie
+      // add the 
     } catch (error) {
       this.setState({ error: 'Oops, something went wrong! 🙁 Please try again.'});
     }
@@ -32,8 +81,14 @@ class App extends Component {
     this.setState({pageView: 'Login'})
   }
   
-  showHomePage = () => {
-    this.setState({pageView: 'Home'})
+  showHomePage = async () => {
+    try { 
+      const movies = await api.getAllMovies();
+      this.setState({ movies })
+      this.setState({pageView: 'Home'})
+    } catch(error) {
+      this.setState({pageView: 'Home', error: error})
+    }
   }
 
   showMoviePage = async (id) => {
@@ -45,21 +100,30 @@ class App extends Component {
     }
   }
 
+  showSearchResultsPage = async () => {
+    try {
+      this.setState({ pageView: 'SearchResults' })
+      return await api.getAllMovies();
+    } catch (error) {
+      this.setState({ pageView: 'SearchResults', error: error })
+    }
+  }
+
   login = async (loginState) => {
-      const response = await api.postLogin(loginState)
-      const user = await response.json()
-      if (response.status === 201) {
-        this.setState({
-          pageView: "Home",
-          isLoggedIn: true,
-          user: user.user,
-          error: "",
-        });
-      } else {
-        this.setState({
-          error: "Incorrect email or password. Please try again.",
-        });
-      }
+    const response = await api.postLogin(loginState)
+    const user = await response.json()
+    if (response.status === 201) {
+      this.setState({
+        pageView: "Home",
+        isLoggedIn: true,
+        user: user.user,
+        error: "",
+      });
+    } else {
+      this.setState({
+        error: "Incorrect email or password. Please try again.",
+      });
+    }
   }
 
   logout = () => {
@@ -76,11 +140,12 @@ class App extends Component {
           logout={this.logout} 
           showLoginPage={this.showLoginPage}
           showHomePage={this.showHomePage}
+          searchMovies={this.searchMovies}
           user={this.state.user}
         />
         {page === 'Login' && 
           <Login login={this.login} error={this.state.error}/>}
-        {page === 'Home' && 
+        {(page === 'Home' || page === 'SearchResults') && 
           <Main 
             movies={this.state.movies} 
             showMoviePage={this.showMoviePage} 

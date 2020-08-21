@@ -6,8 +6,13 @@ const Nav = ({isLoggedIn, showHomePage, showLoginPage, logout, user}) => {
   return (
     <nav>
       <h3
+<<<<<<< HEAD
+        className={props.isLoggedIn ? '' : 'hidden'}>
+        Welcome, Charlie!</h3>
+=======
         className={isLoggedIn ? '' : 'hidden'}>
         Welcome, {user.name}!</h3>
+>>>>>>> master
       <div className='button-box'>
         <button
           id='home-btn'

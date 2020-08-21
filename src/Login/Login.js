@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './Login.scss'
 import Error from '../Error/Error'
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"
 
 class Login extends Component {
   constructor(props) {

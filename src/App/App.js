@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   searchMovies = async (query) => {
-    this.showHomePage()
+    this.showSearchResultsPage()
     const searchQueries = query.split(',')
     const checkedMovies = []
     this.state.movies.forEach(async movie => {
@@ -58,18 +58,31 @@ class App extends Component {
   }
   
   showHomePage = async () => {
-    const movies = await api.getAllMovies();
-    this.setState({ movies })
-    this.setState({pageView: 'Home'})
+    try { 
+      const movies = await api.getAllMovies();
+      this.setState({ movies })
+      this.setState({pageView: 'Home'})
+    } catch(error) {
+      this.setState({pageView: 'Home', error: error})
+    }
   }
 
   showMoviePage = async (id) => {
     try {
       const movie = await api.getAMovie(id)
       this.setState({pageView: "MoviePage", singleMovie: movie, error: ''})
-      console.log(this.state)
     } catch(error) {
       this.setState({pageView: "MoviePage", error: error})
+    }
+  }
+
+  showSearchResultsPage = async () => {
+    try {
+      const movies = await api.getAllMovies();
+      this.setState({ movies })
+      this.setState({ pageView: 'SearchResults' })
+    } catch (error) {
+      this.setState({ pageView: 'SearchResults', error: error })
     }
   }
 
@@ -109,7 +122,7 @@ class App extends Component {
         />
         {page === 'Login' && 
           <Login login={this.login} error={this.state.error}/>}
-        {page === 'Home' && 
+        {(page === 'Home' || page === 'SearchResults') && 
           <Main 
             movies={this.state.movies} 
             showMoviePage={this.showMoviePage} 

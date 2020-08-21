@@ -4,7 +4,6 @@ import Nav from '../Nav/Nav'
 import './Header.scss'
 
 const Header = ({isLoggedIn, showLoginPage, showHomePage, user, logout, searchMovies}) => {
-  console.log("in header", user);
     return (
       <header>
         <h1 className='logo'>R🍅asted<br/> T🍅mahtoes</h1>

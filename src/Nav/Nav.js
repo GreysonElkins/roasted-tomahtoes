@@ -2,7 +2,6 @@ import React from 'react'
 import './Nav.scss'
 
 const Nav = ({isLoggedIn, showHomePage, showLoginPage, logout, user}) => {
-  console.log("in nav", user);
   return (
     <nav>
       <h3

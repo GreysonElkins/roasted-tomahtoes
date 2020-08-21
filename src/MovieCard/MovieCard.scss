@@ -3,15 +3,13 @@
 .card {
   @include columnDisplay();
   justify-content: initial;
-  box-shadow: 1px 1px 15px 10px black;
   border-radius: 6px;
   margin: 1.5em;
   width: 15em;
-
+  
   img {
-    // border: 1px solid rgb(139, 138, 138);
-    border-radius: 6px 6px 0px 0px;
-    height: 20em;
+    box-shadow: 1px 1px 15px 10px black;
+    height: 23em;
     width: 15em;
     &:hover {
       border-radius: 4px;
@@ -23,9 +21,10 @@
    @include columnDisplay();
    align-items: center;
    padding: 3%;
+   margin: 5px;
     h4 {
       text-align: center;
-      margin: 0px;
+      margin: 0;
     }
   }
 

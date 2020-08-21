@@ -21,17 +21,23 @@ class App extends Component {
   }
 
   searchMovies = async (query) => {
-    this.showSearchResultsPage()
-    const searchQueries = query.split(',')
+
+    const allMovies = await this.showSearchResultsPage()
+    const searchQueries = query.split(' ')
     const checkedMovies = []
-    this.state.movies.forEach(async movie => {
-      const fullMovie = await api.getAMovie(movie.id)
-      fullMovie.year = await fullMovie.release_date ? fullMovie.release_date.substring(0, 4) : null;
-      if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
-        checkedMovies.push(fullMovie)
-        this.setState({movies: checkedMovies})
-      } 
-      return checkedMovies
+    await allMovies.forEach(async (movie) => {
+      let fullMovie
+      try {
+        fullMovie = await api.getAMovie(movie.id)
+        fullMovie.year = await fullMovie ? fullMovie.release_date.substring(0, 4) : null;
+        if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
+          checkedMovies.push(fullMovie)
+          this.setState({movies: checkedMovies})
+        }
+      } catch (error) {
+        alert('You\'ve got the following error - you gotta program something to do with it bubbua:', error.message)
+      }
+      this.setState({movies: checkedMovies})
     })
   }
 
@@ -78,9 +84,8 @@ class App extends Component {
 
   showSearchResultsPage = async () => {
     try {
-      const movies = await api.getAllMovies();
-      this.setState({ movies })
       this.setState({ pageView: 'SearchResults' })
+      return await api.getAllMovies();
     } catch (error) {
       this.setState({ pageView: 'SearchResults', error: error })
     }

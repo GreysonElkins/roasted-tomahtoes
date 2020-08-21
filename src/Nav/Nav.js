@@ -1,5 +1,6 @@
 import React from 'react'
 import './Nav.scss'
+import PropTypes from "prop-types"
 
 const Nav = ({isLoggedIn, showHomePage, showLoginPage, logout, user}) => {
   return (
@@ -37,3 +38,12 @@ const Nav = ({isLoggedIn, showHomePage, showLoginPage, logout, user}) => {
 }
 
 export default Nav
+
+Nav.propTypes = {
+ isLoggedIn: PropTypes.bool,
+ showLoginPage: PropTypes.func,
+ showHomePage: PropTypes.func,
+ user: PropTypes.object,
+ logout: PropTypes.func,
+ searchMovies: PropTypes.func,
+};

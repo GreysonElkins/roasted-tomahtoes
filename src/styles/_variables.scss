@@ -6,7 +6,7 @@ $slateBlack: #121212;
 
 @mixin fontStyle() {
   font-family: $bangersFont;
-  color: white;
+  color: #f5f3f2;
 }
 
 @mixin columnDisplay() {
@@ -24,7 +24,7 @@ $slateBlack: #121212;
 }
 
 @mixin input {
-  background: white;
+  background: #f5f3f2;
   border: none;
   border-radius: 4px;
   color: $slateBlack;

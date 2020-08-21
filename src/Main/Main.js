@@ -10,7 +10,7 @@ const Main = (props) => {
     <main>
       {props.error && <Error error={props.error} />}
       {/* <h2 className='all-movies-header'>All Movies</h2><br/> */}
-      <section class='gallery'>
+      <section className='gallery'>
         {
           props.movies.map(movie => {
             return <MovieCard 

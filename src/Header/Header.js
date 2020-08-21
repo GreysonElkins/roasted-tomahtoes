@@ -7,7 +7,9 @@ const Header = (props) => {
     return (
       <header>
         <h1>R🍅asted<br/> T🍅mahtoes</h1>
-        <Search />
+        <Search 
+          searchMovies={props.searchMovies}
+        />
         <Nav 
           isLoggedIn={props.isLoggedIn} 
           showLoginPage={props.showLoginPage}

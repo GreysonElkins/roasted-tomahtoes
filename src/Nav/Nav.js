@@ -7,7 +7,7 @@ const Nav = (props) => {
       <h3
         className={props.isLoggedIn ? '' : 'hidden'}>
         Welcome, Charlie!</h3>
-      <div class='button-box'>
+      <div className='button-box'>
         <button
           id='home-btn'
           onClick={props.showHomePage}

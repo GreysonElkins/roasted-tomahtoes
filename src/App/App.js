@@ -20,10 +20,33 @@ class App extends Component {
     };
   }
 
+  searchMovies = async (query) => {
+    const searchQueries = query.split(',')
+    const filteredMovies = await this.state.movies.reduce(async (matchingMovies, movie) => {
+      const checkedMovies = await matchingMovies;
+      const fullMovie = await api.getAMovie(movie.id)
+      fullMovie.year = await fullMovie.release_date ? fullMovie.release_date.substring(0, 4) : null;
+      if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
+       checkedMovies.push(fullMovie)
+      } 
+      return checkedMovies
+    }, Promise.resolve([]))
+    this.setState({movies: await filteredMovies})
+  }
+
+  checkAllQueriesAgainstMovie(searchQueries, movie) {
+    if (searchQueries.every(query => Object.values(movie).some(
+    movieDetail => isNaN(movieDetail) && movieDetail.includes(query)))) {
+      return true
+    } 
+  }
+
   componentDidMount = async () => {
     try {
       const movies = await api.getAllMovies();
       this.setState({ movies: movies });
+      // for each movie fetch individual movie
+      // add the 
     } catch (error) {
       this.setState({ error: 'Oops, something went wrong! 🙁 Please try again.'});
     }
@@ -50,7 +73,6 @@ class App extends Component {
   login = async (loginState) => {
     const response = await api.postLogin(loginState)
     const user = await response.json()
-    debugger
       if (response.status === 201) {
         // user = user.json()
         this.setState({
@@ -80,6 +102,7 @@ class App extends Component {
           logout={this.logout} 
           showLoginPage={this.showLoginPage}
           showHomePage={this.showHomePage}
+          searchMovies={this.searchMovies}
         />
         {page === 'Login' && 
           <Login login={this.login} error={this.state.error}/>}

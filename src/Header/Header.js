@@ -2,6 +2,7 @@ import React from 'react'
 import Search from '../Search/Search'
 import Nav from '../Nav/Nav'
 import './Header.scss'
+import PropTypes from "prop-types"
 
 const Header = ({isLoggedIn, showLoginPage, showHomePage, user, logout, searchMovies}) => {
     return (
@@ -24,3 +25,12 @@ const Header = ({isLoggedIn, showLoginPage, showHomePage, user, logout, searchMo
   }
 
 export default Header
+
+Header.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  showLoginPage: PropTypes.func,
+  showHomePage: PropTypes.func,
+  user: PropTypes.object,
+  logout: PropTypes.func,
+  searchMovies: PropTypes.func
+}

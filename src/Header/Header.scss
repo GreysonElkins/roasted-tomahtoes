@@ -1,21 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import '../styles/_variables.scss';
 
 header {
-  display: flex;
-  flex-direction: row;
+  @include rowDisplay();
   justify-content: space-between;
-  align-items: center;
-  background: red;
-  color: white;
-  font-family: 'Bangers', cursive;
+  background: $tomahtoRed;
+  @include fontStyle();
   position: fixed;
   height: 7em;
   width: 100%;
+  // box-shadow: 1px 1px 15px black;
   h1 {
     text-shadow: 2px 2px 0px #000;
     margin-left: 40px;
   }
   button {
-    font-family: 'Bangers', cursive;
+    @include fontStyle();
   }
 }

@@ -1,27 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import '../styles/_variables.scss';
 
 nav {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include columnDisplay();
   height: 100%;
   margin-right: 40px;
 
   h3 {
-    font-family: 'Bangers', cursive;
+    font-family: $bangersFont;
     font-size: 30px;
     text-shadow: 2px 2px #000;
     margin: 0;
   }
 
   .button-box {
-    display: flex;
-    flex-direction: row;
+    @include rowDisplay();
     button {
+      background: $slateBlack;
       border-radius: 6px;
-      background: #121212;
-      color: white;
+      @include fontStyle();
       font-size: 1.5em;
       margin: 3px;
         &:hover {

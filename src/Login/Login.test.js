@@ -1,18 +1,23 @@
-import { render, getByPlaceholderText } from '@testing-library/react'
+import { render, getByPlaceholderText, screen } from '@testing-library/react'
 import React from 'react'
 import Login from './Login'
 import '@testing-library/jest-dom'
 
 describe('Login', () => {
+  beforeEach(() => {
+    render(<Login 
+    error='Username or password incorrect. Please try again.'
+    login={jest.fn()}
+    />);
+  })
+
   it('should display email and password inputs', () => {
-    const {getByPlaceholderText} = render(<Login/>)
-    expect(getByPlaceholderText('Email')).toBeInTheDocument()
-    expect(getByPlaceholderText('Password')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument()
   })
 
   it('should display login button', () => {
-    const {getByText} = render(<Login />)
-    expect(getByText('Login')).toBeInTheDocument()
+    expect(screen.getByText('Login')).toBeInTheDocument()
   })
 
 })

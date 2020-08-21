@@ -1,4 +1,4 @@
-import React, {component, Component} from 'react'
+import React, {Component} from 'react'
 import './Login.scss'
 import Error from '../Error/Error'
 

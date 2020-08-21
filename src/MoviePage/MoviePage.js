@@ -24,8 +24,9 @@ const MoviePage = (props) => {
         </p>
         <span className='rating-input'>
           <input
-            label='rate-movie'
+            aria-label='rate-movie-input'
             type='number'
+            name='user-rating-number'
             max='10'
             min='0'
             placeholder='Your 🍅 Rating'

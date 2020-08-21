@@ -1,27 +1,31 @@
+@import '../styles/_variables.scss';
+
 .card {
+  @include columnDisplay();
+  justify-content: initial;
+  border-radius: 6px;
   margin: 1.5em;
   width: 15em;
   
-  
   img {
+    box-shadow: 1px 1px 15px 10px black;
+    height: 23em;
     width: 15em;
-    height: 20em;
-    border: 1px solid rgb(139, 138, 138);
     &:hover {
       border-radius: 4px;
-      box-shadow: 1px 1px 35px rgb(139, 138, 138);
+      box-shadow: 2px 2px 25px whitesmoke;
     }
   }
-  .quick-info {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    margin-top: 5px;
-    color: white;
+
+  .card-info-box {
+   @include columnDisplay();
+   align-items: center;
+   padding: 3%;
+   margin: 5px;
     h4 {
-      text-align: left;
+      text-align: center;
       margin: 0;
     }
-
   }
+
 }

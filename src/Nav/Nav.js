@@ -18,7 +18,7 @@ const Nav = ({isLoggedIn, showHomePage, showLoginPage, logout, user}) => {
         <button 
           className={isLoggedIn ? '' : 'hidden'} 
           id='ratings-header-btn'>
-          My Ratings
+          Your Ratings
         </button> 
         <button 
           className={isLoggedIn ? 'hidden' : ''}

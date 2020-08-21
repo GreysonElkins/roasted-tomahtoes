@@ -23,8 +23,8 @@ describe('Nav', () => {
    expect(screen.getByRole('button', {name:'Home'})).toBeInTheDocument()
   });
 
-  it('should display a My Ratings button', () => {
-   expect(screen.getByRole('button', {name:'My Ratings'})).toBeInTheDocument()
+  it('should display a Your Ratings button', () => {
+   expect(screen.getByRole('button', {name:'Your Ratings'})).toBeInTheDocument()
   });
 
   it('should display a Login button', () => {

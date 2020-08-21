@@ -3,19 +3,14 @@ import Search from '../Search/Search'
 import Nav from '../Nav/Nav'
 import './Header.scss'
 
-const Header = ({isLoggedIn, showLoginPage, showHomePage, user, logout}) => {
+const Header = ({isLoggedIn, showLoginPage, showHomePage, user, logout, searchMovies}) => {
   console.log("in header", user);
     return (
       <header>
-<<<<<<< HEAD
-        <h1>R🍅asted<br/> T🍅mahtoes</h1>
-        <Search 
-          searchMovies={props.searchMovies}
-        />
-=======
         <h1 className='logo'>R🍅asted<br/> T🍅mahtoes</h1>
-        <Search />
->>>>>>> master
+        <Search 
+          searchMovies={searchMovies}
+        />
         <Nav 
           isLoggedIn={isLoggedIn} 
           showLoginPage={showLoginPage}

@@ -3,17 +3,17 @@ import Search from '../Search/Search'
 import Nav from '../Nav/Nav'
 import './Header.scss'
 
-const Header = (props) => {
+const Header = ({isLoggedIn, showLoginPage, showHomePage, user, logout}) => {
     return (
       <header>
         <h1 className='logo'>R🍅asted<br/> T🍅mahtoes</h1>
         <Search />
         <Nav 
-          isLoggedIn={props.isLoggedIn} 
-          showLoginPage={props.showLoginPage}
-          showHomePage={props.showHomePage}
-          user={props.user} 
-          logout={props.logout}
+          isLoggedIn={isLoggedIn} 
+          showLoginPage={showLoginPage}
+          showHomePage={showHomePage}
+          user={user} 
+          logout={logout}
         />
       </header>
     )

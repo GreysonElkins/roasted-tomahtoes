@@ -5,10 +5,11 @@ import './Header.scss'
 
 const Header = ({isLoggedIn, showLoginPage, showHomePage, user, logout, searchMovies}) => {
     return (
-      <header>
+      <header id='header'>
         <h1 className='logo'>R🍅asted<br/> T🍅mahtoes</h1>
         <Search 
           searchMovies={searchMovies}
+          id='search'
         />
         <Nav 
           isLoggedIn={isLoggedIn} 
@@ -16,6 +17,7 @@ const Header = ({isLoggedIn, showLoginPage, showHomePage, user, logout, searchMo
           showHomePage={showHomePage}
           user={user} 
           logout={logout}
+          id='search'
         />
       </header>
     )

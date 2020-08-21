@@ -1,21 +1,22 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import Header from './Header'
-import Search from '../Search/Search'
-import Nav from '../Nav/Nav'
 import '@testing-library/jest-dom'
 
 describe('Header', () => {
-let mockLogout, mockShowHomePage, mockShowLoginPage
+let mockLogout, mockShowHomePage, mockShowLoginPage, mockSearchMovies
 beforeEach(() => {
-  mockLogout = jest.fn();
-  mockShowHomePage = jest.fn();
-  mockShowLoginPage = jest.fn();
+  mockLogout = jest.fn()
+  mockShowHomePage = jest.fn()
+  mockShowLoginPage = jest.fn()
+  mockSearchMovies = jest.fn()
+
   render(
    <Header
     isLoggedIn={false}
     showLoginPage={mockShowLoginPage}
     showHomePage={mockShowHomePage}
+    searchMovies={mockSearchMovies}
     user={{id:1, name: 'John', email: 'john@turing.io'}}
     logout={mockLogout}
    />
@@ -32,15 +33,15 @@ beforeEach(() => {
 
   it('should render five buttons', () => {
     expect(screen.getAllByRole('button')).toHaveLength(5)
-    expect(screen.getByRole("button", { name: "My Ratings" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Your Ratings" })).toBeInTheDocument()
   })
   
-  // it('should fire event when search button is clicked', () => {
-    //   expect(searchBtn).toBeInTheDocument()
-    //   const searchBtn = screen.getByRole("button", { name: "🔍" });
-    //   fireEvent.click(searchBtn)
-    // need to add method info from search stuff when G finishes up
-    // })
+  it('should fire event when Search button is clicked', () => {
+      const searchBtn = screen.getByRole("button", { name: "🔍" })
+      expect(searchBtn).toBeInTheDocument()
+      fireEvent.click(searchBtn)
+      expect(mockSearchMovies).toBeCalledTimes(1);
+    })
     
   it('should fire event when Login button is clicked', () => {
     const loginBtn = screen.getByRole("button", { name: "Login" })
@@ -50,14 +51,14 @@ beforeEach(() => {
   })
 
   it("should fire event when Logout button is clicked", () => {
-    const logoutBtn = screen.getByRole("button", { name: "Logout" });
+    const logoutBtn = screen.getByRole("button", { name: "Logout" })
     expect(logoutBtn).toBeInTheDocument();
     fireEvent.click(logoutBtn);
     expect(mockLogout).toBeCalledTimes(1);
   })
 
   it("should fire event when Home button is clicked", () => {
-   const homeBtn = screen.getByRole("button", { name: "Home" });
+   const homeBtn = screen.getByRole("button", { name: "Home" })
    expect(homeBtn).toBeInTheDocument();
    fireEvent.click(homeBtn);
    expect(mockShowHomePage).toBeCalledTimes(1);

@@ -2,6 +2,7 @@ import React from 'react'
 import MovieCard from '../MovieCard/MovieCard'
 import './Main.scss'
 import Error from '../Error/Error'
+import PropTypes from "prop-types"
 
 const Main = ({error, movies, showMoviePage}) => {
   const movieCards = movies.map(movie => {
@@ -22,3 +23,9 @@ const Main = ({error, movies, showMoviePage}) => {
 }
 
 export default Main
+
+Main.propTypes = {
+  error: PropTypes.string,
+  movies: PropTypes.array,
+  showMoviePage: PropTypes.func
+}

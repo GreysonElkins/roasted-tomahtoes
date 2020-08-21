@@ -21,9 +21,9 @@ class App extends Component {
   }
 
   searchMovies = async (query) => {
-
-    const allMovies = await this.showSearchResultsPage()
+    query = query.toLowerCase()
     const searchQueries = query.split(' ')
+    const allMovies = await this.showSearchResultsPage()
     const checkedMovies = []
     await allMovies.forEach(async (movie) => {
       let fullMovie
@@ -35,17 +35,36 @@ class App extends Component {
           this.setState({movies: checkedMovies})
         }
       } catch (error) {
-        alert('You\'ve got the following error - you gotta program something to do with it bubbua:', error.message)
+        console.log('You\'ve got the following error - you gotta program something to do with it bubbua:', error.message)
       }
       this.setState({movies: checkedMovies})
     })
   }
 
   checkAllQueriesAgainstMovie(searchQueries, movie) {
-    if (searchQueries.every(query => Object.values(movie).some(
+    debugger
+    movie = Object.values(movie)
+    let movieInfo = this.changeDataToLowerCase(movie)
+    if (searchQueries.every(query => movieInfo.some(
     movieDetail => isNaN(movieDetail) && movieDetail.includes(query)))) {
-      return true
+      return true 
     } 
+  }
+
+  changeDataToLowerCase(data) {
+    let args = data
+    let changedData = []
+    args.map(info => {
+      if (isNaN(info) && Array.isArray(info) === false) {
+        changedData.push(info.toLowerCase())
+      } else if (Array.isArray(info)) {
+        // args.concat(info)
+        changedData = changedData.concat(this.changeDataToLowerCase(info))
+      } else {
+        changedData.push(info)
+      }
+    })
+    return changedData
   }
 
   componentDidMount = async () => {

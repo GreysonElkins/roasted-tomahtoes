@@ -15,18 +15,7 @@ const Main = ({error, movies, showMoviePage}) => {
       {error && <Error error={error} />}
       {/* <h2 className='all-movies-header'>All Movies</h2><br/> */}
       <section className='gallery'>
-<<<<<<< HEAD
-        {
-          props.movies.map(movie => {
-            return <MovieCard 
-              movie={movie} 
-              showMoviePage={props.showMoviePage}
-          />
-        })
-      }
-=======
         {movieCards}
->>>>>>> master
       </section>
     </main>
   )

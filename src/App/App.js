@@ -21,6 +21,7 @@ class App extends Component {
   }
 
   searchMovies = async (query) => {
+    this.showHomePage()
     const searchQueries = query.split(',')
     const filteredMovies = await this.state.movies.reduce(async (matchingMovies, movie) => {
       const checkedMovies = await matchingMovies;
@@ -56,7 +57,9 @@ class App extends Component {
     this.setState({pageView: 'Login'})
   }
   
-  showHomePage = () => {
+  showHomePage = async () => {
+    const movies = await api.getAllMovies();
+    this.setState({ movies })
     this.setState({pageView: 'Home'})
   }
 

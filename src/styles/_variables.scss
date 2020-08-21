@@ -23,7 +23,7 @@ $slateBlack: #121212;
   justify-content: center;
 }
 
-@mixin input {
+@mixin input() {
   background: #f5f3f2;
   border: none;
   border-radius: 4px;

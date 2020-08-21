@@ -138,7 +138,6 @@ class App extends Component {
 
  render() {
   const page = this.state.pageView;
-  console.log("in app", this.state.user);
   return (
    <div className="App">
     <Header

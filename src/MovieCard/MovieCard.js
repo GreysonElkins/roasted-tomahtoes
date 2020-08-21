@@ -1,5 +1,6 @@
 import React from 'react'
 import './MovieCard.scss'
+import PropTypes from "prop-types"
 
 const MovieCard = (props) => {
   const altText = `${props.movie.title} movie poster`
@@ -19,3 +20,8 @@ const MovieCard = (props) => {
 }
 
 export default MovieCard
+
+MovieCard.propTypes = {
+  movie: PropTypes.object,
+  showMoviePage: PropTypes.func
+}

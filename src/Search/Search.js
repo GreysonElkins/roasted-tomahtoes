@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './Search.scss'
+import PropTypes from 'prop-types'
 class Search extends Component {
   constructor(props) {
     super(props)
@@ -38,3 +39,8 @@ class Search extends Component {
 }
 
 export default Search
+
+Search.propTypes = {
+  searchMovies: PropTypes.func
+}
+

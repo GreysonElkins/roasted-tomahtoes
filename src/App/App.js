@@ -23,16 +23,16 @@ class App extends Component {
   searchMovies = async (query) => {
     this.showHomePage()
     const searchQueries = query.split(',')
-    await this.state.movies.reduce(async (matchingMovies, movie) => {
-      this.setState({movies: await matchingMovies})
-      const checkedMovies = await matchingMovies;
+    const checkedMovies = []
+    this.state.movies.forEach(async movie => {
       const fullMovie = await api.getAMovie(movie.id)
       fullMovie.year = await fullMovie.release_date ? fullMovie.release_date.substring(0, 4) : null;
       if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
-       checkedMovies.push(fullMovie)
+        checkedMovies.push(fullMovie)
+        this.setState({movies: checkedMovies})
       } 
       return checkedMovies
-    }, Promise.resolve([]))
+    })
   }
 
   checkAllQueriesAgainstMovie(searchQueries, movie) {

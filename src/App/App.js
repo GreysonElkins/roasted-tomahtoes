@@ -40,7 +40,6 @@ class App extends Component {
     try {
       const movie = await api.getAMovie(id)
       this.setState({pageView: "MoviePage", singleMovie: movie, error: ''})
-      console.log(this.state)
     } catch(error) {
       this.setState({pageView: "MoviePage", error: error})
     }
@@ -53,7 +52,7 @@ class App extends Component {
         this.setState({
           pageView: "Home",
           isLoggedIn: true,
-          user: user,
+          user: user.user,
           error: "",
         });
       } else {
@@ -69,6 +68,7 @@ class App extends Component {
 
   render() {
     const page = this.state.pageView;
+    console.log('in app',this.state.user)
     return (
       <div className="App">
         <Header 

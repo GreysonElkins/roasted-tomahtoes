@@ -5,7 +5,6 @@ import Login from '../Login/Login'
 import Main from '../Main/Main'
 import MoviePage from '../MoviePage/MoviePage'
 import api from '../API/API'
-import Error from '../Error/Error'
 
 class App extends Component {
   constructor() {
@@ -49,7 +48,7 @@ class App extends Component {
 
   login = async (loginState) => {
       const response = await api.postLogin(loginState)
-      const user = response.json()
+      const user = await response.json()
       if (response.status === 201) {
         this.setState({
           pageView: "Home",
@@ -96,7 +95,6 @@ class App extends Component {
     );
   }
 
-  // error component for login, data errors-- modal -- had header, body, buttons to take action
 }
 
 export default App

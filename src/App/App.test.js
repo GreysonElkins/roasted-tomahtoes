@@ -18,7 +18,7 @@ describe('App', () => {
 
   it('should hide some header elements in default state', () => {
     const {getByText} = render(<App/>)
-    expect(getByText("Your Ratings").className).toBe("hidden");
+    expect(getByText("My Ratings").className).toBe("hidden");
     expect(getByText('Logout').className).toBe('hidden')
   })
 

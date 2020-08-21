@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Search from '../Search/Search'
 import Nav from '../Nav/Nav'
 import './Header.scss'
@@ -6,7 +6,7 @@ import './Header.scss'
 const Header = (props) => {
     return (
       <header>
-        <h1>R🍅asted<br/> T🍅mahtoes</h1>
+        <h1 className='logo'>R🍅asted<br/> T🍅mahtoes</h1>
         <Search />
         <Nav 
           isLoggedIn={props.isLoggedIn} 

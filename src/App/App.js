@@ -23,7 +23,8 @@ class App extends Component {
   searchMovies = async (query) => {
     this.showHomePage()
     const searchQueries = query.split(',')
-    const filteredMovies = await this.state.movies.reduce(async (matchingMovies, movie) => {
+    await this.state.movies.reduce(async (matchingMovies, movie) => {
+      this.setState({movies: await matchingMovies})
       const checkedMovies = await matchingMovies;
       const fullMovie = await api.getAMovie(movie.id)
       fullMovie.year = await fullMovie.release_date ? fullMovie.release_date.substring(0, 4) : null;
@@ -32,7 +33,6 @@ class App extends Component {
       } 
       return checkedMovies
     }, Promise.resolve([]))
-    this.setState({movies: await filteredMovies})
   }
 
   checkAllQueriesAgainstMovie(searchQueries, movie) {

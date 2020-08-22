@@ -29,6 +29,7 @@ describe('MoviePage', () => {
       pageView={jest.fn()}
       movie={movie}
       error={'No movie found. Please try again.'}
+      isLoggedIn={true}
      />
     )
   })
@@ -43,8 +44,9 @@ describe('MoviePage', () => {
      expect(screen.getByRole('button', {name: 'Play Trailer'})).toBeInTheDocument()
    })
 
-   it('should render a rating input and submit button', () => {
-     expect(screen.getByPlaceholderText('Your 🍅 Rating')).toBeInTheDocument()
+   it('should render a user rating, rating input, submit button if user is logged in', () => {
+     expect(screen.getByText('🍿 40%')).toBeInTheDocument()
+     expect(screen.getByPlaceholderText('Your 🍿 Rating')).toBeInTheDocument()
      expect(screen.getByRole('button', {name:'Submit Rating'})).toBeInTheDocument()
    })
 })

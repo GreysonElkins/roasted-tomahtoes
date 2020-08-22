@@ -169,6 +169,7 @@ class App extends Component {
     {page === "Login" && <Login login={this.login} error={this.state.error} />}
     {(page === "Home" || page === "SearchResults") && (
      <Main
+      isLoggedIn={this.state.isLoggedIn}
       movies={this.state.movies}
       showMoviePage={this.showMoviePage}
       error={this.state.error}
@@ -176,6 +177,7 @@ class App extends Component {
     )}
     {page === "MoviePage" && (
      <MoviePage
+      isLoggedIn={this.state.isLoggedIn}
       pageView={this.state.pageView}
       movie={this.state.singleMovie}
       error={this.state.error}

@@ -17,7 +17,7 @@ beforeEach(() => {
   )
 })
 
-  it('should render the logo', () => {
+  it('should render a header logo', () => {
     expect(screen.getByText('R🍅asted T🍅mahtoes')).toBeInTheDocument()
   })
 

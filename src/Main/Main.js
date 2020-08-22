@@ -5,7 +5,7 @@ import Error from '../Error/Error'
 import PropTypes from "prop-types"
 
 const Main = ({error, movies, showMoviePage, isLoggedIn}) => {
-  const movieCards = !movies ? 'No movies were found. Please try again.' : movies.map(movie => {
+  const movieCards = movies.map(movie => {
       return <MovieCard 
         movie={movie} 
         showMoviePage={showMoviePage}

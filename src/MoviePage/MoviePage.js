@@ -5,8 +5,6 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 
 const MoviePage = ({error, movie, isLoggedIn}) => {
-  // if (!movie) {
-  // }
   const altText = `${movie.title} movie poster`
   return (
     <section className="movie-page">

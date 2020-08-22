@@ -16,7 +16,7 @@ class Search extends Component {
   searchMovies = (event) => {
     event.preventDefault() 
     this.props.searchMovies(this.state.searchQuery)
-    this.input.value = ''
+    this.setState({searchQuery: ''})
   }
 
   render() {
@@ -28,6 +28,7 @@ class Search extends Component {
        type="text"
        name="search-bar"
        placeholder="Search by title, genre, year"
+       value={this.state.searchQuery}
        onChange={this.handleChange}
       />
       <button className="search-btn">Search</button>

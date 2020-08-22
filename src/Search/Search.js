@@ -12,10 +12,11 @@ class Search extends Component {
   handleChange = (event) => {
     this.setState({searchQuery: event.target.value})
   }
-
+  
   searchMovies = (event) => {
     event.preventDefault() 
     this.props.searchMovies(this.state.searchQuery)
+    this.refs.input.value = ''
   }
 
   render() {
@@ -24,7 +25,8 @@ class Search extends Component {
         <input 
           role='search'
           aria-label='search-input'
-          type="text" 
+          type="text"
+          ref='input' 
           name="search-bar" 
           placeholder="Search by title, genre, year" 
           onChange={this.handleChange}/>

@@ -29,7 +29,7 @@ class App extends Component {
  };
 
  showLoginPage = () => {
-  this.setState({ pageView: "Login" });
+  this.setState({ pageView: "Login", error: '' });
  };
 
  login = async (loginState) => {

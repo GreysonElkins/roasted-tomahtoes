@@ -23,7 +23,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className='login-box'>
+      <form className='login-box' onSubmit={this.login}>
         <input
           aria-label='email-input'
           type="text"
@@ -36,15 +36,15 @@ class Login extends Component {
           name="passwordInput"
           placeholder="Password" 
           onChange={this.handleChange}/>
-        {this.props.error && <Error error={this.props.error} />}
         <button 
           id='login-btn'
-          onClick={this.login}>
+          type='submit'>
           Login
         </button>
-        <h2 className='logo-login'>R🍅asted<br /> T🍅mahtoes</h2>
-        <h4 className='logo-message'>Rate Movies. View Trailers. Enjoy Cinema.</h4>
-      </div>
+          {this.props.error && <Error error={this.props.error} />}
+        {/* <h2 className='logo-login'>R🍅asted<br /> T🍅mahtoes</h2>
+        <h4 className='logo-message'>Rate Movies. View Trailers. Enjoy Cinema.</h4> */}
+      </form>
     )
   }
 

@@ -2,12 +2,16 @@
 
 .error-box {
   @include columnDisplay();
+  text-align: center;
+  h2 {
+    margin-top: 20px;
+  }
   p {
-    font-size: 1.4em;
-    margin: 5px;
+    font-size: 1em;
+    margin: 3px;
   }
   img {
-    height: 15em;
-    width: 25em;
+    height: 10em;
+    width: 20em;
   }
 }

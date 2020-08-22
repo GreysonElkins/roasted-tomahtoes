@@ -16,7 +16,7 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
      {isLoggedIn && <h3 className="user-rating">🍿 40%</h3>}
      <button className="movie-trailer-btn">Play Trailer</button>
      <article className="movie-information">
-      <b>Release Date:</b> {moment(movie.release_date).format("MM/DD/YYYY")} <br />
+      <b>Release Date:</b> {moment(movie.release_date).format("MMMM DD, YYYY")} <br />
       <b>Overview:</b> {movie.overview} <br />
       <b>Genre(s):</b> {movie.genres.join(", ")} <br />
       <b>Budget:</b> ${movie.budget} <br />

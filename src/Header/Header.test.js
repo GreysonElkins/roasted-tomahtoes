@@ -4,26 +4,20 @@ import '@testing-library/jest-dom'
 import Header from './Header'
 
 describe('Header', () => {
-let mockLogout, mockShowHomePage, mockShowLoginPage, mockSearchMovies
 beforeEach(() => {
-  mockLogout = jest.fn()
-  mockShowHomePage = jest.fn()
-  mockShowLoginPage = jest.fn()
-  mockSearchMovies = jest.fn()
-
   render(
    <Header
     isLoggedIn={false}
-    showLoginPage={mockShowLoginPage}
-    showHomePage={mockShowHomePage}
-    searchMovies={mockSearchMovies}
+    showLoginPage={jest.fn()}
+    showHomePage={jest.fn()}
+    searchMovies={jest.fn()}
     user={{id:1, name: 'John', email: 'john@turing.io'}}
-    logout={mockLogout}
+    logout={jest.fn()}
    />
   )
 })
 
-  it('should render the logo', () => {
+  it('should render a header logo', () => {
     expect(screen.getByText('R🍅asted T🍅mahtoes')).toBeInTheDocument()
   })
 
@@ -36,43 +30,4 @@ beforeEach(() => {
     expect(screen.getByRole("button", { name: "Your Ratings" })).toBeInTheDocument()
   })
   
-  it('should fire event when Search button is clicked', () => {
-      const searchBtn = screen.getByRole("button", { name: "🔍" })
-      expect(searchBtn).toBeInTheDocument()
-      fireEvent.click(searchBtn)
-      expect(mockSearchMovies).toBeCalledTimes(1);
-    })
-    
-  it('should fire event when Login button is clicked', () => {
-    const loginBtn = screen.getByRole("button", { name: "Login" })
-    expect(loginBtn).toBeInTheDocument()
-    fireEvent.click(loginBtn)
-    expect(mockShowLoginPage).toBeCalledTimes(1)
-  })
-
-  it("should fire event when Logout button is clicked", () => {
-    const logoutBtn = screen.getByRole("button", { name: "Logout" })
-    expect(logoutBtn).toBeInTheDocument();
-    fireEvent.click(logoutBtn);
-    expect(mockLogout).toBeCalledTimes(1);
-  })
-
-  it("should fire event when Home button is clicked", () => {
-   const homeBtn = screen.getByRole("button", { name: "Home" })
-   expect(homeBtn).toBeInTheDocument();
-   fireEvent.click(homeBtn);
-   expect(mockShowHomePage).toBeCalledTimes(1);
-  })
-
-  // it("should fire event when My Ratings button is clicked", () => {
-  //  const myRatingsBtn = screen.getByRole("button", { name: "My Ratings" });
-  //  expect(myRatingsBtn).toBeInTheDocument();
-  //  fireEvent.click(myRatingsBtn);
-
-  //  expect(mockShowRatingsPage).toBeCalledTimes(1);
-  // });
-
-
-
-
 })

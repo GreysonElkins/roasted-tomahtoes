@@ -10,7 +10,6 @@ const Header = ({isLoggedIn, showLoginPage, showHomePage, user, logout, searchMo
         <h1 className='logo'>R🍅asted<br/> T🍅mahtoes</h1>
         <Search 
           searchMovies={searchMovies}
-          id='search'
         />
         <Nav 
           isLoggedIn={isLoggedIn} 

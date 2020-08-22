@@ -1,5 +1,5 @@
 import React from 'react'
-import Error from '../Error/Error.scss'
+import Error from '../Error/Error'
 import './MoviePage.scss'
 import PropTypes from 'prop-types'
 
@@ -12,7 +12,7 @@ const MoviePage = ({error, movie}) => {
       <div className='movie-content'>
         <h1 className='movie-title'>{movie.title}</h1>
         <button className='movie-trailer-btn'>Play Trailer</button>
-        <p className='movie-information'>
+        <article className='movie-information'>
           <b>Average Rating:</b> 🍅 {movie.average_rating * 10}% <br />
           <b>Release Date:</b> {movie.release_date} <br /> 
           <b>Overview:</b> {movie.overview} <br /> 
@@ -21,14 +21,14 @@ const MoviePage = ({error, movie}) => {
           <b>Revenue:</b> ${movie.revenue} <br /> 
           <b>Runtime:</b> {movie.runtime} minutes<br /> 
           <b>Tagline:</b> {movie.tagline ? movie.tagline : 'None'}
-        </p>
+        </article>
         <span className='rating-input'>
           <input
             aria-label='rate-movie-input'
             type='number'
             name='user-rating-number'
             max='10'
-            min='0'
+            min='1'
             placeholder='Your 🍅 Rating'
             />
           <button className='submit-rating-btn'>Submit Rating</button>

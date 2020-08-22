@@ -8,7 +8,6 @@ describe('Search', () => {
  it('should have one button', () => {
   const {getByRole, getByText} = render(<Search />)
   expect(getByRole('button').id).toBe('search-btn')
-  // expect(getByText(' 🔍')).toBeInTheDocument()
  });
 
  it('should have input field', () => {

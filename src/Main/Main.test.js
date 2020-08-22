@@ -1,10 +1,10 @@
-import { render, getByPlaceholderText, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import React from "react";
 import Main from "./Main";
 import "@testing-library/jest-dom";
 
 describe("MoviePage", () => {
- let movies;
+ let movies, mockShowMoviePage
  beforeEach(() => {
   const movies = [
    {
@@ -25,15 +25,22 @@ describe("MoviePage", () => {
     overview: "Some overview",
     average_rating: 4,
    },
-  ];
+  ]
   render(
    <Main
     movies={movies}
     showMoviePage={jest.fn()}
     error={'No movies found'}
    />
-  );
- });
+  )
+ })
 
- it("should render a number of movies equal to the length of the array being passed in", () => {});
-});
+ it('should render a number of movies equal to the length of the array being passed in', () => {
+  const headingOne = screen.getByRole('heading', {name:'Donkey Kong'})
+  const headingTwo = screen.getByRole("heading", { name: "Wizard of Oz" })
+
+  expect(headingOne).toBeInTheDocument()
+  expect(headingTwo).toBeInTheDocument();
+ })
+
+})

@@ -3,12 +3,12 @@
 .login-box {
   @include columnDisplay();
   text-align: left;
-  margin-top: 20em;
+  margin-top: 12em;
 
   h2 {
     @include fontStyle();
     text-align: center;
-    margin-top: 120px;
+    // margin-top: 120px;
     margin-bottom: 5px;
   }
 

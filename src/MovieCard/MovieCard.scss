@@ -26,6 +26,13 @@
       text-align: center;
       margin: 0;
     }
+    h5 {
+      margin: 0 auto;
+    }
+    span {
+      @include rowDisplay();
+      width: 150px;
+    }
   }
 
 }

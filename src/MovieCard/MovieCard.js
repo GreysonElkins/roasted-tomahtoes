@@ -9,11 +9,14 @@ const MovieCard = (props) => {
     }; 
 
   return (
-    <article className='card' onClick={showMoviePage}>
+    <article className='card' onClick={showMoviePage} tabIndex='0'>
       <img src={props.movie.poster_path} alt={altText} />  
       <span className='card-info-box'>
-        <h4 className="rating">{`🍅 ${props.movie.average_rating * 10}%`}</h4>
         <h4 className='movie-title'>{props.movie.title}</h4>
+        <span className='ratings-box'>
+          <h5 className="rating">{`🍅 ${props.movie.average_rating * 10}%`} </h5>
+          {props.isLoggedIn === true && <h5 className='rating'>🍿 40%</h5>}
+        </span>
       </span>
     </article>
   )

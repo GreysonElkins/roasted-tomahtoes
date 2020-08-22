@@ -29,14 +29,15 @@ class App extends Component {
  };
 
  showLoginPage = () => {
-  this.setState({ pageView: "Login" });
+  this.setState({ pageView: "Login", error: '' });
  };
+
 
  showHomePage = async () => {
   try {
    const movies = await API.getData('movies');
    this.setState({ movies });
-   this.setState({ pageView: "Home" });
+   this.setState({ pageView: "Home", error: '' });
   } catch (error) {
    this.setState({ pageView: "Home", error: error });
   }
@@ -47,7 +48,7 @@ class App extends Component {
    const movie = await API.getData(`movies/${id}`);
    this.setState({ pageView: "MoviePage", singleMovie: movie, error: "" });
   } catch (error) {
-   this.setState({ pageView: "MoviePage", error: error });
+   this.setState({pageView: "MoviePage", error: error});
   }
  };
 
@@ -56,7 +57,8 @@ class App extends Component {
    this.setState({ pageView: "SearchResults" });
    return await API.getData('movies');
   } catch (error) {
-   this.setState({ pageView: "SearchResults", error: error });
+   this.setState({pageView: "SearchResults", error: "No movies were found. Please refine your search.",
+   });
   }
  };
 
@@ -73,16 +75,16 @@ class App extends Component {
      ? fullMovie.release_date.substring(0, 4)
      : null;
     if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
-     checkedMovies.push(fullMovie);
-     this.setState({ movies: checkedMovies });
+     checkedMovies.push(fullMovie)
+    }
+    if (checkedMovies.length > 0) {
+     this.setState({ movies: checkedMovies, error: "" });
+    } else {
+     this.setState({movies: checkedMovies, error: "No movies were found. Please refine your search."});
     }
    } catch (error) {
-    console.log(
-     "You've got the following error - you gotta program something to do with it bubbua:",
-     error.message
-    );
+    this.setState({error: "No movies were found. Please refine your search."});
    }
-   this.setState({ movies: checkedMovies });
   });
  };
 
@@ -138,6 +140,16 @@ class App extends Component {
 
  render() {
   const page = this.state.pageView;
+  const sortedMovies = this.state.movies.sort((a, b) => {
+   if (a.title < b.title) {
+    return -1;
+   }
+   if (a.title > b.title) {
+    return 1;
+   } else {
+    return 0;
+   }
+  });
   return (
    <div className="App">
     <Header
@@ -151,14 +163,15 @@ class App extends Component {
     {page === "Login" && <Login login={this.login} error={this.state.error} />}
     {(page === "Home" || page === "SearchResults") && (
      <Main
-      movies={this.state.movies}
+      isLoggedIn={this.state.isLoggedIn}
+      movies={sortedMovies}
       showMoviePage={this.showMoviePage}
       error={this.state.error}
      />
     )}
     {page === "MoviePage" && (
      <MoviePage
-      pageView={this.state.pageView}
+      isLoggedIn={this.state.isLoggedIn}
       movie={this.state.singleMovie}
       error={this.state.error}
      />

@@ -21,7 +21,7 @@ class Search extends Component {
 
   render() {
     return (
-      <div className='search-box'>
+      <form className='search-box' onSubmit={this.searchMovies}>
         <input 
           role='search'
           aria-label='search-input'
@@ -31,12 +31,11 @@ class Search extends Component {
           placeholder="Search by title, genre, year" 
           onChange={this.handleChange}/>
         <button 
-          id='search-btn'
-          onClick={this.searchMovies}
+          className='search-btn'
         >
           Search
         </button>
-      </div>
+      </form>
     )
   }
 }

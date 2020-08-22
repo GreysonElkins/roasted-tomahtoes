@@ -37,8 +37,8 @@ class Login extends Component {
           placeholder="Password" 
           onChange={this.handleChange}/>
         <button 
-          id='login-btn'
-          type='submit'>
+          className='login-btn'
+          >
           Login
         </button>
           {this.props.error && <Error error={this.props.error} />}

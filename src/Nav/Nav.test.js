@@ -36,7 +36,7 @@ describe('Nav', () => {
   });
 
   it('should greet the user after log in',() => {
-    expect(screen.getByText('Welcome, Charlie!')).toBeInTheDocument();
+    expect(screen.getByText('Welcome, John!')).toBeInTheDocument();
   })
 
 })

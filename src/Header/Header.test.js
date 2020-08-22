@@ -36,12 +36,7 @@ beforeEach(() => {
     expect(screen.getByRole("button", { name: "Your Ratings" })).toBeInTheDocument()
   })
   
-  it('should fire event when Search button is clicked', () => {
-      const searchBtn = screen.getByRole("button", { name: "🔍" })
-      expect(searchBtn).toBeInTheDocument()
-      fireEvent.click(searchBtn)
-      expect(mockSearchMovies).toBeCalledTimes(1);
-    })
+ 
     
   it('should fire event when Login button is clicked', () => {
     const loginBtn = screen.getByRole("button", { name: "Login" })

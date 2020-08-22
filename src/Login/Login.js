@@ -42,8 +42,8 @@ class Login extends Component {
           onClick={this.login}>
           Login
         </button>
-        <h2>R🍅asted<br /> T🍅mahtoes</h2>
-        <h4 className='login-message'>Rate Movies. View Trailers. Enjoy Cinema.</h4>
+        <h2 className='logo-login'>R🍅asted<br /> T🍅mahtoes</h2>
+        <h4 className='logo-message'>Rate Movies. View Trailers. Enjoy Cinema.</h4>
       </div>
     )
   }

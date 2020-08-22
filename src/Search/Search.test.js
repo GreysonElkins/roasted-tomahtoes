@@ -10,7 +10,7 @@ describe("Search", () => {
     mockSearchMovies = jest.fn();
     render(<Search searchMovies={mockSearchMovies} />);
   });
-
+  
   it("should have a search button button", () => {
     expect(screen.getByRole("button", { name: "Search" })).toBeInTheDocument();
   });

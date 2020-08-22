@@ -4,7 +4,7 @@ import Main from "./Main";
 import "@testing-library/jest-dom";
 
 describe("MoviePage", () => {
- let movies, mockShowMoviePage
+ let movies
  beforeEach(() => {
   const movies = [
    {

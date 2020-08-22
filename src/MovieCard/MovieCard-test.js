@@ -1,1 +1,0 @@
-// test for alt-text, class, id, src img, title, rating, headers

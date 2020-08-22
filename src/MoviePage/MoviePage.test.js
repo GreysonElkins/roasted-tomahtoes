@@ -37,7 +37,6 @@ describe('MoviePage', () => {
    it('should render information about the selected movie', () => {
     expect(screen.getByRole('img')).toBeInTheDocument()
     expect(screen.getByRole('heading', {name: 'Greenland'})).toBeInTheDocument();
-    expect(screen.getByRole('article')).toBeInTheDocument()
     screen.getByText((content, node) => {
      const hasText = (node) =>
       node.textContent ===

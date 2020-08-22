@@ -27,24 +27,23 @@ class API {
     }
   }
 
-  static postLogin = async (loginInfo) => {
+  static postData = async (info, id) => {
+    const path = id ? `/users/${id}/ratings` : 'login'
     try {
-      const response = await fetch(`${apiHead}/login`, {
-        method: "POST",
+      const response = await fetch(`${apiHead}/${path}`, {
+        method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: loginInfo.emailInput,
-          password: loginInfo.passwordInput,
-        }),
+        body: JSON.stringify(
+          info
+        )
       })
       return response
     } catch (error) {
       return error
     }
   }
-
 }
 
 export default API

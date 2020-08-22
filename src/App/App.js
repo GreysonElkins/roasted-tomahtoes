@@ -116,7 +116,7 @@ class App extends Component {
  }
 
  login = async (loginState) => {
-  const response = await API.postLogin(loginState);
+  const response = await API.postData(loginState);
   const user = await response.json();
   if (response.status === 201) {
    this.setState({

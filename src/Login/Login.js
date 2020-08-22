@@ -7,8 +7,8 @@ class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      emailInput: '',
-      passwordInput: ''
+      email: '',
+      password: ''
     }
   }
 
@@ -27,13 +27,13 @@ class Login extends Component {
         <input
           aria-label='email-input'
           type="text"
-          name="emailInput"
+          name="email"
           placeholder="Email" 
           onChange={this.handleChange}/>
         <input
           aria-label='password-input'
           type="password"
-          name="passwordInput"
+          name="password"
           placeholder="Password" 
           onChange={this.handleChange}/>
         {this.props.error && <Error error={this.props.error} />}

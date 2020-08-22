@@ -2,21 +2,6 @@ import React from 'react'
 
 const apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
 class API {
-  static getAllMovies = async () => {
-    const response = await fetch(`${apiHead}/movies`)
-    const data = await response.json()
-    return data.movies
-  }
-
-  static getAMovie = async id => {
-    try {
-      const response = await fetch(`${apiHead}/movies/${id}`)
-      const data = await response.json()
-      return data.movie
-    } catch (error) {
-      return error
-    }
-  }
 
   static getData = async location => {
     let response
@@ -32,7 +17,6 @@ class API {
   }
   
   static findRelevantData = location => {
-    debugger
     const apiPath = location.split('/') 
     if (apiPath.length === 3) {
       return apiPath[2]

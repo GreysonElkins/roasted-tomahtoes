@@ -22,7 +22,16 @@ class App extends Component {
  componentDidMount = async () => {
   try {
    const movies = await api.getAllMovies();
-   this.setState({ movies: movies });
+   const sortedMovies = movies.sort((a, b) => {
+     if (a.title <  b.title) {
+         return -1;
+     } if (a.title > b.title) {
+     return 1;
+   } else {
+     return 0;
+   }
+  })
+   this.setState({ movies: sortedMovies });
   } catch (error) {
    this.setState({ error: "Oops, something went wrong! 🙁 Please try again." });
   }

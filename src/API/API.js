@@ -1,14 +1,14 @@
 import React from 'react'
 
 const apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
-const api = {
-  getAllMovies: async () => {
+class API {
+  static getAllMovies = async () => {
     const response = await fetch(`${apiHead}/movies`)
     const data = await response.json()
     return data.movies
-  },
+  }
 
-  getAMovie: async id => {
+  static getAMovie = async id => {
     try {
       const response = await fetch(`${apiHead}/movies/${id}`)
       const data = await response.json()
@@ -16,20 +16,23 @@ const api = {
     } catch (error) {
       return error
     }
-  },
+  }
 
-  getData: async location => {
+  static getData = async location => {
     let response
-    let key = location ? movie : movies
+    let data
+    let key = this.findRelevantData(location)
     try {
       response = await fetch(`${apiHead}/${location}`)
+      data = await response.json()
     } catch (error) {
       return error
     }
     return data[key]
-  },
-
-  findRelevantData: location => {
+  }
+  
+  static findRelevantData = location => {
+    debugger
     const apiPath = location.split('/') 
     if (apiPath.length === 3) {
       return apiPath[2]
@@ -40,7 +43,7 @@ const api = {
     }
   }
 
-  postLogin: async (loginInfo) => {
+  static postLogin = async (loginInfo) => {
     try {
       const response = await fetch(`${apiHead}/login`, {
         method: "POST",
@@ -60,4 +63,4 @@ const api = {
 
 }
 
-export default api
+export default API

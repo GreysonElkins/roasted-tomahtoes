@@ -78,7 +78,7 @@ class App extends Component {
     }
    } catch (error) {
     console.log(
-     "You've got the following error - you gotta program something to do with it bubbua:",
+     "You've got the following error - you gotta program something to do with it bubba:",
      error.message
     );
    }

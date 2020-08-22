@@ -9,7 +9,7 @@ const MovieCard = (props) => {
     }; 
 
   return (
-    <article className='card' onClick={showMoviePage}>
+    <article className='card' onClick={showMoviePage} tabIndex='0'>
       <img src={props.movie.poster_path} alt={altText} />  
       <span className='card-info-box'>
         <h4 className="rating">{`🍅 ${props.movie.average_rating * 10}%`}</h4>

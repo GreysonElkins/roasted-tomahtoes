@@ -14,8 +14,8 @@ const Main = ({error, movies, showMoviePage}) => {
   return (
     <main>
       {error && <Error error={error} />}
-      {/* <h2 className='all-movies-header'>All Movies</h2><br/> */}
       <section className='gallery'>
+      {/* <h2 className='all-movies-header'>All Movies</h2><br/> */}
         {movieCards}
       </section>
     </main>

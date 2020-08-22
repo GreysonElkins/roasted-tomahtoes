@@ -18,16 +18,26 @@ const api = {
     }
   },
 
-  getMovies: async id => {
+  getData: async location => {
     let response
-    let key = id ? movie : movies
-    if (id) {
-      response = await fetch(`${apiHead}/movies/${id}`)
-    } else {
-      response = await fetch(`${apiHead}/movies`)
+    let key = location ? movie : movies
+    try {
+      response = await fetch(`${apiHead}/${location}`)
+    } catch (error) {
+      return error
     }
-
     return data[key]
+  },
+
+  findRelevantData: location => {
+    const apiPath = location.split('/') 
+    if (apiPath.length === 3) {
+      return apiPath[2]
+    } else if (apiPath.length === 2) {
+      return 'movie'
+    } else {
+      return 'movies'
+    }
   }
 
   postLogin: async (loginInfo) => {

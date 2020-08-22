@@ -27,17 +27,17 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
       <p className='movie-tagline'><b>Tagline:</b> {movie.tagline ? movie.tagline : "None"}</p>
      </article>
      {isLoggedIn === true && (
-      <span className="rating-input">
+      <form className="rating-input">
        <input
         aria-label="rate-movie-input"
         type="number"
         name="user-rating-number"
         max="10"
         min="1"
-        placeholder="Your 🍿 Rating"
+        placeholder="Your Rating 🍿"
        />
        <button className="submit-rating-btn">Submit Rating</button>
-      </span>
+      </form>
      )}
     </div>
    </section>

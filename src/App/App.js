@@ -68,7 +68,7 @@ class App extends Component {
    const movie = await api.getAMovie(id);
    this.setState({ pageView: "MoviePage", singleMovie: movie, error: "" });
   } catch (error) {
-   this.setState({pageView: "MoviePage", error: error.message});
+   this.setState({pageView: "MoviePage", error: error});
   }
  };
 

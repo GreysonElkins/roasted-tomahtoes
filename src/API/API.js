@@ -18,6 +18,18 @@ const api = {
     }
   },
 
+  getMovies: async id => {
+    let response
+    let key = id ? movie : movies
+    if (id) {
+      response = await fetch(`${apiHead}/movies/${id}`)
+    } else {
+      response = await fetch(`${apiHead}/movies`)
+    }
+
+    return data[key]
+  }
+
   postLogin: async (loginInfo) => {
     try {
       const response = await fetch(`${apiHead}/login`, {

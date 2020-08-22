@@ -29,5 +29,4 @@ beforeEach(() => {
     expect(screen.getAllByRole('button')).toHaveLength(5)
     expect(screen.getByRole("button", { name: "Your Ratings" })).toBeInTheDocument()
   })
-  
 })

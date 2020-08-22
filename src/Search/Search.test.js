@@ -1,18 +1,30 @@
-import { render, getByPlaceholderText } from '@testing-library/react'
-import React from 'react'
-import Search from './Search'
-import '@testing-library/jest-dom'
+import { screen, render, fireEvent } from "@testing-library/react"
+import React from "react"
+import Search from "./Search"
+import "@testing-library/jest-dom"
 
-describe('Search', () => {
+describe("Search", () => {
+  let mockSearchMovies;
 
- it('should have one button', () => {
-  const {getByRole, getByText} = render(<Search />)
-  expect(getByRole('button').id).toBe('search-btn')
- });
+  beforeEach(() => {
+    mockSearchMovies = jest.fn();
+    render(<Search searchMovies={mockSearchMovies} />);
+  });
+  
+  it("should have a search button button", () => {
+    expect(screen.getByRole("button", { name: "Search" })).toBeInTheDocument();
+  });
 
- it('should have input field', () => {
-  const { getByPlaceholderText } = render(<Search />)
-  expect(getByPlaceholderText('Search by title, genre, year')).toBeInTheDocument()
- });
+  it("should have input field", () => {
+    expect(screen.getByRole("search")).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText("Search by title, genre, year")
+    ).toBeInTheDocument();
+  });
 
+  it("Should run the search function when the search button is clicked", () => {
+    const searchButton = screen.getByRole('button', {name: 'Search'})
+    fireEvent.click(searchButton, {target: {value: "Birdman"}})
+    expect(mockSearchMovies).toBeCalledTimes(1);
+  });
 });

@@ -22,6 +22,7 @@ class Search extends Component {
     return (
       <div className='search-box'>
         <input 
+          role='search'
           aria-label='search-input'
           type="text" 
           name="search-bar" 
@@ -31,7 +32,7 @@ class Search extends Component {
           id='search-btn'
           onClick={this.searchMovies}
         >
-          🔍
+          Search
         </button>
       </div>
     )

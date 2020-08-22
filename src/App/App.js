@@ -50,7 +50,7 @@ class App extends Component {
  };
 
  logout = () => {
-  this.setState({ pageView: "Home", isLoggedIn: false, user: "" });
+  this.setState({ pageView: "Home", isLoggedIn: false, user: "", error: ''});
  };
 
  showHomePage = async () => {
@@ -68,8 +68,7 @@ class App extends Component {
    const movie = await api.getAMovie(id);
    this.setState({ pageView: "MoviePage", singleMovie: movie, error: "" });
   } catch (error) {
-   this.setState({pageView: "MoviePage", error: "No movie was found. Please try again.",
-   });
+   this.setState({pageView: "MoviePage", error: "No movie was found. Please try again."});
   }
  };
 
@@ -96,7 +95,9 @@ class App extends Component {
      ? fullMovie.release_date.substring(0, 4)
      : null;
     if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
-     checkedMovies.push(fullMovie);
+     checkedMovies.push(fullMovie)
+    }
+    if (checkedMovies.length > 0) {
      this.setState({ movies: checkedMovies, error: "" });
     } else {
      this.setState({movies: checkedMovies, error: "No movies were found. Please refine your search."});

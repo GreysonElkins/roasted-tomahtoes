@@ -31,6 +31,7 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
        <input
         aria-label="rate-movie-input"
         type="number"
+        ref='input'
         name="user-rating-number"
         max="10"
         min="1"

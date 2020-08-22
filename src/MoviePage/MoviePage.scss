@@ -19,17 +19,27 @@
   width: 30em;
   margin: 20px;
   text-align: left;
-  line-height: 25px;
+  line-height: 20px;
   h1 {
     @include fontStyle();
     font-size: 40px;
     text-align: center;
     text-shadow: 2px 2px 0px #000;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+  }
+  p {
+    margin: 3px;
+  }
+  .ratings-box {
+    @include rowDisplay();
+      width: 150px;
+      margin: 3px;
+    h3 {
+      margin: 0 auto;
+    }
   }
   button {
-    border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     background: red;
     @include fontStyle();
     font-size: 1.25em;
@@ -43,7 +53,7 @@
 
 .rating-input {
  @include columnDisplay();
-  margin-bottom: 20px;
+  margin: 10px;
   input {
     @include input();
     border-radius: 4px;

@@ -1,5 +1,17 @@
 @import '../styles/_variables.scss';
 
-.error-text {
-  margin: 5px;
+.error-box {
+  @include columnDisplay();
+  text-align: center;
+  h2 {
+    margin-top: 20px;
+  }
+  p {
+    font-size: 1em;
+    margin: 3px;
+  }
+  img {
+    height: 10em;
+    width: 20em;
+  }
 }

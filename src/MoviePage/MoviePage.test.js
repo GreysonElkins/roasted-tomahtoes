@@ -1,4 +1,4 @@
-import { render, getByPlaceholderText, getByText, getByRole, screen } from "@testing-library/react";
+import { render, getByPlaceholderText, getByText, getByRole, screen, within } from "@testing-library/react";
 import React from "react";
 import MoviePage from "./MoviePage";
 import "@testing-library/jest-dom";
@@ -29,6 +29,7 @@ describe('MoviePage', () => {
       pageView={jest.fn()}
       movie={movie}
       error={'No movie found. Please try again.'}
+      isLoggedIn={true}
      />
     )
   })
@@ -36,15 +37,31 @@ describe('MoviePage', () => {
    it('should render information about the selected movie', () => {
     expect(screen.getByRole('img')).toBeInTheDocument()
     expect(screen.getByRole('heading', {name: 'Greenland'})).toBeInTheDocument();
-    expect(screen.getByRole('article')).toBeInTheDocument()
+    screen.getByText((content, node) => {
+     const hasText = (node) =>
+      node.textContent ===
+      ('Overview: A detached married couple must get their son and themselves to safety after being randomly selected to enter an underground bunker, as a massive object from space threatens to destroy the world in less than 48 hours.' &&
+       "Genre(s): Action, Science Fiction, Thriller" &&
+       "Release Date: July 29, 2020" &&
+       "Budget: $0" &&
+       "Revenue: $0" &&
+       "Runtime: 119 minutes" &&
+       "Tagline: None");
+     const nodeHasText = hasText(node);
+     const childrenDontHaveText = Array.from(node.children).every(
+      (child) => !hasText(child)
+     )
+     return nodeHasText && childrenDontHaveText;
+    })
    }) 
 
    it('should display a button to play trailer', () => {
      expect(screen.getByRole('button', {name: 'Play Trailer'})).toBeInTheDocument()
    })
 
-   it('should render a rating input and submit button', () => {
-     expect(screen.getByPlaceholderText('Your 🍅 Rating')).toBeInTheDocument()
+   it('should render a user rating, rating input, submit button if user is logged in', () => {
+     expect(screen.getByText('🍿 40%')).toBeInTheDocument()
+     expect(screen.getByPlaceholderText('Your 🍿 Rating')).toBeInTheDocument()
      expect(screen.getByRole('button', {name:'Submit Rating'})).toBeInTheDocument()
    })
 })

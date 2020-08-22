@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, getAllByText } from "@testing-library/react";
 import React from "react";
 import Main from "./Main";
 import "@testing-library/jest-dom";
@@ -40,6 +40,11 @@ describe("MoviePage", () => {
 
   expect(headingOne).toBeInTheDocument()
   expect(headingTwo).toBeInTheDocument();
+ })
+
+ it('should render an error message if no movies are found', () => {
+    const {getByText} = render(<Main />)
+    expect(getByText('No movies were found. Please try again.'))
  })
 
 })

@@ -2,14 +2,13 @@
 
 nav {
   @include columnDisplay();
-  height: 100%;
   margin-right: 40px;
 
   h3 {
     font-family: $bangersFont;
     font-size: 30px;
     text-shadow: 2px 2px #000;
-    margin: 0;
+    margin: 0 auto;
   }
 
   .button-box {
@@ -18,8 +17,8 @@ nav {
       background: $slateBlack;
       border-radius: 6px;
       @include fontStyle();
-      font-size: 1.5em;
-      margin: 3px;
+      font-size: 1.3em;
+      margin: 5px 3px;
         &:hover {
           box-shadow: 1px 1px 35px rgb(255, 255, 255);
         }

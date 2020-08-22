@@ -3,7 +3,7 @@ import Error from '../Error/Error'
 import './MoviePage.scss'
 import PropTypes from 'prop-types'
 
-const MoviePage = ({error, movie}) => {
+const MoviePage = ({error, movie, isLoggedIn}) => {
   const altText = `${movie.title} movie poster`
   return (
     <section className="movie-page">
@@ -22,6 +22,7 @@ const MoviePage = ({error, movie}) => {
           <b>Runtime:</b> {movie.runtime} minutes<br /> 
           <b>Tagline:</b> {movie.tagline ? movie.tagline : 'None'}
         </article>
+        {isLoggedIn === true && 
         <span className='rating-input'>
           <input
             aria-label='rate-movie-input'
@@ -33,6 +34,7 @@ const MoviePage = ({error, movie}) => {
             />
           <button className='submit-rating-btn'>Submit Rating</button>
         </span>
+        }
       </div>  
     </section>
   ) 

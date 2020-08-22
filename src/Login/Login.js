@@ -23,29 +23,27 @@ class Login extends Component {
 
   render() {
     return (
-      <form className='login-box' onSubmit={this.login}>
-        <input
-          aria-label='email-input'
-          type="text"
-          name="emailInput"
-          placeholder="Email" 
-          onChange={this.handleChange}/>
-        <input
-          aria-label='password-input'
-          type="password"
-          name="passwordInput"
-          placeholder="Password" 
-          onChange={this.handleChange}/>
-        <button 
-          className='login-btn'
-          >
-          Login
-        </button>
-          {this.props.error && <Error error={this.props.error} />}
-        {/* <h2 className='logo-login'>R🍅asted<br /> T🍅mahtoes</h2>
+     <form className="login-box" onSubmit={this.login}>
+      <input
+       aria-label="email-input"
+       type="text"
+       name="emailInput"
+       placeholder="Email"
+       onChange={this.handleChange}
+      />
+      <input
+       aria-label="password-input"
+       type="password"
+       name="passwordInput"
+       placeholder="Password"
+       onChange={this.handleChange}
+      />
+      <button className="login-btn">Login</button>
+      {this.props.error && <Error error={this.props.error} />}
+      {/* <h2 className='logo-login'>R🍅asted<br /> T🍅mahtoes</h2>
         <h4 className='logo-message'>Rate Movies. View Trailers. Enjoy Cinema.</h4> */}
-      </form>
-    )
+     </form>
+    );
   }
 
 }

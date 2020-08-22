@@ -16,27 +16,23 @@ class Search extends Component {
   searchMovies = (event) => {
     event.preventDefault() 
     this.props.searchMovies(this.state.searchQuery)
-    this.refs.input.value = ''
+    this.input.value = ''
   }
 
   render() {
     return (
-      <form className='search-box' onSubmit={this.searchMovies}>
-        <input 
-          role='search'
-          aria-label='search-input'
-          type="text"
-          ref='input' 
-          name="search-bar" 
-          placeholder="Search by title, genre, year" 
-          onChange={this.handleChange}/>
-        <button 
-          className='search-btn'
-        >
-          Search
-        </button>
-      </form>
-    )
+     <form className="search-box" onSubmit={this.searchMovies}>
+      <input
+       role="search"
+       aria-label="search-input"
+       type="text"
+       name="search-bar"
+       placeholder="Search by title, genre, year"
+       onChange={this.handleChange}
+      />
+      <button className="search-btn">Search</button>
+     </form>
+    );
   }
 }
 

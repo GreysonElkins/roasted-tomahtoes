@@ -12,13 +12,15 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
     <img src={movie.poster_path} alt={altText} />
     <div className="movie-content">
      <h1 className="movie-title">{movie.title}</h1>
-     <h3 className="avg-rating">🍅 {movie.average_rating * 10}% </h3>
-     {isLoggedIn && <h3 className="user-rating">🍿 40%</h3>}
+     <span className='ratings-box'>
+      <h3 className="avg-rating">🍅 {movie.average_rating * 10}% </h3>
+      {isLoggedIn && <h3 className="user-rating">🍿 40%</h3>}
+     </span>
      <button className="movie-trailer-btn">Play Trailer</button>
      <article className="movie-information">
-      <b>Release Date:</b> {moment(movie.release_date).format("MMMM DD, YYYY")} <br />
       <b>Overview:</b> {movie.overview} <br />
       <b>Genre(s):</b> {movie.genres.join(", ")} <br />
+      <b>Release Date:</b> {moment(movie.release_date).format("MMMM DD, YYYY")} <br />
       <b>Budget:</b> ${movie.budget} <br />
       <b>Revenue:</b> ${movie.revenue} <br />
       <b>Runtime:</b> {movie.runtime} minutes<br />
@@ -32,7 +34,7 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
         name="user-rating-number"
         max="10"
         min="1"
-        placeholder="Your 🍅 Rating"
+        placeholder="Your 🍿 Rating"
        />
        <button className="submit-rating-btn">Submit Rating</button>
       </span>

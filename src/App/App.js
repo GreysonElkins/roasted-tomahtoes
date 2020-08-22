@@ -24,7 +24,7 @@ class App extends Component {
    const movies = await api.getAllMovies();
    const sortedMovies = movies.sort((a, b) => {
      if (a.title <  b.title) {
-         return -1;
+      return -1;
      } if (a.title > b.title) {
      return 1;
    } else {
@@ -83,7 +83,16 @@ class App extends Component {
      : null;
     if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
      checkedMovies.push(fullMovie);
-     this.setState({ movies: checkedMovies });
+      const sortedMovies = checkedMovies.sort((a, b) => {
+        if (a.title < b.title) {
+          return -1;
+        } if (a.title > b.title) {
+          return 1;
+        } else {
+          return 0;
+        }
+      })
+     this.setState({ movies: sortedMovies });
     }
    } catch (error) {
     console.log(

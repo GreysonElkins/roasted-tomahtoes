@@ -18,13 +18,13 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
      </span>
      <button className="movie-trailer-btn">Play Trailer</button>
      <article className="movie-information">
-      <b>Overview:</b> {movie.overview} <br />
-      <b>Genre(s):</b> {movie.genres.join(", ")} <br />
-      <b>Release Date:</b> {moment(movie.release_date).format("MMMM DD, YYYY")} <br />
-      <b>Budget:</b> ${movie.budget} <br />
-      <b>Revenue:</b> ${movie.revenue} <br />
-      <b>Runtime:</b> {movie.runtime} minutes<br />
-      <b>Tagline:</b> {movie.tagline ? movie.tagline : "None"}
+      <p className='movie-overview'><b>Overview:</b> {movie.overview}</p>
+      <p className='movie-genre'><b>Genre(s):</b> {movie.genres.join(", ")}</p>
+      <p className='movie-release-date'><b>Release Date:</b> {moment(movie.release_date).format("MMMM DD, YYYY")}</p>
+      <p className='movie-budget'><b>Budget:</b> ${movie.budget}</p>
+      <p className='movie-revenue'><b>Revenue:</b> ${movie.revenue}</p>
+      <p className='movie-runtime'><b>Runtime:</b> {movie.runtime} minutes</p>
+      <p className='movie-tagline'><b>Tagline:</b> {movie.tagline ? movie.tagline : "None"}</p>
      </article>
      {isLoggedIn === true && (
       <span className="rating-input">

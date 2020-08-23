@@ -40,12 +40,11 @@ class Login extends Component {
       />
       <button className="login-btn">Login</button>
       {this.props.error && <Error error={this.props.error} />}
-      {/* <h2 className='logo-login'>R🍅asted<br /> T🍅mahtoes</h2>
-        <h4 className='logo-message'>Rate Movies. View Trailers. Enjoy Cinema.</h4> */}
+      <h2 className='logo-login'>R🍅asted<br /> T🍅mahtoes</h2>
+        <h4 className='logo-message'>Rate Movies. View Trailers. Enjoy Cinema.</h4>
      </form>
     );
   }
-
 }
 
 export default Login

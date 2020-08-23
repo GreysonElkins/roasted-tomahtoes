@@ -32,7 +32,6 @@ class App extends Component {
   this.setState({ pageView: "Login", error: '' });
  };
 
-
  showHomePage = async () => {
   try {
    const movies = await API.getData('movies');

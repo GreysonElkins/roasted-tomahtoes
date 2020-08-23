@@ -17,9 +17,7 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
       <h3 className="avg-rating">
        🍅 {(movie.average_rating * 10).toFixed(0)}%
       </h3>
-      {isLoggedIn && <Rating userRating={
-        movie.userRating ? movie.userRating : 0
-      }/>}
+      {isLoggedIn && <Rating userRating={movie.userRating}/>}
      </span>
      <button className="movie-trailer-btn">Play Trailer</button>
      <article className="movie-information">

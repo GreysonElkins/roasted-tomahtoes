@@ -19,7 +19,7 @@ const MovieCard = (props) => {
        {`🍅 ${(props.movie.average_rating * 10).toFixed(0)}%`}{" "}
       </h5>
       {props.isLoggedIn === true && <Rating userRating={
-        props.movie.userRating ? props.movie.userRating : 0 
+        props.movie.userRating ? props.movie.userRating : {rating: 0}
       }/>}
      </span>
     </span>

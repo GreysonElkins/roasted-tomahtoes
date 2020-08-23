@@ -14,7 +14,7 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
     <div className="movie-content">
      <h1 className="movie-title">{movie.title}</h1>
      <span className='ratings-box'>
-      <h3 className="avg-rating">🍅 {movie.average_rating * 10}% </h3>
+      <h3 className="avg-rating">🍅 {(movie.average_rating * 10).toFixed(0)}% </h3>
       {isLoggedIn && <Rating/>}
      </span>
      <button className="movie-trailer-btn">Play Trailer</button>

@@ -1,6 +1,18 @@
 @import '../styles/_variables.scss';
 
-.star-image {
-  width: 1.5em;
-  // height: 2em;
+
+.stars-box {
+  @include rowDisplay();
+  margin: 0 auto;
+  img {
+    border: none;
+    width: 1em;
+    height: 1em;
+    margin: 0 1px;
+    box-shadow: none;
+    &:hover {
+      box-shadow: none;
+      
+    }
+  }
 }

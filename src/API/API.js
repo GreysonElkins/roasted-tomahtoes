@@ -1,41 +1,90 @@
 import React from 'react'
 
 const apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
-const api = {
-  getAllMovies: async () => {
-    const response = await fetch(`${apiHead}/movies`)
-    const data = await response.json()
-    return data.movies
-  },
+class API {
+  // constructor() {
+    // this.apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
+    // can I not use this in static methods because the API wasn't constructed?
+  // }
 
-  getAMovie: async id => {
+  static getData = async location => {
+    let response
+    let data
+    let key = this.findRelevantData(location)
     try {
-      const response = await fetch(`${apiHead}/movies/${id}`)
-      const data = await response.json()
-      return data.movie
+      response = await fetch(`${apiHead}/${location}`)
+      data = await response.json()
     } catch (error) {
       return error
     }
-  },
-
-  postLogin: async (loginInfo) => {
-    try {
-      const response = await fetch(`${apiHead}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: loginInfo.emailInput,
-          password: loginInfo.passwordInput,
-        }),
-      })
-      return response
-    } catch (error) {
-      return error
+    return data[key]
+    //should this get moved into the `try` block?
+  }
+  
+  static findRelevantData = location => {
+    const acceptableData = ['movies', 'movie', 'videos', 'ratings']
+    const apiPath = location.split('/') 
+    if (apiPath.length === 3 
+      && acceptableData.includes(apiPath[2])) {
+      return apiPath[2]
+    } else if (apiPath.length === 2 
+      && acceptableData.includes('movies')) {
+      return 'movie'
+    } else if (location.includes('movies')) {
+      return 'movies'
+    } else {
+      throw new Error("A bad path was provided for fetching data")
     }
   }
 
+  static postData = async (info, id) => {
+    if (this.postInfoIsOk(info, id)) {
+      const path = id ? `users/${id}/ratings` : 'login'
+      try {
+        const response = await fetch(`${apiHead}/${path}`, {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(
+            info
+          )
+        })
+        return response
+      } catch (error) {
+        return error
+      }
+    }
+  }
+
+  static postInfoIsOk = (info, id) => {
+    const acceptableUserInfo = ['email', 'password']
+    const acceptableRatingInfo = ['rating', 'movie_id']
+    const infoValues = Object.keys(info)
+    if (id && infoValues.every(
+      value=> acceptableRatingInfo.includes(value))) {
+      return true
+    } else if (infoValues.every(
+      value => acceptableUserInfo.includes(value))) {
+      return true
+    } else {
+      throw new Error ('Something is wrong with the data for POST')
+    }
+  }
+
+  static deleteData = async (userID, ratingID) => {
+    try {
+      const response = await fetch(`${apiHead}/users/${userID}/ratings/${ratingID}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })  
+      return response
+    } catch(error) {
+      return error
+    }
+  }
 }
 
-export default api
+export default API

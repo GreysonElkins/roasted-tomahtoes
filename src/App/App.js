@@ -4,7 +4,7 @@ import Header from '../Header/Header'
 import Login from '../Login/Login'
 import Main from '../Main/Main'
 import MoviePage from '../MoviePage/MoviePage'
-import api from '../API/API'
+import API from '../API/API'
 
 class App extends Component {
  constructor() {
@@ -21,7 +21,7 @@ class App extends Component {
 
  componentDidMount = async () => {
   try {
-   const movies = await api.getAllMovies();
+   const movies = await API.getData('movies');
    this.setState({ movies: movies });
   } catch (error) {
    this.setState({ error: "Oops, something went wrong! 🙁 Please try again." });
@@ -32,30 +32,9 @@ class App extends Component {
   this.setState({ pageView: "Login", error: '' });
  };
 
- login = async (loginState) => {
-  const response = await api.postLogin(loginState);
-  const user = await response.json();
-  if (response.status === 201) {
-   this.setState({
-    pageView: "Home",
-    isLoggedIn: true,
-    user: user.user,
-    error: "",
-   });
-  } else {
-   this.setState({
-    error: "Incorrect email or password. Please try again.",
-   });
-  }
- };
-
- logout = () => {
-  this.setState({ pageView: "Home", isLoggedIn: false, user: "", error: ''});
- };
-
  showHomePage = async () => {
   try {
-   const movies = await api.getAllMovies();
+   const movies = await API.getData('movies');
    this.setState({ movies });
    this.setState({ pageView: "Home", error: '' });
   } catch (error) {
@@ -65,7 +44,7 @@ class App extends Component {
 
  showMoviePage = async (id) => {
   try {
-   const movie = await api.getAMovie(id);
+   const movie = await API.getData(`movies/${id}`);
    this.setState({ pageView: "MoviePage", singleMovie: movie, error: "" });
   } catch (error) {
    this.setState({pageView: "MoviePage", error: error});
@@ -75,7 +54,7 @@ class App extends Component {
  showSearchResultsPage = async () => {
   try {
    this.setState({ pageView: "SearchResults" });
-   return await api.getAllMovies();
+   return await API.getData('movies');
   } catch (error) {
    this.setState({pageView: "SearchResults", error: "No movies were found. Please refine your search.",
    });
@@ -90,7 +69,7 @@ class App extends Component {
   await allMovies.forEach(async (movie) => {
    let fullMovie;
    try {
-    fullMovie = await api.getAMovie(movie.id);
+    fullMovie = await API.getData(`movies/${movie.id}`);
     fullMovie.year = (await fullMovie)
      ? fullMovie.release_date.substring(0, 4)
      : null;
@@ -125,7 +104,7 @@ class App extends Component {
  changeDataToLowerCase(data) {
   let args = data;
   let changedData = [];
-  args.map((info) => {
+  args.forEach((info) => {
    if (isNaN(info) && Array.isArray(info) === false) {
     changedData.push(info.toLowerCase());
    } else if (Array.isArray(info)) {
@@ -136,6 +115,27 @@ class App extends Component {
   });
   return changedData;
  }
+
+ login = async (loginState) => {
+  const response = await API.postData(loginState);
+  const user = await response.json();
+  if (response.status === 201) {
+   this.setState({
+    pageView: "Home",
+    isLoggedIn: true,
+    user: user.user,
+    error: "",
+   });
+  } else {
+   this.setState({
+    error: "Incorrect email or password. Please try again.",
+   });
+  }
+ };
+
+ logout = () => {
+  this.setState({ pageView: "Home", isLoggedIn: false, user: "" });
+ };
 
  render() {
   const page = this.state.pageView;

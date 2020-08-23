@@ -4,6 +4,7 @@
 .stars-box {
   @include rowDisplay();
   margin: 0 auto;
+  width: 70px;
   img {
     border: none;
     width: 1em;
@@ -12,7 +13,7 @@
     box-shadow: none;
     &:hover {
       box-shadow: none;
-      
+
     }
   }
 }

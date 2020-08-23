@@ -3,6 +3,7 @@ import Error from '../Error/Error'
 import './MoviePage.scss'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import Rating from '../Rating/Rating'
 
 const MoviePage = ({error, movie, isLoggedIn}) => {
   const altText = `${movie.title} movie poster`
@@ -14,7 +15,7 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
      <h1 className="movie-title">{movie.title}</h1>
      <span className='ratings-box'>
       <h3 className="avg-rating">🍅 {movie.average_rating * 10}% </h3>
-      {isLoggedIn && <h3 className="user-rating">🍿 40%</h3>}
+      {isLoggedIn && <Rating/>}
      </span>
      <button className="movie-trailer-btn">Play Trailer</button>
      <article className="movie-information">
@@ -26,7 +27,7 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
       <p className='movie-runtime'><b>Runtime:</b> {movie.runtime} minutes</p>
       <p className='movie-tagline'><b>Tagline:</b> {movie.tagline ? movie.tagline : "None"}</p>
      </article>
-     {isLoggedIn === true && (
+     {/* {isLoggedIn === true && (
       <form className="rating-input">
        <input
         aria-label="rate-movie-input"
@@ -38,7 +39,7 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
        />
        <button className="submit-rating-btn">Submit Rating</button>
       </form>
-     )}
+     )} */}
     </div>
    </section>
   ); 

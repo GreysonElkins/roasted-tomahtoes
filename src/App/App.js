@@ -16,7 +16,6 @@ class App extends Component {
    pageView: "Home",
    user: { id: "", email: "", name: "" },
    singleMovie: {},
-   userRatings: []
   };
  }
 
@@ -121,13 +120,13 @@ class App extends Component {
   const response = await API.postData(loginState);
   const user = await response.json();
   if (response.status === 201) {
-    const userRatings = await API.getData(`users/${user.user.id}/ratings`)
+    API.getData(`users/${user.user.id}/ratings`)
+      .then(data => this.sortMovieRatings(data))
     this.setState({
       pageView: "Home",
       isLoggedIn: true,
       user: user.user,
       error: "",
-      userRatings: userRatings
     });
   } else {
    this.setState({
@@ -140,9 +139,18 @@ class App extends Component {
   this.setState({ pageView: "Home", isLoggedIn: false, user: "" });
  };
 
-//  sortMovieRatings = () => {
-//   this.state.userRatings 
-//  }
+ sortMovieRatings = (ratings) => {
+  let moviesWithRatings = this.state.movies
+  ratings.forEach(rating => {
+    moviesWithRatings.forEach(movie => {
+      movie.userRating = movie.id === rating.movie_id ? rating : 0;
+      // if (movie.id === rating.movie_id) movie.userRating = rating
+    })
+  })
+  this.setState({
+    // userRatings: ratings, 
+    movies: moviesWithRatings})
+ };
 
  render() {
   const page = this.state.pageView;
@@ -173,7 +181,7 @@ class App extends Component {
       movies={sortedMovies}
       showMoviePage={this.showMoviePage}
       error={this.state.error}
-      userRatings={this.state.userRatings}
+      // userRatings={this.state.userRatings}
      />
     )}
     {page === "MoviePage" && (

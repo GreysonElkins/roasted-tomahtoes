@@ -1,22 +1,21 @@
 import Star from '../Star/Star'
 import React, {Component} from 'react'
 
-class Rating extends Component {
-  constructor(props) {
-    super(props)
+const Rating = (props) =>  {
+
+  const makeStars = (props) => {
+    let stars = [];
+    for (let i = 0; i < 5; i++) {
+      stars.push(<Star userRating={props.userRating} starValue={i + 1}/>);
+    }
+    return stars
   }
 
-  render() {
-    return (
-     <div className="stars-box">
-      <Star />
-      <Star /> 
-      <Star /> 
-      <Star /> 
-      <Star />
+  return (
+    <div className="stars-box">
+      {makeStars(props)}
      </div>
-    );
-  }
+  )
 }
 
 export default Rating

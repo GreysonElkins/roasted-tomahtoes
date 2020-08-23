@@ -10,17 +10,27 @@ const MovieCard = (props) => {
     }; 
 
   return (
-    <article className='card' onClick={showMoviePage} tabIndex='0'>
-      <img src={props.movie.poster_path} alt={altText} />  
-      <span className='card-info-box'>
-        <h4 className='movie-title'>{props.movie.title}</h4>
-        <span className='ratings-box'>
-          <h5 className="rating">{`🍅 ${(props.movie.average_rating * 10).toFixed(0)}%`} </h5>
-          {props.isLoggedIn === true && <Rating />}
-        </span>
-      </span>
-    </article>
-  )
+   <article className="card" onClick={showMoviePage} tabIndex="0">
+    <img className="poster" src={props.movie.poster_path} alt={altText} />
+    <span className="card-info-box">
+     <h4 className="movie-title">{props.movie.title}</h4>
+     <span className="ratings-box">
+      <h5 className="rating">
+       {`🍅 ${(props.movie.average_rating * 10).toFixed(0)}%`}{" "}
+      </h5>
+      {props.isLoggedIn === true && (
+       <div className="stars-box">
+        <Rating />
+        <Rating />
+        <Rating />
+        <Rating />
+        <Rating />
+       </div>
+      )}
+     </span>
+    </span>
+   </article>
+  );
 }
 
 export default MovieCard

@@ -10,7 +10,8 @@ class Rating extends Component {
   }
 
   setStar = () => {
-    this.setState({imgSrc: selectedStar})
+    this.state.imgSrc === emptyStar ?  this.setState({imgSrc: selectedStar}) : this.setState({imgSrc: emptyStar});
+   
     // // const hover = id => {this.setStar(id)}
     // let stars = []
     // for (let i = 0; i < 5; i++) {

@@ -16,6 +16,7 @@ class App extends Component {
    pageView: "Home",
    user: { id: "", email: "", name: "" },
    singleMovie: {},
+   userRatings: []
   };
  }
 
@@ -120,12 +121,14 @@ class App extends Component {
   const response = await API.postData(loginState);
   const user = await response.json();
   if (response.status === 201) {
-   this.setState({
-    pageView: "Home",
-    isLoggedIn: true,
-    user: user.user,
-    error: "",
-   });
+    const userRatings = await API.getData(`users/${user.user.id}/ratings`)
+    this.setState({
+      pageView: "Home",
+      isLoggedIn: true,
+      user: user.user,
+      error: "",
+      userRatings: userRatings
+    });
   } else {
    this.setState({
     error: "Incorrect email or password. Please try again.",
@@ -136,6 +139,10 @@ class App extends Component {
  logout = () => {
   this.setState({ pageView: "Home", isLoggedIn: false, user: "" });
  };
+
+//  sortMovieRatings = () => {
+//   this.state.userRatings 
+//  }
 
  render() {
   const page = this.state.pageView;
@@ -166,6 +173,7 @@ class App extends Component {
       movies={sortedMovies}
       showMoviePage={this.showMoviePage}
       error={this.state.error}
+      userRatings={this.state.userRatings}
      />
     )}
     {page === "MoviePage" && (

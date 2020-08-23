@@ -34,19 +34,23 @@ class App extends Component {
 
  showHomePage = async () => {
   try {
-   const movies = await API.getData('movies');
-   this.setState({ movies });
-   this.setState({ pageView: "Home", error: '' });
+    let ratings
+    const movies = await API.getData('movies')
+    if(this.state.isLoggedIn === true) {
+      ratings = await API.getData(`users/${this.state.user.id}/ratings`)
+    }
+    this.setState({ movies })
+    ratings && this.sortMovieRatings(ratings)
+    this.setState({ pageView: "Home", error: '' });
   } catch (error) {
    this.setState({ pageView: "Home", error: error });
   }
  };
 
  showMoviePage = async (id) => {
-   debugger
   try {
     const movie = await API.getData(`movies/${id}`);
-    movie.userRating = this.findMovieUserRating(id).userRating
+    movie.userRating = this.findMovieUserRating(id)
     this.setState({ pageView: "MoviePage", singleMovie: movie, error: "" });
   } catch (error) {
    this.setState({pageView: "MoviePage", error: error});
@@ -54,9 +58,10 @@ class App extends Component {
  };
 
  findMovieUserRating = (movie_id) => {
-    return this.state.movies.find(movieFromLibrary => {
-      if (movieFromLibrary.id === movie_id) return movieFromLibrary.userRating   
+   let result = this.state.movies.find(movieFromLibrary => {
+      if (movieFromLibrary.id === movie_id) return movieFromLibrary
     })    
+    return result.userRating
  }
 
  showSearchResultsPage = async () => {

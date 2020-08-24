@@ -37,16 +37,21 @@ class App extends Component {
   try {
     const movies = await API.getData('movies')
     if(this.state.isLoggedIn === true) {
-      await API.getData(`users/${this.state.user.id}/ratings`)
-        .then(ratings => this.setState({userRatings: ratings}))
+      API.getData(`users/${this.state.user.id}/ratings`)
+        .then(ratings => {
+        this.convertRatingsToStarValues(ratings)
+        this.setState({
+          userRatings: ratings, 
+          pageView: "Home",
+          error: ''
+        })})
     } else {
-      this.setState({ movies })
+      this.setState({ pageView: "Home", error: '', movies })
     }
-    this.setState({ pageView: "Home", error: '' });
   } catch (error) {
    this.setState({ pageView: "Home", error: error });
   }
- };
+ }
 
  showMoviePage = async (id) => {
   try {
@@ -59,15 +64,12 @@ class App extends Component {
  };
 
  findMovieUserRating = (movie_id) => {
-   return this.state.userRatings.find(rating => {
-      if (rating.id === movie_id) {
-        return rating
-      } else {
-        return { rating: 0}
-      }
-    })    
+   debugger
+    let rating = this.state.userRatings.find(rating => rating.movie_id === movie_id) 
+    return rating ? rating : { rating: 0 }
+  }  
     // this is doubled in Main.js
- }
+ 
 
  showSearchResultsPage = async () => {
   try {
@@ -157,8 +159,7 @@ class App extends Component {
  };
 
  convertRatingsToStarValues = (ratings) => {
-  return ratings.forEach((rating) => rating.rating = rating.rating / 2
-  )
+  ratings.forEach((rating) => rating.rating = rating.rating / 2)
  }
 
  logout = () => {

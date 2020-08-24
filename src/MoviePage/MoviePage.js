@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import Trailer from '../Trailer/Trailer'
 import Rating from '../Rating/Rating'
+import Overview from '../Overview/Overview'
 
 const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) => {
   const altText = `${movie.title} movie poster`
@@ -29,10 +30,7 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) 
               movie_id={movie.id}/>}
           </span>
       <article className="movie-information">
-        <span className='overview-box'>
-          <p className='movie-overview' >{movie.overview}</p>
-          <button className='moreLessOverview'>More Info</button>
-        </span>
+       <Overview movie={movie}/>
         <p className="movie-genre">
        <b>Genre(s):</b> {movie.genres.join(", ")}
       </p>

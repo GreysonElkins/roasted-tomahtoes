@@ -143,11 +143,7 @@ class App extends Component {
           user: user.user,
           error: "",
         })
-      );
-  
-    // this.setState({
-      
-    // });
+      )
   } else {
    this.setState({
     error: "Incorrect email or password. Please try again.",
@@ -163,14 +159,27 @@ class App extends Component {
   let moviesWithRatings = this.state.movies
   ratings.forEach(rating => {
     moviesWithRatings.forEach(movie => {
-      // movie.userRating = {rating: 0}
       if (movie.id === rating.movie_id) movie.userRating = rating
     })
   })
   return moviesWithRatings
-  // this.setState({
-  //   movies: moviesWithRatings})
  };
+
+ rateMovie = (rating, id) => {
+  let movie = this.state.movies.find(movie => movie.id === id)
+  let user = this.state.user.id
+  if (movie.userRating !== undefined) {
+    this.deleteRating(user, movie.userRating.id)
+    .then(() => API.postData({rating: rating, movie_id: movie.id}, user))
+  }
+  else {
+    API.postData({rating: rating, movie_id: movie.id}, user)
+  }
+ }
+
+ deleteRating = (userID, ratingID) => {
+   return API.deleteData(userID, ratingID)
+ }
 
  render() {
   const page = this.state.pageView;
@@ -201,7 +210,6 @@ class App extends Component {
       movies={sortedMovies}
       showMoviePage={this.showMoviePage}
       error={this.state.error}
-      // userRatings={this.state.userRatings}
      />
     )}
     {page === "MoviePage" && (
@@ -209,6 +217,7 @@ class App extends Component {
       isLoggedIn={this.state.isLoggedIn}
       movie={this.state.singleMovie}
       error={this.state.error}
+      // rateMovie={}
      />
     )}
    </div>

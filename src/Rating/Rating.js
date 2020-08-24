@@ -27,7 +27,6 @@ class Rating extends Component {
           starValue={i + 1}
           starHover={() => {this.starPreview(i + 1)}}
           starLeave={() => {
-            debugger
             this.starPreview(this.state.userRating)
           }}
         />

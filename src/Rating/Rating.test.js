@@ -9,7 +9,7 @@ describe('Rating', () => {
   beforeEach(() => {
     mockRateMovie = jest.fn()
     render(<Rating 
-      userRating={5}
+      userRating={{rating: 5}}
       rateMovie={mockRateMovie}
       movie_id={149}
       />)

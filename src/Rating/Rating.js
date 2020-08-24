@@ -54,6 +54,6 @@ export default Rating
 Rating.propTypes = {
   movie_id: PropTypes.number,
   rateMovie: PropTypes.func,
-  userRating: PropTypes.number
+  userRating: PropTypes.object
 
 }

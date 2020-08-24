@@ -13,7 +13,7 @@ describe('MovieCard', () => {
      <MovieCard
       showMoviePage={mockShowMoviePage}
       isLoggedIn={true}
-      userRating={5}
+      userRating={{rating: 5}}
       movie={{
        id: 1,
        title: "Donkey Kong",

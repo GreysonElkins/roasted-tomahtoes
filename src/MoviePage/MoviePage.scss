@@ -4,7 +4,6 @@
   @include columnDisplay();
   margin-top: 100px;
   width: 100%;
-
   h1 {
     @include fontStyle();
     font-size: 40px;
@@ -22,6 +21,7 @@
     }
   }
 }
+
 .all-movie-info {
   @include rowDisplay();
   img {
@@ -31,6 +31,7 @@
     height: 30em;
   }
 }
+
 .movie-content {
   @include columnDisplay();
   justify-content: flex-start;
@@ -38,14 +39,14 @@
   line-height: 20px;
   text-align: left;
   width: 30em;
-    .movie-overview {
-      height: 45px;
-      overflow: hidden;
-    }
-    p {
-      margin: 5px auto;
-      text-align: left;
-    }
+  p {
+    margin: 5px auto;
+    text-align: left;
+  }
+  .movie-overview {
+    height: 65px;
+    overflow: hidden;
+  }
 
   button {
     border-radius: 6px;
@@ -55,7 +56,10 @@
     font-size: .75em;
     // margin: 5px auto;
     &:hover {
-      box-shadow: 1px 1px 10px rgb(255, 255, 255);
+      background: $tomahtoRed;
+      color: white;
+      border: none;
     }
+
   }
 }

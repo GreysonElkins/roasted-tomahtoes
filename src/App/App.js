@@ -34,13 +34,13 @@ class App extends Component {
 
  showHomePage = async () => {
   try {
-    let ratings
     const movies = await API.getData('movies')
     if(this.state.isLoggedIn === true) {
-      ratings = await API.getData(`users/${this.state.user.id}/ratings`)
+      await API.getData(`users/${this.state.user.id}/ratings`)
+        .then(ratings => this.sortMovieRatings(ratings))
+    } else {
+      this.setState({ movies })
     }
-    this.setState({ movies })
-    ratings && this.sortMovieRatings(ratings)
     this.setState({ pageView: "Home", error: '' });
   } catch (error) {
    this.setState({ pageView: "Home", error: error });
@@ -134,13 +134,20 @@ class App extends Component {
   const user = await response.json();
   if (response.status === 201) {
     API.getData(`users/${user.user.id}/ratings`)
-      .then(data => this.sortMovieRatings(data))
-    this.setState({
-      pageView: "Home",
-      isLoggedIn: true,
-      user: user.user,
-      error: "",
-    });
+      .then((data) => this.sortMovieRatings(data))
+      .then((ratedMovies) =>
+        this.setState({
+          movies: ratedMovies,
+          pageView: "Home",
+          isLoggedIn: true,
+          user: user.user,
+          error: "",
+        })
+      );
+  
+    // this.setState({
+      
+    // });
   } else {
    this.setState({
     error: "Incorrect email or password. Please try again.",
@@ -160,8 +167,9 @@ class App extends Component {
       if (movie.id === rating.movie_id) movie.userRating = rating
     })
   })
-  this.setState({
-    movies: moviesWithRatings})
+  return moviesWithRatings
+  // this.setState({
+  //   movies: moviesWithRatings})
  };
 
  render() {

@@ -5,6 +5,7 @@ import Login from '../Login/Login'
 import Main from '../Main/Main'
 import MoviePage from '../MoviePage/MoviePage'
 import API from '../API/API'
+import Helmet from 'react-helmet'
 
 class App extends Component {
  constructor() {
@@ -206,6 +207,10 @@ class App extends Component {
   });
   return (
     <div className="App">
+      <Helmet>
+        <title>Roasted Tomahtoes</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
+      </Helmet>
       <Header
         isLoggedIn={this.state.isLoggedIn}
         logout={this.logout}

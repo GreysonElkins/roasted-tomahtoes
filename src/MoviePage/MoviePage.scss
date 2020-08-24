@@ -44,8 +44,11 @@
     text-align: left;
   }
   .movie-overview {
-    height: 65px;
+    height: 60px;
+    width: 420px;
+    text-justify: inter-character;
     overflow: hidden;
+    margin: 0px;
   }
 
   button {

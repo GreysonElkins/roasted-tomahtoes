@@ -16,6 +16,7 @@ class App extends Component {
    pageView: "Home",
    user: { id: "", email: "", name: "" },
    singleMovie: {},
+   singleMovieUserRating: {},
    userRatings: []
   };
  }
@@ -56,15 +57,14 @@ class App extends Component {
  showMoviePage = async (id) => {
   try {
     const movie = await API.getData(`movies/${id}`);
-    movie.userRating = this.findMovieUserRating(id)
-    this.setState({ pageView: "MoviePage", singleMovie: movie, error: "" });
+    const rating = this.findMovieUserRating(id)
+    this.setState({ pageView: "MoviePage", singleMovie: movie, singleMovieUserRating: rating, error: "" });
   } catch (error) {
    this.setState({pageView: "MoviePage", error: error});
   }
  };
 
  findMovieUserRating = (movie_id) => {
-   debugger
     let rating = this.state.userRatings.find(rating => rating.movie_id === movie_id) 
     return rating ? rating : { rating: 0 }
   }  
@@ -175,6 +175,12 @@ class App extends Component {
       .then((ratings) => {
         this.convertRatingsToStarValues(ratings)
         this.setState({userRatings: ratings})
+          if (this.state.singleMovieUserRating !== {}) {
+            const newRating = this.findMovieUserRating(
+              this.state.singleMovieUserRating.movie_id
+              )
+              this.setState({singleMovieUserRating: newRating})
+          }
       })    
  }
 
@@ -225,7 +231,7 @@ class App extends Component {
           movie={this.state.singleMovie}
           error={this.state.error}
           rateMovie={this.rateMovie}
-          userRating={this.state.singleMovie.userRating}
+          userRating={this.state.singleMovieUserRating}
         />
       )}
     </div>

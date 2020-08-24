@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import Rating from '../Rating/Rating'
 
-const MoviePage = ({error, movie, isLoggedIn, rateMovie}) => {
+const MoviePage = ({error, movie, isLoggedIn, rateMovie, userRating}) => {
   const altText = `${movie.title} movie poster`
   return (
    <section className="movie-page">
@@ -19,7 +19,7 @@ const MoviePage = ({error, movie, isLoggedIn, rateMovie}) => {
       </h3>
       {isLoggedIn 
         && <Rating 
-          userRating={movie.userRating} 
+          userRating={userRating} 
           rateMovie={rateMovie}
           movie_id={movie.id}/>}
      </span>

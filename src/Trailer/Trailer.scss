@@ -1,3 +1,13 @@
+@import '../styles/_variables.scss';
+
+.trailerList {
+  @include rowDisplay();
+  justify-content: initial;
+  overflow: scroll;
+  width: 400px;
+  height: 220px;
+}
+
 .movie-trailer {
   border: 1px solid red;
   margin: 5px;

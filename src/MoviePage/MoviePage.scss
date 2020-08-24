@@ -1,11 +1,29 @@
 @import '../styles/_variables.scss';
 
-
 .movie-page {
-  @include rowDisplay();
-  margin-top: 145px;
+  @include columnDisplay();
+  margin-top: 100px;
   width: 100%;
 
+  h1 {
+    @include fontStyle();
+    font-size: 40px;
+    text-align: center;
+    text-shadow: 2px 2px 0px #000;
+    margin-bottom: 5px;
+    line-height: 35px;
+  }
+  .ratings-box {
+    @include rowDisplay();
+      width: 150px;
+      margin-bottom: 10px;
+    h3 {
+      margin: 0 auto;
+    }
+  }
+}
+.all-movie-info {
+  @include rowDisplay();
   img {
     border: 2px solid rgb(139, 138, 138);    
     margin-right: 20px;
@@ -13,35 +31,19 @@
     height: 30em;
   }
 }
-
 .movie-content {
   @include columnDisplay();
-  width: 30em;
-  margin: 20px;
-  text-align: left;
+  justify-content: flex-start;
+  align-items: initial;
   line-height: 20px;
-  h1 {
-    @include fontStyle();
-    font-size: 40px;
-    text-align: center;
-    text-shadow: 2px 2px 0px #000;
-    margin-bottom: 10px;
-  }
+  text-align: left;
+  width: 30em;
   p {
-    margin: 5px;
-    text-align: center;
-  }
-  .movie-overview {
+    margin: 5px auto;
     text-align: left;
   }
-  .ratings-box {
-    @include rowDisplay();
-      width: 150px;
-      margin: 3px;
-    h3 {
-      margin: 0 auto;
-    }
-  }
+
+ 
   button {
     border-radius: 6px;
     background: red;
@@ -53,15 +55,4 @@
       box-shadow: 1px 1px 15px rgb(255, 255, 255);
     }
   }
-}
-
-.rating-input {
- @include columnDisplay();
-  margin: 10px;
-  input {
-    @include input();
-    border-radius: 4px;
-    width: 125px;
-  }
-  
 }

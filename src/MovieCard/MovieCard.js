@@ -40,5 +40,7 @@ export default MovieCard
 
 MovieCard.propTypes = {
   movie: PropTypes.object,
-  showMoviePage: PropTypes.func
+  showMoviePage: PropTypes.func,
+  userRating: PropTypes.object,
+  isLoggedIn: PropTypes.bool
 }

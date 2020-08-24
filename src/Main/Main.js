@@ -5,13 +5,16 @@ import Error from '../Error/Error'
 import PropTypes from "prop-types"
 
 const Main = ({error, movies, showMoviePage, isLoggedIn, rateMovie, userRatings}) => {
+  const matchUserRatingWithMovie = (movie) => {
+    if (userRatings.some((rating) => rating.movie_id === movie.id)) {
+      return userRatings.find((rating) => rating.movie_id === movie.id);
+    } else {
+      return { rating: 0 };
+    }
+  };
+  
   const movieCards = movies.map(movie => {
-      let matchingUserRating  
-      if (userRatings.some(rating => rating.movie_id === movie.id)) {
-        matchingUserRating = userRatings.find(rating => rating.movie_id === movie.id)
-      } else {
-        matchingUserRating = { rating: 0}
-      }
+      let matchingUserRating = matchUserRatingWithMovie(movie)
       
       return <MovieCard 
         movie={movie} 
@@ -21,6 +24,7 @@ const Main = ({error, movies, showMoviePage, isLoggedIn, rateMovie, userRatings}
         userRating={matchingUserRating}
     />
   })
+
   return (
     <main>
       {error && <Error error={error} />}

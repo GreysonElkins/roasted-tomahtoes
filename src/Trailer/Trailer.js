@@ -5,8 +5,9 @@ import PropTypes from "prop-types";
 
 function Trailer({trailer}) {
     return(
-      <div className='movie-trailer'>
+      <div className='movie-trailer' alt='movie trailer'>
         <ReactPlayer
+          alt='movie trailer'
           width={350}
           height={200}
           url={`www.youtube.com/watch?v=${trailer.key}`}

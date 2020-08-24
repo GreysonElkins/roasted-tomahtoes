@@ -25,7 +25,6 @@ describe('Rating', () => {
     fireEvent.click(stars[0])
     expect(mockRateMovie).toHaveBeenCalledTimes(1)
     expect(mockRateMovie).toHaveBeenCalledWith({movie_id:149, rating: 2})
-    
   })
 
 

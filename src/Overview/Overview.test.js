@@ -36,17 +36,11 @@ describe('Overview', () => {
     expect(overview).toBeInTheDocument()
   })
 
-  it('should render a button', () => {
+  it('should render a toggle button', () => {
     const displayOverviewBtn = screen.getByRole('button')
     expect(displayOverviewBtn).toBeInTheDocument()
   })
 
-  it('should fire an event when button is clicked', () => {
-    const displayOverviewBtn = screen.getByRole('button')
-    
-    fireEvent.click(displayOverviewBtn)
-    expect(toggleOverview).toBeCalledTimes(1)
-  })
 
 
 })

@@ -41,19 +41,4 @@
     margin: 5px auto;
     text-align: left;
   }
-
-
-  button {
-    border-radius: 6px;
-    border: none;
-    background: transparent;
-    color: white;
-    font-size: .75em;
-    &:hover {
-      background: $tomahtoRed;
-      color: white;
-      border: none;
-    }
-
-  }
 }

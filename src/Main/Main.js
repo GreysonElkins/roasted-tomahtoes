@@ -4,13 +4,21 @@ import './Main.scss'
 import Error from '../Error/Error'
 import PropTypes from "prop-types"
 
-const Main = ({error, movies, showMoviePage, isLoggedIn, rateMovie}) => {
+const Main = ({error, movies, showMoviePage, isLoggedIn, rateMovie, userRatings}) => {
   const movieCards = movies.map(movie => {
+      let matchingUserRating  
+      if (userRatings.some(rating => rating.movie_id === movie.id)) {
+        matchingUserRating = userRatings.find(rating => rating.movie_id === movie.id)
+      } else {
+        matchingUserRating = { rating: 0}
+      }
+      
       return <MovieCard 
         movie={movie} 
         showMoviePage={showMoviePage}
         isLoggedIn={isLoggedIn}
         rateMovie={rateMovie}
+        userRating={matchingUserRating}
     />
   })
   return (

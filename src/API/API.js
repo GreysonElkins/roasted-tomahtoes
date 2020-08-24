@@ -17,19 +17,9 @@ class API {
     } catch (error) {
       return error
     }
-    let cleanedData = this.dataCleaner(data[key], key)
-    return cleanedData
+    return data[key]
     //should this get moved into the `try` block?
   }
-
-  static dataCleaner = (dataToClean, key) => {
-    if (key === 'movies') {
-      dataToClean.forEach(datum => {
-        datum.userRating = {rating: 0}
-      })
-    } 
-    return dataToClean
-  } 
   
   static findRelevantData = location => {
     const acceptableData = ['movies', 'movie', 'videos', 'ratings']

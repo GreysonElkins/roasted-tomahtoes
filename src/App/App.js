@@ -16,6 +16,7 @@ class App extends Component {
    pageView: "Home",
    user: { id: "", email: "", name: "" },
    singleMovie: {},
+   userRatings: []
   };
  }
 
@@ -37,7 +38,7 @@ class App extends Component {
     const movies = await API.getData('movies')
     if(this.state.isLoggedIn === true) {
       await API.getData(`users/${this.state.user.id}/ratings`)
-        .then(ratings => this.sortMovieRatings(ratings))
+        .then(ratings => this.setState({userRatings: ratings}))
     } else {
       this.setState({ movies })
     }
@@ -58,10 +59,14 @@ class App extends Component {
  };
 
  findMovieUserRating = (movie_id) => {
-   let result = this.state.movies.find(movieFromLibrary => {
-      if (movieFromLibrary.id === movie_id) return movieFromLibrary
+   return this.state.userRatings.find(rating => {
+      if (rating.id === movie_id) {
+        return rating
+      } else {
+        return { rating: 0}
+      }
     })    
-    return result.userRating
+    // this is doubled in Main.js
  }
 
  showSearchResultsPage = async () => {
@@ -134,16 +139,16 @@ class App extends Component {
   const user = await response.json();
   if (response.status === 201) {
     API.getData(`users/${user.user.id}/ratings`)
-      .then((data) => this.sortMovieRatings(data))
-      .then((ratedMovies) =>
-        this.setState({
-          movies: ratedMovies,
-          pageView: "Home",
-          isLoggedIn: true,
-          user: user.user,
-          error: "",
-        })
-      )
+      .then((ratings) => {
+        this.convertRatingsToStarValues(ratings)
+        this.setState({userRatings: ratings})
+      })
+      .then(() => {this.setState({
+        pageView: "Home",
+        isLoggedIn: true,
+        user: user.user,
+        error: "",
+      })})
   } else {
    this.setState({
     error: "Incorrect email or password. Please try again.",
@@ -151,37 +156,30 @@ class App extends Component {
   }
  };
 
+ convertRatingsToStarValues = (ratings) => {
+  return ratings.forEach((rating) => rating.rating = rating.rating / 2
+  )
+ }
+
  logout = () => {
   this.setState({ pageView: "Home", isLoggedIn: false, user: "" });
  };
 
- sortMovieRatings = (ratings) => {
-  let moviesWithRatings = this.state.movies
-  ratings.forEach(rating => {
-    moviesWithRatings.forEach(movie => {
-      if (movie.id === rating.movie_id) {
-        rating.rating = rating.rating / 2
-        movie.userRating = rating
-      }
-    })
-  })
-  // this.setState({movies: moviesWithRatings})
-  return moviesWithRatings
- };
-
  rateMovie = async (rating) => {
-  const movie = this.state.movies.find(movie => movie.id === rating.movie_id)
+  const oldRating = this.state.userRatings.find(oldRating => oldRating.movie_id === rating.movie_id)
   const user = this.state.user.id
-    this.removeRating(movie.userRating.rating, user, movie.userRating.id)
+    this.removeRating(oldRating, user)
       .then(() => API.postData(rating, user))
       .then(() => API.getData(`users/${this.state.user.id}/ratings`))
-      .then((ratings) => this.sortMovieRatings(ratings))
-      .then((ratedMovies) => this.setState({movies: ratedMovies}) )    
+      .then((ratings) => {
+        this.convertRatingsToStarValues(ratings)
+        this.setState({userRatings: ratings})
+      })    
  }
 
- removeRating = async (movieRating, user, movie) => {
-   if (movieRating > 0) {
-    return await API.deleteData(user, movie)
+ removeRating = async (oldRating, user) => {
+   if (oldRating) {
+    return await API.deleteData(user, oldRating.id)
    } 
  }
 
@@ -198,34 +196,38 @@ class App extends Component {
    }
   });
   return (
-   <div className="App">
-    <Header
-     isLoggedIn={this.state.isLoggedIn}
-     logout={this.logout}
-     showLoginPage={this.showLoginPage}
-     showHomePage={this.showHomePage}
-     searchMovies={this.searchMovies}
-     user={this.state.user}
-    />
-    {page === "Login" && <Login login={this.login} error={this.state.error} />}
-    {(page === "Home" || page === "SearchResults") && (
-     <Main
-      isLoggedIn={this.state.isLoggedIn}
-      movies={sortedMovies}
-      showMoviePage={this.showMoviePage}
-      rateMovie={this.rateMovie}
-      error={this.state.error}
-     />
-    )}
-    {page === "MoviePage" && (
-     <MoviePage
-      isLoggedIn={this.state.isLoggedIn}
-      movie={this.state.singleMovie}
-      error={this.state.error}
-      rateMovie={this.rateMovie}
-     />
-    )}
-   </div>
+    <div className="App">
+      <Header
+        isLoggedIn={this.state.isLoggedIn}
+        logout={this.logout}
+        showLoginPage={this.showLoginPage}
+        showHomePage={this.showHomePage}
+        searchMovies={this.searchMovies}
+        user={this.state.user}
+      />
+      {page === "Login" && (
+        <Login login={this.login} error={this.state.error} />
+      )}
+      {(page === "Home" || page === "SearchResults") && (
+        <Main
+          isLoggedIn={this.state.isLoggedIn}
+          movies={sortedMovies}
+          showMoviePage={this.showMoviePage}
+          rateMovie={this.rateMovie}
+          userRatings={this.state.userRatings}
+          error={this.state.error}
+        />
+      )}
+      {page === "MoviePage" && (
+        <MoviePage
+          isLoggedIn={this.state.isLoggedIn}
+          movie={this.state.singleMovie}
+          error={this.state.error}
+          rateMovie={this.rateMovie}
+          userRating={this.state.singleMovie.userRating}
+        />
+      )}
+    </div>
   );
  }
 }

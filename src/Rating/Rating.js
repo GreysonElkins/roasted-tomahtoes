@@ -5,25 +5,8 @@ class Rating extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      // userRating: this.findRating(props),
-      userRating: this.props.userRating.rating,
-      // currentValue: this.findRating(props),
-      currentValue: this.props.userRating.rating,
-    };
-  }
-
-  componentDidMount = () => {
-    this.setState({
-      userRating: this.props.userRating.rating, 
-      currentValue: this.props.userRating.rating
-    })
-  }
-
-  findRating = (props) => {
-    if (props.userRating) {
-      return props.userRating.rating
-    } else {
-      return 0
+      rating: props.userRating.rating,
+      currentValue: props.userRating.rating,
     }
   }
 
@@ -35,7 +18,7 @@ class Rating extends Component {
           starCount={numberOfStars}
           starValue={i + 1}
           starHover={() => {this.starPreview(i + 1)}}
-          starLeave={() => {this.starPreview(this.state.userRating)}}
+          starLeave={() => {this.starPreview(this.state.rating)}}
           rateMovie={() => {
             this.props.rateMovie({
               rating: (i + 1) * 2, 

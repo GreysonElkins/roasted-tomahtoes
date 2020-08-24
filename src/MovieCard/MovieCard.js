@@ -25,7 +25,7 @@ const MovieCard = (props) => {
           </h5>
           {props.isLoggedIn === true && (
             <Rating
-              userRating={props.movie.userRating}
+              userRating={props.userRating}
               rateMovie={props.rateMovie}
               movie_id={props.movie.id}
             />

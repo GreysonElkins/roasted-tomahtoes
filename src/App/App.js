@@ -161,7 +161,6 @@ class App extends Component {
     })
   })
   this.setState({
-    // userRatings: ratings, 
     movies: moviesWithRatings})
  };
 

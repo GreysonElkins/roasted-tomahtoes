@@ -5,14 +5,17 @@ import emptyStar from '../images/empty-star.png'
 
 const Star = (props) => {
   let starSource = emptyStar
-  if (props.userRating.rating >= props.starValue) {
+  if (props.starCount 
+  && props.starCount >= props.starValue) {
     starSource = selectedStar
   } 
   return (
     <img 
+      starValue={props.starValue}
       className='star-image' 
       alt='empty star icon' 
       src={starSource} 
+      onMouseEnter={props.starHover}
     />
   )
   // }

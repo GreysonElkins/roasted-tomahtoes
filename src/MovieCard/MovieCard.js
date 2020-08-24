@@ -21,7 +21,7 @@ const MovieCard = (props) => {
         <h4 className="movie-title">{props.movie.title}</h4>
         <span className="ratings-box">
           <h5 className="rating">
-            {`🍅 ${(props.movie.average_rating * 10).toFixed(0)}%`}
+            {`🍅 ${(props.movie.average_rating * 10).toFixed(0)}%`} <br />
           </h5>
           {props.isLoggedIn === true && (
             <Rating

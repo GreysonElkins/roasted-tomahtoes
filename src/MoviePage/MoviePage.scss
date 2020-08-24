@@ -2,7 +2,7 @@
 
 .movie-page {
   @include columnDisplay();
-  margin-top: 100px;
+  margin-top: 170px;
   width: 100%;
   h1 {
     @include fontStyle();
@@ -13,7 +13,7 @@
     line-height: 35px;
   }
   .ratings-box {
-    @include rowDisplay();
+    @include columnDisplay();
       width: 150px;
       margin-bottom: 10px;
     h3 {

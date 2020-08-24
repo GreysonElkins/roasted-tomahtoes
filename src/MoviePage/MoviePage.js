@@ -15,19 +15,19 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) 
   })
   return (
     <section className="movie-page">
-     <h1 className="movie-title">{movie.title}</h1>
-      <span className='ratings-box'>
-        <h3 className="avg-rating">🍅 {(movie.average_rating * 10).toFixed(0)}% </h3>
-        {isLoggedIn 
-        && <Rating 
-          userRating={userRating} 
-          rateMovie={rateMovie}
-          movie_id={movie.id}/>}
-      </span>
     {error && <Error error={error} />}
     <section className='all-movie-info'>
       <img src={movie.poster_path} alt={altText} />
       <div className="movie-content">
+        <h1 className="movie-title">{movie.title}</h1>
+          <span className='ratings-box'>
+            <h3 className="avg-rating">🍅 {(movie.average_rating * 10).toFixed(0)}% </h3>
+            {isLoggedIn 
+            && <Rating 
+              userRating={userRating} 
+              rateMovie={rateMovie}
+              movie_id={movie.id}/>}
+          </span>
       <article className="movie-information">
         <span className='overview-box'>
           <p className='movie-overview'>{movie.overview}</p>

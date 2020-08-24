@@ -1,6 +1,7 @@
 import React from 'react'
 import './MovieCard.scss'
 import PropTypes from "prop-types"
+import Rating from '../Rating/Rating'
 
 const MovieCard = (props) => {
   const altText = `${props.movie.title} movie poster`
@@ -9,17 +10,30 @@ const MovieCard = (props) => {
     }; 
 
   return (
-    <article className='card' onClick={showMoviePage} tabIndex='0'>
-      <img src={props.movie.poster_path} alt={altText} />  
-      <span className='card-info-box'>
-        <h4 className='movie-title'>{props.movie.title}</h4>
-        <span className='ratings-box'>
-          <h5 className="rating">{`🍅 ${(props.movie.average_rating * 10).toFixed(0)}%`} </h5>
-          {props.isLoggedIn === true && <h5 className='rating'>🍿 40%</h5>}
+    <article className="card" tabIndex="0">
+      <img
+        className="poster"
+        onClick={showMoviePage}
+        src={props.movie.poster_path}
+        alt={altText}
+      />
+      <span className="card-info-box">
+        <h4 className="movie-title">{props.movie.title}</h4>
+        <span className="ratings-box">
+          <h5 className="rating">
+            {`🍅 ${(props.movie.average_rating * 10).toFixed(0)}%`}
+          </h5>
+          {props.isLoggedIn === true && (
+            <Rating
+              userRating={props.userRating}
+              rateMovie={props.rateMovie}
+              movie_id={props.movie.id}
+            />
+          )}
         </span>
       </span>
     </article>
-  )
+  );
 }
 
 export default MovieCard

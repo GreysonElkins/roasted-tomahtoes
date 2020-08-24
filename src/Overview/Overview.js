@@ -17,7 +17,7 @@ class Overview extends Component {
     return(
       <span className='overview-box'>
           <p className={this.state.collapsed ? 'movie-overview' : 'movie-overview-exp'}>{this.props.movie.overview}</p>
-          <button className='moreLessOverview' onClick={this.toggleOverview}>{this.state.collapsed ? 'Show More' : 'Show Less'}</button>
+          <button className='overview-display-btn' onClick={this.toggleOverview}>{this.state.collapsed ? 'Show More' : 'Show Less'}</button>
       </span>
 
     )

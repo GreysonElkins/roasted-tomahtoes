@@ -62,5 +62,8 @@ export default MoviePage
 
 MoviePage.propTypes = {
   movie: PropTypes.object,
-  error: PropTypes.string
+  trailers: PropTypes.array,
+  error: PropTypes.string,
+  rateMovie: PropTypes.func,
+  userRating: PropTypes.object
 }

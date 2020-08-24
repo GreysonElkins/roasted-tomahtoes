@@ -2,6 +2,7 @@ import './Star.scss'
 import React, {Component} from 'react'
 import selectedStar from "../images/selected-star.png";
 import emptyStar from "../images/empty-star.png";
+import PropTypes from 'prop-types'
 
 class Rating extends Component {
   constructor(props) {
@@ -19,7 +20,6 @@ class Rating extends Component {
       stars.push(
         <div className="stars-box">
           <img
-            // starValue={props.starValue}
             className="star-image"
             alt="empty star icon"
             src={starSource}
@@ -49,3 +49,10 @@ class Rating extends Component {
 }
 
 export default Rating
+
+Rating.propTypes = {
+  movie_id: PropTypes.number,
+  rateMovie: PropTypes.func,
+  userRating: PropTypes.object
+
+}

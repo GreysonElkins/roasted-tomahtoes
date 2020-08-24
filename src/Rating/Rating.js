@@ -5,8 +5,16 @@ class Rating extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userRating: props.userRating && props.userRating.rating,
-      currentValue: this.userRating ? this.userRating : {rating: 0}
+      userRating: this.findRating(props),
+      currentValue: this.findRating(props),
+    };
+  }
+
+  findRating = (props) => {
+    if (props.userRating) {
+      return props.userRating.rating
+    } else {
+      return 0
     }
   }
 
@@ -17,19 +25,23 @@ class Rating extends Component {
         <Star
           starCount={numberOfStars}
           starValue={i + 1}
-          starHover={() => {this.starHover(i + 1)}}
+          starHover={() => {this.starPreview(i + 1)}}
+          starLeave={() => {
+            debugger
+            this.starPreview(this.state.userRating)
+          }}
         />
       );
     }
     return stars
   }
 
-  starHover(starNum) {
+  starPreview = (starNum) => {
     this.setState({currentValue: starNum})
 
   }
 
-  render () {
+  render = () => {
     return (
       <div className="stars-box">
         {this.makeStars(this.state.currentValue)}

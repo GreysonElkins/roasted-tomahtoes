@@ -16,6 +16,7 @@ const Star = (props) => {
       alt='empty star icon' 
       src={starSource} 
       onMouseEnter={props.starHover}
+      onMouseLeave={props.starLeave}
     />
   )
   // }

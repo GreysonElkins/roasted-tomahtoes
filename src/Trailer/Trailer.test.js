@@ -10,7 +10,7 @@ describe('Trailer', () => {
     />)
   })
 
-  xit('should render a Youtube movie trailer', () => {
+  it('should render a Youtube movie trailer', () => {
     const trailer = screen.getByAltText('movie trailer')
     expect(trailer).toBeInTheDocument()
   })

@@ -29,7 +29,7 @@
       margin: 0 auto;
     }
     .ratings-box {
-      @include rowDisplay();
+      @include columnDisplay();
       width: 150px;
     }
   }

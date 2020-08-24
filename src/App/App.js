@@ -5,6 +5,7 @@ import Login from '../Login/Login'
 import Main from '../Main/Main'
 import MoviePage from '../MoviePage/MoviePage'
 import API from '../API/API'
+import Helmet from 'react-helmet'
 
 class App extends Component {
  constructor() {
@@ -16,6 +17,7 @@ class App extends Component {
    pageView: "Home",
    user: { id: "", email: "", name: "" },
    singleMovie: {},
+   trailers: [],
    singleMovieUserRating: {},
    userRatings: []
   };
@@ -58,7 +60,8 @@ class App extends Component {
   try {
     const movie = await API.getData(`movies/${id}`);
     const rating = this.findMovieUserRating(id)
-    this.setState({ pageView: "MoviePage", singleMovie: movie, singleMovieUserRating: rating, error: "" });
+    const trailers = await API.getData(`movies/${id}/videos`)
+    this.setState({ pageView: "MoviePage", singleMovie: movie, singleMovieUserRating: rating, error: "", trailers: trailers });
   } catch (error) {
    this.setState({pageView: "MoviePage", error: error});
   }
@@ -204,6 +207,10 @@ class App extends Component {
   });
   return (
     <div className="App">
+      <Helmet>
+        <title>Roasted Tomahtoes</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
+      </Helmet>
       <Header
         isLoggedIn={this.state.isLoggedIn}
         logout={this.logout}
@@ -232,6 +239,7 @@ class App extends Component {
           error={this.state.error}
           rateMovie={this.rateMovie}
           userRating={this.state.singleMovieUserRating}
+          trailers={this.state.trailers}
         />
       )}
     </div>

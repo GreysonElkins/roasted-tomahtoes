@@ -1,0 +1,31 @@
+@import '../styles/_variables.scss';
+
+
+.movie-overview {
+    height: 60px;
+    width: 420px;
+    text-align: justify;
+    overflow: hidden;
+    margin: 0px;
+  }
+
+  .movie-overview-exp {
+    width: 420px;
+    text-align: justify;
+    margin: 0px;
+  }
+
+ .overview-display-btn {
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: white;
+    font-weight: bold;
+    font-size: .75em;
+    &:hover {
+      background: $tomahtoRed;
+      color: white;
+      border: none;
+    }
+
+  }

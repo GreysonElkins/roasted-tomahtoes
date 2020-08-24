@@ -30,7 +30,7 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) 
           </span>
       <article className="movie-information">
         <span className='overview-box'>
-          <p className='movie-overview'>{movie.overview}</p>
+          <p className='movie-overview' >{movie.overview}</p>
           <button className='moreLessOverview'>More Info</button>
         </span>
         <p className="movie-genre">

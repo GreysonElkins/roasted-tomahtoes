@@ -46,7 +46,6 @@ describe('Overview', () => {
     
     fireEvent.click(displayOverviewBtn)
     expect(toggleOverview).toBeCalledTimes(1)
-
   })
 
 

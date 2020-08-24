@@ -9,6 +9,7 @@ class Overview extends Component {
   }
 
   toggleOverview = () => {
+    console.log('hello')
     this.setState({
       collapsed: !this.state.collapsed})
   }

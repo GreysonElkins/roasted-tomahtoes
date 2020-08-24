@@ -34,7 +34,7 @@ describe("MoviePage", () => {
   )
  })
 
- it('should render a number of movies equal to the length of the array being passed in', () => {
+ it.skip('should render a number of movies equal to the length of the array being passed in', () => {
   const headingOne = screen.getByRole('heading', {name:'Donkey Kong'})
   const headingTwo = screen.getByRole("heading", { name: "Wizard of Oz" })
 
@@ -42,7 +42,7 @@ describe("MoviePage", () => {
   expect(headingTwo).toBeInTheDocument();
  })
 
- it('should render an error message if no movies are found', () => {
+ it.skip('should render an error message if no movies are found', () => {
     const {getByText} = render(<Main />)
     expect(getByText('No movies were found. Please try again.'))
  })

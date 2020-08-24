@@ -18,7 +18,7 @@ class Rating extends Component {
     }
   }
 
-  makeStars = (numberOfStars) => {
+  makeStars = (numberOfStars, props) => {
     let stars = [];
     for (let i = 0; i < 5; i++) {
       stars.push(
@@ -26,9 +26,12 @@ class Rating extends Component {
           starCount={numberOfStars}
           starValue={i + 1}
           starHover={() => {this.starPreview(i + 1)}}
-          starLeave={() => {
-            this.starPreview(this.state.userRating)
-          }}
+          starLeave={() => {this.starPreview(this.state.userRating)}}
+          rateMovie={() => {
+            this.props.rateMovie({
+              rating: (i + 1) * 2, 
+              movie_id: props.movie_id
+            })}}
         />
       );
     }
@@ -43,7 +46,7 @@ class Rating extends Component {
   render = () => {
     return (
       <div className="stars-box">
-        {this.makeStars(this.state.currentValue)}
+        {this.makeStars(this.state.currentValue, this.props)}
        </div>
     )
   }

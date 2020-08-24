@@ -159,21 +159,22 @@ class App extends Component {
   let moviesWithRatings = this.state.movies
   ratings.forEach(rating => {
     moviesWithRatings.forEach(movie => {
-      if (movie.id === rating.movie_id) movie.userRating = rating
+      if (movie.id === rating.movie_id) {
+        movie.userRating = rating
+      }
     })
   })
   return moviesWithRatings
  };
 
- rateMovie = (rating, id) => {
-  let movie = this.state.movies.find(movie => movie.id === id)
-  let user = this.state.user.id
-  if (movie.userRating !== undefined) {
+ rateMovie = (rating) => {
+  const movie = this.state.movies.find(movie => movie.id === rating.movie_id)
+  const user = this.state.user.id
+  if (movie.userRating > 0) {
     this.deleteRating(user, movie.userRating.id)
     .then(() => API.postData({rating: rating, movie_id: movie.id}, user))
-  }
-  else {
-    API.postData({rating: rating, movie_id: movie.id}, user)
+  } else {
+    API.postData(rating, user);
   }
  }
 
@@ -209,6 +210,7 @@ class App extends Component {
       isLoggedIn={this.state.isLoggedIn}
       movies={sortedMovies}
       showMoviePage={this.showMoviePage}
+      rateMovie={this.rateMovie}
       error={this.state.error}
      />
     )}
@@ -217,7 +219,7 @@ class App extends Component {
       isLoggedIn={this.state.isLoggedIn}
       movie={this.state.singleMovie}
       error={this.state.error}
-      // rateMovie={}
+      rateMovie={this.rateMovie}
      />
     )}
    </div>

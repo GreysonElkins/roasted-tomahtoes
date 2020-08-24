@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import Rating from '../Rating/Rating'
 
-const MoviePage = ({error, movie, isLoggedIn}) => {
+const MoviePage = ({error, movie, isLoggedIn, rateMovie}) => {
   const altText = `${movie.title} movie poster`
   return (
    <section className="movie-page">
@@ -17,7 +17,11 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
       <h3 className="avg-rating">
        🍅 {(movie.average_rating * 10).toFixed(0)}%
       </h3>
-      {isLoggedIn && <Rating userRating={movie.userRating}/>}
+      {isLoggedIn 
+        && <Rating 
+          userRating={movie.userRating} 
+          rateMovie={rateMovie}
+          movie_id={movie.id}/>}
      </span>
      <button className="movie-trailer-btn">Play Trailer</button>
      <article className="movie-information">

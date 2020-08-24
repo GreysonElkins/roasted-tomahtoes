@@ -4,12 +4,13 @@ import './Main.scss'
 import Error from '../Error/Error'
 import PropTypes from "prop-types"
 
-const Main = ({error, movies, showMoviePage, isLoggedIn}) => {
+const Main = ({error, movies, showMoviePage, isLoggedIn, rateMovie}) => {
   const movieCards = movies.map(movie => {
       return <MovieCard 
         movie={movie} 
         showMoviePage={showMoviePage}
         isLoggedIn={isLoggedIn}
+        rateMovie={rateMovie}
     />
   })
   return (

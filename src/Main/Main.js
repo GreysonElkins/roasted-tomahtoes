@@ -13,10 +13,11 @@ const Main = ({error, movies, showMoviePage, isLoggedIn, rateMovie, userRatings}
     }
   };
   
-  const movieCards = movies.map(movie => {
+  const movieCards = movies.map((movie, i) => {
       let matchingUserRating = matchUserRatingWithMovie(movie)
       
       return <MovieCard 
+        key={i}
         movie={movie} 
         showMoviePage={showMoviePage}
         isLoggedIn={isLoggedIn}

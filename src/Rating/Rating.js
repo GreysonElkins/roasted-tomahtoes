@@ -18,8 +18,9 @@ class Rating extends Component {
       let starSource = emptyStar
       if (i < numberOfStars) starSource = selectedStar
       stars.push(
-        <div className="stars-box">
+        <div className="stars-box" key={i}>
           <img
+            key={i}
             className="star-image"
             alt="empty star icon"
             src={starSource}

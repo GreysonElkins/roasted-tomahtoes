@@ -65,5 +65,5 @@ MoviePage.propTypes = {
   trailers: PropTypes.array,
   error: PropTypes.string,
   rateMovie: PropTypes.func,
-  userRating: PropTypes.object
+  userRating: PropTypes.number
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactPlayer from 'react-player/youtube'
 import './Trailer.scss'
+import PropTypes from "prop-types";
 
 function Trailer({trailer}) {
     return(
@@ -16,3 +17,8 @@ function Trailer({trailer}) {
 
 
 export default Trailer
+
+Trailer.propTypes = {
+ trailer: PropTypes.object,
+ error: PropTypes.string,
+};

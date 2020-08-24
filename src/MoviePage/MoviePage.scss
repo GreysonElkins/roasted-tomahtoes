@@ -38,21 +38,24 @@
   line-height: 20px;
   text-align: left;
   width: 30em;
-  p {
-    margin: 5px auto;
-    text-align: left;
-  }
+    .movie-overview {
+      height: 45px;
+      overflow: hidden;
+    }
+    p {
+      margin: 5px auto;
+      text-align: left;
+    }
 
- 
   button {
     border-radius: 6px;
-    background: red;
-    @include fontStyle();
-    font-size: 1.25em;
-    margin: 5px auto;
-    width: 125px;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: .75em;
+    // margin: 5px auto;
     &:hover {
-      box-shadow: 1px 1px 15px rgb(255, 255, 255);
+      box-shadow: 1px 1px 10px rgb(255, 255, 255);
     }
   }
 }

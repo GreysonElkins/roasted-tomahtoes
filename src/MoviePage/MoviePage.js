@@ -24,7 +24,10 @@ const MoviePage = ({error, movie, isLoggedIn, trailers}) => {
       <img src={movie.poster_path} alt={altText} />
       <div className="movie-content">
       <article className="movie-information">
+        <span className='overview-box'>
         <p className='movie-overview'>{movie.overview}</p>
+        <button className='moreOverview'>More Info</button>
+        </span>
         <p className='movie-genre'><b>Genre(s):</b> {movie.genres.join(", ")}</p>
         <p className='movie-release-date'><b>Release Date:</b> {moment(movie.release_date).format("MMMM DD, YYYY")}</p>
         <p className='movie-budget'><b>Budget:</b> ${movie.budget}</p>

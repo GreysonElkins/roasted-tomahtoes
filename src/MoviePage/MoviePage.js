@@ -4,7 +4,7 @@ import './MoviePage.scss'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
-const MoviePage = ({error, movie, isLoggedIn}) => {
+const MoviePage = ({error, movie, isLoggedIn, trailer, showTrailer}) => {
   const altText = `${movie.title} movie poster`
   return (
     <section className="movie-page">
@@ -16,7 +16,7 @@ const MoviePage = ({error, movie, isLoggedIn}) => {
       <h3 className="avg-rating">🍅 {movie.average_rating * 10}% </h3>
       {isLoggedIn && <h3 className="user-rating">🍿 40%</h3>}
      </span>
-     <button className="movie-trailer-btn">Play Trailer</button>
+     <button className="movie-trailer-btn" onClick={showTrailer}>Play Trailer</button>
      <article className="movie-information">
       <p className='movie-overview'><b>Overview:</b> {movie.overview}</p>
       <p className='movie-genre'><b>Genre(s):</b> {movie.genres.join(", ")}</p>

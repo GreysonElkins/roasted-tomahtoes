@@ -16,6 +16,7 @@ class App extends Component {
    pageView: "Home",
    user: { id: "", email: "", name: "" },
    singleMovie: {},
+   trailer: {}
   };
  }
 
@@ -45,7 +46,8 @@ class App extends Component {
  showMoviePage = async (id) => {
   try {
    const movie = await API.getData(`movies/${id}`);
-   this.setState({ pageView: "MoviePage", singleMovie: movie, error: "" });
+   const trailer = await API.getData(`movies/${id}/videos`)
+   this.setState({ pageView: "MoviePage", singleMovie: movie, error: "", trailer: trailer });
   } catch (error) {
    this.setState({pageView: "MoviePage", error: error});
   }
@@ -172,6 +174,7 @@ class App extends Component {
      <MoviePage
       isLoggedIn={this.state.isLoggedIn}
       movie={this.state.singleMovie}
+      trailer={this.state.trailer}
       error={this.state.error}
      />
     )}

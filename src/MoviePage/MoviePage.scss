@@ -29,6 +29,11 @@
   }
   p {
     margin: 3px;
+    text-align: center;
+  }
+  .movie-overview {
+    text-align: left;
+    margin: 5px;
   }
   .ratings-box {
     @include rowDisplay();

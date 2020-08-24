@@ -26,7 +26,7 @@ const MoviePage = ({error, movie, isLoggedIn, rateMovie}) => {
      <button className="movie-trailer-btn">Play Trailer</button>
      <article className="movie-information">
       <p className="movie-overview">
-       <b>Overview:</b> {movie.overview}
+       {movie.overview}
       </p>
       <p className="movie-genre">
        <b>Genre(s):</b> {movie.genres.join(", ")}

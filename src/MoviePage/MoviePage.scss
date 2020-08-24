@@ -10,7 +10,7 @@
     border: 2px solid rgb(139, 138, 138);    
     margin-right: 20px;
     width: 25em;
-    height: 30em;
+    // height: 30em;
   }
 }
 
@@ -32,7 +32,7 @@
   }
   .ratings-box {
     @include rowDisplay();
-      width: 150px;
+      width: 160px;
       margin: 3px;
     h3 {
       margin: 0 auto;

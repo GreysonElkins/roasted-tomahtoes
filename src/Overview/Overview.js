@@ -4,7 +4,7 @@ import './Overview.scss'
 class Overview extends Component {
   constructor(props) {
     super(props)
-    this.state = {collapsed: false, }
+    this.state = {collapsed: true, }
   }
 
   toggleOverview = () => {

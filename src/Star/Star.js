@@ -5,7 +5,7 @@ import emptyStar from '../images/empty-star.png'
 
 const Star = (props) => {
   let starSource = emptyStar
-  if (props.sztarCount 
+  if (props.starCount 
   && props.starCount >= props.starValue) {
     starSource = selectedStar
   } 

@@ -160,26 +160,29 @@ class App extends Component {
   ratings.forEach(rating => {
     moviesWithRatings.forEach(movie => {
       if (movie.id === rating.movie_id) {
+        rating.rating = rating.rating / 2
         movie.userRating = rating
       }
     })
   })
+  // this.setState({movies: moviesWithRatings})
   return moviesWithRatings
  };
 
- rateMovie = (rating) => {
+ rateMovie = async (rating) => {
+   debugger
   const movie = this.state.movies.find(movie => movie.id === rating.movie_id)
   const user = this.state.user.id
-  if (movie.userRating > 0) {
-    this.deleteRating(user, movie.userRating.id)
-    .then(() => API.postData({rating: rating, movie_id: movie.id}, user))
-  } else {
-    API.postData(rating, user);
-  }
+    this.removeRating(movie.userRating.rating, user, movie.userRating.id)
+      .then(() => API.postData(rating, user))
+      .then(() => API.getData(`users/${this.state.user.id}/ratings`))
+      .then((ratings) => this.sortMovieRatings(ratings));    
  }
 
- deleteRating = (userID, ratingID) => {
-   return API.deleteData(userID, ratingID)
+ removeRating = async (movieRating, user, movie) => {
+   if (movieRating > 0) {
+    return await API.deleteData(user, movie)
+   } 
  }
 
  render() {

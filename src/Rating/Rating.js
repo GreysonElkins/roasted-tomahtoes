@@ -5,9 +5,18 @@ class Rating extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userRating: this.findRating(props),
-      currentValue: this.findRating(props),
+      // userRating: this.findRating(props),
+      userRating: this.props.userRating.rating,
+      // currentValue: this.findRating(props),
+      currentValue: this.props.userRating.rating,
     };
+  }
+
+  componentDidMount = () => {
+    this.setState({
+      userRating: this.props.userRating.rating, 
+      currentValue: this.props.userRating.rating
+    })
   }
 
   findRating = (props) => {

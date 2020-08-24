@@ -170,13 +170,13 @@ class App extends Component {
  };
 
  rateMovie = async (rating) => {
-   debugger
   const movie = this.state.movies.find(movie => movie.id === rating.movie_id)
   const user = this.state.user.id
     this.removeRating(movie.userRating.rating, user, movie.userRating.id)
       .then(() => API.postData(rating, user))
       .then(() => API.getData(`users/${this.state.user.id}/ratings`))
-      .then((ratings) => this.sortMovieRatings(ratings));    
+      .then((ratings) => this.sortMovieRatings(ratings))
+      .then((ratedMovies) => this.setState({movies: ratedMovies}) )    
  }
 
  removeRating = async (movieRating, user, movie) => {

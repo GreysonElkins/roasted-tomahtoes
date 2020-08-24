@@ -1,15 +1,16 @@
 import React from 'react'
 import ReactPlayer from 'react-player'
+import './Trailer.scss'
 
 function Trailer({trailer}) {
-  const key = trailer.key
-  return(
-    <div className='movie-trailer'>
-      <ReactPlayer
-        url="www.youtube/watch?v=${key}"
-      />
-    </div>
-  )
-}
+    return(
+      <div className='movie-trailer'>
+        <ReactPlayer
+          url={`www.youtube/watch?v=${trailer.key}`}
+        />
+      </div>
+    )
+  }
+
 
 export default Trailer

@@ -16,7 +16,6 @@ const Main = ({error, movies, showMoviePage, isLoggedIn}) => {
     <main>
       {error && <Error error={error} />}
       <section className='gallery'>
-      {/* <h2 className='all-movies-header'>All Movies</h2><br/> */}
         {movieCards}
       </section>
     </main>

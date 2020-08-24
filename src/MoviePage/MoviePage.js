@@ -5,8 +5,13 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import Trailer from '../Trailer/Trailer'
 
-const MoviePage = ({error, movie, isLoggedIn, trailer, showTrailer}) => {
+const MoviePage = ({error, movie, isLoggedIn, trailers}) => {
   const altText = `${movie.title} movie poster`
+  let trailerClips = trailers.map(trailer => {
+    return (
+     <Trailer trailer={trailer} />
+    )
+  })
   return (
     <section className="movie-page">
     {error && <Error error={error} />}
@@ -27,7 +32,7 @@ const MoviePage = ({error, movie, isLoggedIn, trailer, showTrailer}) => {
       <p className='movie-runtime'><b>Runtime:</b> {movie.runtime} minutes</p>
       <p className='movie-tagline'><b>Tagline:</b> {movie.tagline ? movie.tagline : "None"}</p>
      </article>
-     {trailer.length > 0 && <Trailer trailer={trailer} />}
+     {trailers.length > 0 && trailerClips}
     </div>
    </section>
   ); 

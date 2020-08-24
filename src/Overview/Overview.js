@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import './Overview.scss'
+import PropTypes from 'prop-types'
 
 class Overview extends Component {
   constructor(props) {
@@ -24,3 +25,6 @@ class Overview extends Component {
 
 export default Overview
 
+Overview.propTypes = {
+  movie: PropTypes.object
+}

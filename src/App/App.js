@@ -124,7 +124,7 @@ class App extends Component {
     // this is doubled in Main.js
  
 
- showSearchResultsPage = async () => {
+ refreshMoviesForSearch = async () => {
   try {
    this.setState({ pageView: "SearchResults" });
    return await API.getData('movies');
@@ -137,7 +137,7 @@ class App extends Component {
  searchMovies = async (query) => {
   query = query.toLowerCase();
   const searchQueries = query.split(" ");
-  const allMovies = await this.showSearchResultsPage();
+  const allMovies = await this.refreshMoviesForSearch()
   const checkedMovies = [];
   await allMovies.forEach(async (movie) => {
    let fullMovie;
@@ -150,12 +150,14 @@ class App extends Component {
      checkedMovies.push(fullMovie)
     }
     if (checkedMovies.length > 0) {
-     this.setState({ movies: this.sortMoviesByTitle(checkedMovies), error: "" });
+     this.setState({ movies: this.sortMoviesByTitle(checkedMovies), error: "" })
+     this.props.history.push("/search-results");
     } else {
-     this.setState({movies: checkedMovies, error: "No movies were found. Please refine your search."});
+     this.setState({movies: checkedMovies, error: "No movies were found. Please refine your search."})
+     this.props.history.push("/search-results");
     }
    } catch (error) {
-    this.setState({error: "No movies were found. Please refine your search."});
+    this.setState({error: "No movies were found. Please refine your search."})
    }
   });
  };
@@ -342,10 +344,21 @@ class App extends Component {
               trailers={this.state.trailers}
             />)
         }} /> 
-
+        <Route exact path='/search-results'
+          render={({match}) => {
+            return (
+              <Main 
+                isLoggedIn={this.state.isLoggedIn}
+                movies={this.state.movies}
+                rateMovie={this.rateMovie}
+                userRatings={this.state.userRatings}
+                deleteRating={this.deleteRating}
+                error={this.state.error}
+            />)
+          }} />
       {(
         // page === "Home" ||
-        page === "SearchResults" ||
+        // page === "SearchResults" ||
         page === "UserRatings") && (
         <Main
           // pageView={this.state.pageView}
@@ -358,16 +371,6 @@ class App extends Component {
           // getSingleMovie={this.getSingleMovie}
           />
           )}
-      {page === "MoviePage" && (
-        <MoviePage
-          isLoggedIn={this.state.isLoggedIn}
-          movie={this.state.singleMovie}
-          error={this.state.error}
-          rateMovie={this.rateMovie}
-          userRating={this.state.singleMovieUserRating}
-          trailers={this.state.trailers}
-        />
-      )}
 
 
     </div>

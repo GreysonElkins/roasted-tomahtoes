@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './Login.scss'
 import Error from '../Error/Error'
 import PropTypes from "prop-types"
-import { NavLink } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
 
 class Login extends Component {
   constructor(props) {

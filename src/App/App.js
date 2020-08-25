@@ -316,6 +316,12 @@ class App extends Component {
             />
           );
         }} />
+      <Route 
+        exact path ='/login'
+        render={() => {
+          return <Login login={this.login} error={this.state.error} />
+        }}
+      />
       {page === "Login" && (
         <Login login={this.login} error={this.state.error} />
       )}

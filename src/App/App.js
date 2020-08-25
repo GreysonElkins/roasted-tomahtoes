@@ -44,7 +44,7 @@ class App extends Component {
         .then(ratings => {
         this.convertRatingsToStarValues(ratings)
         this.setState({
-          movies,
+          movies: this.sortMovies(movies),
           userRatings: ratings, 
           pageView: "Home",
           error: ''
@@ -127,7 +127,7 @@ class App extends Component {
      checkedMovies.push(fullMovie)
     }
     if (checkedMovies.length > 0) {
-     this.setState({ movies: checkedMovies, error: "" });
+     this.setState({ movies: this.sortMovies(checkedMovies), error: "" });
     } else {
      this.setState({movies: checkedMovies, error: "No movies were found. Please refine your search."});
     }
@@ -218,6 +218,19 @@ class App extends Component {
    if (oldRating) {
     return await API.deleteData(user, oldRating.id)
    } 
+ }
+
+ sortMovies(movies) {
+    return movies.sort((a, b) => {
+      if (a.title < b.title) {
+        return -1;
+      }
+      if (a.title > b.title) {
+        return 1;
+      } else {
+        return 0;
+      }
+    })
  }
 
  render() {

@@ -55,5 +55,4 @@ Rating.propTypes = {
   movie_id: PropTypes.number,
   rateMovie: PropTypes.func,
   userRating: PropTypes.object
-
 }

@@ -38,11 +38,19 @@ describe('App', () => {
     expect(getByText('Login').className).toBe('')
   })
 
+  // test for rendered stars
+
   describe('Fetch Successful', () => {
+
   
     it.skip('should welcome user after successful login', async () => {
       API.postData.mockResolvedValueOnce({ id: 1, email: 'charlie@turing.io', name: "Charlie" })
-      const { getByText } = render(<App/>)
+      const { getByText } = render(
+       <App
+        isLoggedIn={true}
+        user={{ id: 1, email: "charlie@turing.io", name: "Charlie" }}
+       />
+      );
       const welcomeCharlie =  await waitFor(() => getByText('Welcome, Charlie!'))
       expect(getByText(welcomeCharlie)).toBeInTheDocument()
       // why won't it display 'Charlie'?
@@ -90,11 +98,51 @@ describe('App', () => {
     })
 
     it.skip('should display user ratings on each movie card', async () => {
-      API.getData.mockResolvedValueOnce([{rating: 5}, {rating: 3}, {rating: 8}])
+      API.getData.mockResolvedValueOnce([{rating: 3}, {rating: 2}, {rating: 4}])
+      const { getAllByAltText } = render(
+       <App
+        isLoggedIn={true}
+        user={{ id: 1, email: "charlie@turing.io", name: "Charlie" }}
+        userRatings={[
+         { rating: 3, movie_id: 1 },
+         { rating: 2, movie_id: 2 },
+         { rating: 4, movie_id: 3 },
+        ]}
+        movies={[
+         {
+          id: 1,
+          title: "Donkey Kong",
+          poster_path: "someURL",
+          backdrop_path: "someURL",
+          release_date: "2019-12-04",
+          overview: "Some overview",
+          average_rating: 6,
+         },
+         {
+          id: 2,
+          title: "Godzilla",
+          poster_path: "someURL",
+          backdrop_path: "someURL",
+          release_date: "2019-12-04",
+          overview: "Some overview",
+          average_rating: 4,
+         },
+         {
+          id: 3,
+          title: "Signs",
+          poster_path: "someURL",
+          backdrop_path: "someURL",
+          release_date: "2018-12-04",
+          overview: "Some overview",
+          average_rating: 8,
+         },
+        ]}
+       />
+      );
+      const emptyStarIcons = await waitFor(() => getAllByAltText('empty star icon'))
+      expect(emptyStarIcons).toHaveLength(3)
 
-      const { getAllByAltText } = render(<App />)
-      const starIcons = await waitFor(() => getAllByAltText('empty star icon'))
-      expect(starIcons).toHaveLength(15)
+      // what about testing helper methods 
     })
 
 

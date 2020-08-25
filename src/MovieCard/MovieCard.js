@@ -22,12 +22,12 @@ const MovieCard = (props) => {
         </button>
       }  */}
       <Link to={`/movies/${props.movie.id}`}>
-      <img
-        className="poster"
-        // onClick={showMoviePage}
-        src={props.movie.poster_path}
-        alt={altText}
-      />
+        <img
+          className="poster"
+          // onClick={showMoviePage}
+          src={props.movie.poster_path}
+          alt={altText}
+        />
       </Link>
       </div>
       <span className="card-info-box">

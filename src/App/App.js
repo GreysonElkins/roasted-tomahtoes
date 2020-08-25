@@ -18,7 +18,7 @@ class App extends Component {
    error: "",
    pageView: "Home",
    user: { id: "", email: "", name: "" },
-   singleMovie: {},
+   singleMovie: {genres:[]},
    trailers: [],
    singleMovieUserRating: {},
    userRatings: []
@@ -59,12 +59,12 @@ class App extends Component {
   }
  }
 
- showMoviePage = async (id) => {
+ getSingleMovie = async (id) => {
   try {
-    const movie = await API.getData(`movies/${id}`);
+    const movie = await API.getData(`movies/${id}`)
     const rating = this.findMovieUserRating(id)
     const trailers = await API.getData(`movies/${id}/videos`)
-    this.setState({ pageView: "MoviePage", singleMovie: movie, singleMovieUserRating: rating, error: "", trailers: trailers });
+    this.setState({singleMovie: movie, trailers: trailers, singleMovieUserRating: rating, error: ""});
   } catch (error) {
    this.setState({pageView: "MoviePage", error: error});
   }
@@ -328,6 +328,21 @@ class App extends Component {
           return <Login login={this.login} error={this.state.error} />
         }}
       />
+      <Route
+        exact path='/movies/:id'
+        render={({ match }) => {
+            this.getSingleMovie(+match.params.id)
+            return (
+              <MoviePage 
+              isLoggedIn={this.state.isLoggedIn}
+              movie={this.state.singleMovie}
+              error={this.state.error}
+              rateMovie={this.rateMovie}
+              userRating={this.state.singleMovieUserRating}
+              trailers={this.state.trailers}
+            />)
+        }} /> 
+
       {(
         // page === "Home" ||
         page === "SearchResults" ||
@@ -336,13 +351,13 @@ class App extends Component {
           // pageView={this.state.pageView}
           isLoggedIn={this.state.isLoggedIn}
           movies={this.state.movies}
-          // showMoviePage={this.showMoviePage}
           rateMovie={this.rateMovie}
           userRatings={this.state.userRatings}
           deleteRating={this.deleteRating}
           error={this.state.error}
-        />
-      )}
+          // getSingleMovie={this.getSingleMovie}
+          />
+          )}
       {page === "MoviePage" && (
         <MoviePage
           isLoggedIn={this.state.isLoggedIn}
@@ -355,20 +370,6 @@ class App extends Component {
       )}
 
 
-      {/* <Route
-        exact path='/movies/:id'
-        render={({ match }) => {
-          const movie = this.state.movies.find(movie => movie.id === +match.params.id)
-          const userRating = this.findMovieUserRating(+match.params.id)
-          return (<MoviePage 
-            isLoggedIn={this.state.isLoggedIn}
-            movie={movie}
-            error={this.state.error}
-            rateMovie={this.rateMovie}
-            userRating={userRating}
-            trailers={this.state.trailers}
-          />)
-        }} />  */}
     </div>
   );
  }

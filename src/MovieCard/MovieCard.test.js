@@ -1,15 +1,19 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, getByRole } from "@testing-library/react";
 import React from "react";
+// import React-DOM from 'react-dom';
 import MovieCard from "./MovieCard";
 import "@testing-library/jest-dom";
 
+
 describe('MovieCard', () => {
-  let showMoviePage
+  let mockShowMoviePage
   beforeEach(() => {
-    showMoviePage = jest.fn()
+    mockShowMoviePage = jest.fn()
     render(
      <MovieCard
-      showMoviePage={showMoviePage}
+      showMoviePage={mockShowMoviePage}
+      isLoggedIn={true}
+      userRating={{rating: 5}}
       movie={{
        id: 1,
        title: "Donkey Kong",
@@ -25,19 +29,21 @@ describe('MovieCard', () => {
   })
 
   it('should render a card', () => {
-    const poster = screen.getByRole('img')
+    const poster = screen.getByAltText('Donkey Kong movie poster')
     const title = screen.getByRole('heading', {name: 'Donkey Kong'})
-    const rating = screen.getByRole("heading", { name: '🍅 60%'});
+    const rating = screen.getByRole("heading", { name: '🍅 60%'})
+    const stars = screen.getAllByAltText('selected star icon')
     expect(poster).toBeInTheDocument()
     expect(title).toBeInTheDocument()
     expect(rating).toBeInTheDocument('🍅 60%')
+    expect(stars).toHaveLength(5)
   })
   
   it('should fire an event when card is clicked', () => {
-    const card = screen.getByRole('article')
-    fireEvent.click(card)
-    expect(showMoviePage).toBeCalledTimes(1)
-    expect(showMoviePage).toBeCalledWith(1)
+    const poster = screen.getByAltText('Donkey Kong movie poster')
+    fireEvent.click(poster)
+    expect(mockShowMoviePage).toBeCalledTimes(1)
+    expect(mockShowMoviePage).toBeCalledWith(1)
   })
 
 

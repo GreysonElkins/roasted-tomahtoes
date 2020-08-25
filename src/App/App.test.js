@@ -1,10 +1,16 @@
 import React from 'react'
-import { render, getByPlaceholderText, getAllByRole, getAllByLabelText } from '@testing-library/react'
+import { render, screen, getByPlaceholderText, getByText, waitFor } from '@testing-library/react'
 import App from './App'
-import Header from '../Header/Header'
+import API from '../API/API'
+// import Header from '../Header/Header'
 import '@testing-library/jest-dom'
 
 describe('App', () => {
+  beforeEach(() => {
+  App.
+
+  render(<App/>)
+ })
 
   it('should start with default login state', () => {
     const defaultApp = new App()
@@ -12,14 +18,16 @@ describe('App', () => {
   })
 
   it('should render header', () => {
-    const {getByPlaceholderText} = render(<App />)
-    expect(getByPlaceholderText('Search by title, genre, year')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Search by title, genre, year')).toBeInTheDocument()
   })
 
   it('should hide some header elements in default state', () => {
-    const {getByText} = render(<App/>)
-    expect(getByText("Your Ratings").className).toBe("hidden");
-    expect(getByText('Logout').className).toBe('hidden')
+    expect(screen.getByText("Your Ratings").className).toBe("hidden");
+    expect(screen.getByText('Logout').className).toBe('hidden')
+  })
+
+  it('should fetch movies data on load', async () => {
+    const movie1 = await waitFor(() => screen.getByText('Akira'))
   })
 
   //component did mount

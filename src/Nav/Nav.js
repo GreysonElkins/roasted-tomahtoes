@@ -2,39 +2,45 @@ import React from 'react'
 import './Nav.scss'
 import PropTypes from "prop-types"
 
-const Nav = ({isLoggedIn, showHomePage, showLoginPage, logout, user}) => {
+const Nav = ({
+  isLoggedIn, 
+  showHomePage, 
+  showLoginPage, 
+  logout, 
+  user,
+  showUserFavoritePage
+  }) => {
   return (
     <nav>
-      <h3
-        className={isLoggedIn ? '' : 'hidden'}>
-        Welcome, {user.name}!</h3>
-      <div className='button-box'>
-        <button
-          id='home-btn'
-          onClick={showHomePage}
-          >
+      <h3 className={isLoggedIn ? "" : "hidden"}>Welcome, {user.name}!</h3>
+      <div className="button-box">
+        <button id="home-btn" onClick={showHomePage}>
           Home
         </button>
-        <button 
-          className={isLoggedIn ? '' : 'hidden'} 
-          id='ratings-header-btn'>
+        <button
+          className={isLoggedIn ? "" : "hidden"}
+          id="ratings-header-btn"
+          onClick={showUserFavoritePage}
+        >
           Your Ratings
-        </button> 
-        <button 
-          className={isLoggedIn ? 'hidden' : ''}
-          id='login-btn'
-          onClick={showLoginPage}>
+        </button>
+        <button
+          className={isLoggedIn ? "hidden" : ""}
+          id="login-btn"
+          onClick={showLoginPage}
+        >
           Login
         </button>
-        <button 
-          className={isLoggedIn ? '' : 'hidden'} 
-          id='logout-btn'
-          onClick={logout}>
+        <button
+          className={isLoggedIn ? "" : "hidden"}
+          id="logout-btn"
+          onClick={logout}
+        >
           Logout
         </button>
       </div>
     </nav>
-  )
+  );
 }
 
 export default Nav

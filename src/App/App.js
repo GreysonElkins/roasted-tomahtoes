@@ -26,7 +26,7 @@ class App extends Component {
  componentDidMount = async () => {
   try {
    const movies = await API.getData('movies');
-   this.setState({ movies: movies });
+   this.setState({ movies: this.sortMoviesByTitle(movies) });
   } catch (error) {
    this.setState({ error: "Oops, something went wrong! 🙁 Please try again." });
   }
@@ -44,12 +44,13 @@ class App extends Component {
         .then(ratings => {
         this.convertRatingsToStarValues(ratings)
         this.setState({
+          movies: this.sortMoviesByTitle(movies),
           userRatings: ratings, 
           pageView: "Home",
           error: ''
         })})
     } else {
-      this.setState({ pageView: "Home", error: '', movies })
+      this.setState({ pageView: "Home", error: '', movies: this.sortMoviesByTitle(movies) })
     }
   } catch (error) {
    this.setState({ pageView: "Home", error: error });
@@ -66,6 +67,53 @@ class App extends Component {
    this.setState({pageView: "MoviePage", error: error});
   }
  };
+
+ showUserFavoritesPage = async () => {
+  if (this.state.userRatings.length === 0) {
+      try {
+        API.getData(`users/${this.state.user.id}/ratings`)
+        .then(data => this.setState({userRatings: data}))
+        .then(() => { 
+          if (this.state.userRatings.length === 0) {
+            this.setState({
+              error:`You haven't rated any movies yet! 
+                They'll be here when you do`
+            })
+          } else {
+            this.setState({
+              movies: this.filterFavoriteMovies(), 
+              pageView: 'UserRatings'})
+          }
+        }) 
+      } catch (error) {
+         this.setState({
+           error: `You haven't rated any movies yet! 
+            They'll be here when you do`,
+         });
+      }
+  } else {
+    this.setState({movies: this.filterFavoriteMovies(), pageView: 'UserRatings'})
+  }
+ }
+
+ filterFavoriteMovies = () => {
+    const favoriteMovies = this.state.movies.filter(movie => {
+      return this.state.userRatings.some(rating => rating.movie_id === movie.id)
+    })
+    return this.sortByRating(favoriteMovies)
+ }
+
+ sortByRating = (movies) => {
+   movies.forEach(movie => {
+     movie.userRating = this.state.userRatings.find(rating => rating.movie_id === movie.id)
+    })
+   
+   return movies.sort((a, b) => {
+    // const aRating = this.findMovieUserRating
+    return b.userRating.rating - a.userRating.rating
+    // return a.userRating.rating - b.userRating.rating
+    })
+ }
 
  findMovieUserRating = (movie_id) => {
     let rating = this.state.userRatings.find(rating => rating.movie_id === movie_id) 
@@ -100,7 +148,7 @@ class App extends Component {
      checkedMovies.push(fullMovie)
     }
     if (checkedMovies.length > 0) {
-     this.setState({ movies: checkedMovies, error: "" });
+     this.setState({ movies: this.sortMoviesByTitle(checkedMovies), error: "" });
     } else {
      this.setState({movies: checkedMovies, error: "No movies were found. Please refine your search."});
     }
@@ -123,6 +171,23 @@ class App extends Component {
    return true;
   }
  }
+
+  deleteRating = (ratingID, userID = this.state.user.id) => {
+    try {
+      API.deleteData(userID, ratingID)
+      .then(() => API.getData(`users/${userID}/ratings`))
+      .then((ratings) => {
+        console.log(ratings)
+        this.setState({userRatings: ratings})
+        this.showUserFavoritesPage()
+      })
+    } catch (error) {
+      this.setState({
+        error: `Sorry, we couldn't delete that
+          please try again.`
+      })
+    }
+  }
 
  changeDataToLowerCase(data) {
   let args = data;
@@ -193,42 +258,63 @@ class App extends Component {
    } 
  }
 
+ sortMoviesByTitle(movies) {
+    return movies.sort((a, b) => {
+      if (a.title < b.title) {
+        return -1;
+      }
+      if (a.title > b.title) {
+        return 1;
+      } else {
+        return 0;
+      }
+    })
+ }
+
  render() {
   const page = this.state.pageView;
-  const sortedMovies = this.state.movies.sort((a, b) => {
-   if (a.title < b.title) {
-    return -1;
-   }
-   if (a.title > b.title) {
-    return 1;
-   } else {
-    return 0;
-   }
-  });
+  // const sortedMovies = this.state.movies.sort((a, b) => {
+  //  if (a.title < b.title) {
+  //   return -1;
+  //  }
+  //  if (a.title > b.title) {
+  //   return 1;
+  //  } else {
+  //   return 0;
+  //  }
+  // });
   return (
     <div className="App">
       <Helmet>
         <title>Roasted Tomahtoes</title>
-        <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1"
+        ></meta>
       </Helmet>
       <Header
         isLoggedIn={this.state.isLoggedIn}
         logout={this.logout}
         showLoginPage={this.showLoginPage}
         showHomePage={this.showHomePage}
+        showUserFavoritesPage={this.showUserFavoritesPage}
         searchMovies={this.searchMovies}
         user={this.state.user}
       />
       {page === "Login" && (
         <Login login={this.login} error={this.state.error} />
       )}
-      {(page === "Home" || page === "SearchResults") && (
+      {(page === "Home" ||
+        page === "SearchResults" ||
+        page === "UserRatings") && (
         <Main
+          pageView={this.state.pageView}
           isLoggedIn={this.state.isLoggedIn}
-          movies={sortedMovies}
+          movies={this.state.movies}
           showMoviePage={this.showMoviePage}
           rateMovie={this.rateMovie}
           userRatings={this.state.userRatings}
+          deleteRating={this.deleteRating}
           error={this.state.error}
         />
       )}

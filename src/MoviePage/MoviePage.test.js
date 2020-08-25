@@ -26,7 +26,9 @@ describe('MoviePage', () => {
     }
     render(
      <MoviePage
-      pageView={jest.fn()}
+      rateMovie={jest.fn()}
+      userRating={{rating: 5}}
+      trailers={[{id: 1, movie_id: 1, key: "SUXWAEX2jlg", site: "YouTube", type: "Trailer"}]}
       movie={movie}
       error={'No movie found. Please try again.'}
       isLoggedIn={true}
@@ -34,8 +36,8 @@ describe('MoviePage', () => {
     )
   })
 
-   it('should render information about the selected movie', () => {
-    expect(screen.getByRole('img')).toBeInTheDocument()
+   it('should render poster and information about the selected movie', () => {
+    expect(screen.getByAltText(`${movie.title} movie poster`)).toBeInTheDocument()
     expect(screen.getByRole('heading', {name: 'Greenland'})).toBeInTheDocument();
     screen.getByText((content, node) => {
      const hasText = (node) =>
@@ -55,13 +57,5 @@ describe('MoviePage', () => {
     })
    }) 
 
-   it('should display a button to play trailer', () => {
-     expect(screen.getByRole('button', {name: 'Play Trailer'})).toBeInTheDocument()
-   })
-
-   it('should render a user rating, rating input, submit button if user is logged in', () => {
-     expect(screen.getByText('🍿 40%')).toBeInTheDocument()
-     expect(screen.getByPlaceholderText('Your 🍿 Rating')).toBeInTheDocument()
-     expect(screen.getByRole('button', {name:'Submit Rating'})).toBeInTheDocument()
-   })
 })
+

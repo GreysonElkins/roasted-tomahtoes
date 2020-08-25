@@ -11,12 +11,22 @@ const MovieCard = (props) => {
 
   return (
     <article className="card" tabIndex="0">
+      <div>
+      {props.pageView === "UserRatings" && 
+        <button 
+          className="delete-btn"
+          onClick={() => props.deleteRating(props.userRating.id)}
+        >
+          Ⓧ
+        </button>
+      } 
       <img
         className="poster"
         onClick={showMoviePage}
         src={props.movie.poster_path}
         alt={altText}
       />
+      </div>
       <span className="card-info-box">
         <h4 className="movie-title">{props.movie.title}</h4>
         <span className="ratings-box">
@@ -41,6 +51,6 @@ export default MovieCard
 MovieCard.propTypes = {
   movie: PropTypes.object,
   showMoviePage: PropTypes.func,
-  userRating: PropTypes.number,
+  userRating: PropTypes.object,
   isLoggedIn: PropTypes.bool
 }

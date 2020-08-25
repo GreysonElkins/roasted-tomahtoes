@@ -1,15 +1,18 @@
 import React from 'react'
 import Rating from './Rating'
 import "@testing-library/jest-dom";
-import { render, screen, getAllByText, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+// ^ tried using this to test hover, seemed most promising path,
+// testing suite couldn't recognize it's functions
+import { render, screen, fireEvent } from "@testing-library/react";
 
 
 describe('Rating', () => {
-  let mockRateMovie
+  let mockRateMovie, ratingsBar
   beforeEach(() => {
     mockRateMovie = jest.fn()
-    render(<Rating 
-      userRating={5}
+    ratingsBar = render(<Rating 
+      userRating={{rating: 0}}
       rateMovie={mockRateMovie}
       movie_id={149}
       />)
@@ -26,6 +29,4 @@ describe('Rating', () => {
     expect(mockRateMovie).toHaveBeenCalledTimes(1)
     expect(mockRateMovie).toHaveBeenCalledWith({movie_id:149, rating: 2})
   })
-
-
 })

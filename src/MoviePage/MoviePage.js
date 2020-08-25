@@ -9,9 +9,9 @@ import Overview from '../Overview/Overview'
 
 const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) => {
   const altText = `${movie.title} movie poster`
-  let trailerClips = trailers.map(trailer => {
+  let trailerClips = trailers.map((trailer, i) => {
     return (
-     <Trailer trailer={trailer} />
+     <Trailer trailer={trailer} key={i} />
     )
   })
   return (
@@ -65,5 +65,5 @@ MoviePage.propTypes = {
   trailers: PropTypes.array,
   error: PropTypes.string,
   rateMovie: PropTypes.func,
-  userRating: PropTypes.number
+  userRating: PropTypes.object
 }

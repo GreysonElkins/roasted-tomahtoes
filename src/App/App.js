@@ -26,7 +26,7 @@ class App extends Component {
  componentDidMount = async () => {
   try {
    const movies = await API.getData('movies');
-   this.setState({ movies: movies });
+   this.setState({ movies: this.sortMoviesByTitle(movies) });
   } catch (error) {
    this.setState({ error: "Oops, something went wrong! 🙁 Please try again." });
   }
@@ -44,7 +44,7 @@ class App extends Component {
         .then(ratings => {
         this.convertRatingsToStarValues(ratings)
         this.setState({
-          movies: this.sortMovies(movies),
+          movies: this.sortMoviesByTitle(movies),
           userRatings: ratings, 
           pageView: "Home",
           error: ''
@@ -89,8 +89,22 @@ class App extends Component {
  }
 
  filterFavoriteMovies = () => {
-   return this.state.movies.filter(movie => {
-     return this.state.userRatings.some(rating => rating.movie_id === movie.id)
+    const favoriteMovies = this.state.movies.filter(movie => {
+      return this.state.userRatings.some(rating => rating.movie_id === movie.id)
+    })
+    return this.sortByRating(favoriteMovies)
+ }
+
+ sortByRating = (movies) => {
+   movies.forEach(movie => {
+     movie.userRating = this.state.userRatings.find(rating => rating.movie_id === movie.id)
+    })
+    debugger
+   
+   return movies.sort((a, b) => {
+    // const aRating = this.findMovieUserRating
+    return b.userRating.rating - a.userRating.rating
+    // return a.userRating.rating - b.userRating.rating
     })
  }
 
@@ -127,7 +141,7 @@ class App extends Component {
      checkedMovies.push(fullMovie)
     }
     if (checkedMovies.length > 0) {
-     this.setState({ movies: this.sortMovies(checkedMovies), error: "" });
+     this.setState({ movies: this.sortMoviesByTitle(checkedMovies), error: "" });
     } else {
      this.setState({movies: checkedMovies, error: "No movies were found. Please refine your search."});
     }
@@ -220,7 +234,7 @@ class App extends Component {
    } 
  }
 
- sortMovies(movies) {
+ sortMoviesByTitle(movies) {
     return movies.sort((a, b) => {
       if (a.title < b.title) {
         return -1;
@@ -235,16 +249,16 @@ class App extends Component {
 
  render() {
   const page = this.state.pageView;
-  const sortedMovies = this.state.movies.sort((a, b) => {
-   if (a.title < b.title) {
-    return -1;
-   }
-   if (a.title > b.title) {
-    return 1;
-   } else {
-    return 0;
-   }
-  });
+  // const sortedMovies = this.state.movies.sort((a, b) => {
+  //  if (a.title < b.title) {
+  //   return -1;
+  //  }
+  //  if (a.title > b.title) {
+  //   return 1;
+  //  } else {
+  //   return 0;
+  //  }
+  // });
   return (
     <div className="App">
       <Helmet>
@@ -271,7 +285,7 @@ class App extends Component {
         page === "UserRatings") && (
         <Main
           isLoggedIn={this.state.isLoggedIn}
-          movies={sortedMovies}
+          movies={this.state.movies}
           showMoviePage={this.showMoviePage}
           rateMovie={this.rateMovie}
           userRatings={this.state.userRatings}

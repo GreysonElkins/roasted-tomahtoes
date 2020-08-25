@@ -6,7 +6,8 @@ import Main from '../Main/Main'
 import MoviePage from '../MoviePage/MoviePage'
 import API from '../API/API'
 import Helmet from 'react-helmet'
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
+// import history from './history'
 
 class App extends Component {
  constructor() {
@@ -208,22 +209,26 @@ class App extends Component {
  login = async (loginState) => {
   const response = await API.postData(loginState);
   const user = await response.json();
+  console.log(response)
   if (response.status === 201) {
     API.getData(`users/${user.user.id}/ratings`)
       .then((ratings) => {
         this.convertRatingsToStarValues(ratings)
         this.setState({userRatings: ratings})
       })
-      .then(() => {this.setState({
-        pageView: "Home",
-        isLoggedIn: true,
-        user: user.user,
-        error: "",
-      })})
+      .then(() => {
+        this.props.history.push('/')
+        this.setState({
+          // pageView: "Home",
+          isLoggedIn: true,
+          user: user.user,
+          error: "",
+        })
+    })
   } else {
    this.setState({
     error: "Incorrect email or password. Please try again.",
-   });
+   })
   }
  };
 
@@ -305,6 +310,7 @@ class App extends Component {
       <Route 
         exact path ='/'
         render={()=>{
+          // this.setState({error: ''})
           return (
             <Main
               isLoggedIn={this.state.isLoggedIn}
@@ -322,9 +328,6 @@ class App extends Component {
           return <Login login={this.login} error={this.state.error} />
         }}
       />
-      {page === "Login" && (
-        <Login login={this.login} error={this.state.error} />
-      )}
       {(
         // page === "Home" ||
         page === "SearchResults" ||
@@ -371,9 +374,4 @@ class App extends Component {
  }
 }
 
-//login /login
-//your ratings /movies/your-ratings
-//search = /movies/search-results
-//home = /
-//moviepage - / movies/:id
-export default App
+export default withRouter(App)

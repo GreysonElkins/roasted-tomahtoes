@@ -13,7 +13,7 @@ nav {
 
   .button-box {
     @include rowDisplay();
-    button {
+    .nav-btn {
       background: $slateBlack;
       border-radius: 6px;
       @include fontStyle();

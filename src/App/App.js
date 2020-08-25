@@ -6,6 +6,7 @@ import Main from '../Main/Main'
 import MoviePage from '../MoviePage/MoviePage'
 import API from '../API/API'
 import Helmet from 'react-helmet'
+import { Route } from 'react-router-dom'
 
 class App extends Component {
  constructor() {
@@ -301,17 +302,32 @@ class App extends Component {
         searchMovies={this.searchMovies}
         user={this.state.user}
       />
+      <Route 
+        exact path ='/'
+        render={()=>{
+          return (
+            <Main
+              isLoggedIn={this.state.isLoggedIn}
+              movies={this.state.movies}
+              rateMovie={this.rateMovie}
+              userRatings={this.state.userRatings}
+              deleteRating={this.deleteRating}
+              error={this.state.error}
+            />
+          );
+        }} />
       {page === "Login" && (
         <Login login={this.login} error={this.state.error} />
       )}
-      {(page === "Home" ||
+      {(
+        // page === "Home" ||
         page === "SearchResults" ||
         page === "UserRatings") && (
         <Main
-          pageView={this.state.pageView}
+          // pageView={this.state.pageView}
           isLoggedIn={this.state.isLoggedIn}
           movies={this.state.movies}
-          showMoviePage={this.showMoviePage}
+          // showMoviePage={this.showMoviePage}
           rateMovie={this.rateMovie}
           userRatings={this.state.userRatings}
           deleteRating={this.deleteRating}
@@ -328,9 +344,30 @@ class App extends Component {
           trailers={this.state.trailers}
         />
       )}
+
+
+      {/* <Route
+        exact path='/movies/:id'
+        render={({ match }) => {
+          const movie = this.state.movies.find(movie => movie.id === +match.params.id)
+          const userRating = this.findMovieUserRating(+match.params.id)
+          return (<MoviePage 
+            isLoggedIn={this.state.isLoggedIn}
+            movie={movie}
+            error={this.state.error}
+            rateMovie={this.rateMovie}
+            userRating={userRating}
+            trailers={this.state.trailers}
+          />)
+        }} />  */}
     </div>
   );
  }
 }
 
+//login /login
+//your ratings /movies/your-ratings
+//search = /movies/search-results
+//home = /
+//moviepage - / movies/:id
 export default App

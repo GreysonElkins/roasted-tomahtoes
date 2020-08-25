@@ -1,6 +1,7 @@
 import React from 'react'
 import './Nav.scss'
 import PropTypes from "prop-types"
+import { NavLink } from 'react-router-dom'
 
 const Nav = ({
   isLoggedIn, 
@@ -14,22 +15,22 @@ const Nav = ({
     <nav>
       <h3 className={isLoggedIn ? "" : "hidden"}>Welcome, {user.name}!</h3>
       <div className="button-box">
-        <button id="home-btn" onClick={showHomePage}>
-          Home
-        </button>
+        <NavLink to="/" className="nav-btn">
+            Home
+        </NavLink>
+        <NavLink
+          to="/login"
+          className={`nav-btn ${ isLoggedIn ? "hidden" : ""}`}
+          // className='nav-btn'
+        >
+          Login
+        </NavLink>
         <button
           className={isLoggedIn ? "" : "hidden"}
           id="ratings-header-btn"
           onClick={showUserFavoritePage}
         >
           Your Ratings
-        </button>
-        <button
-          className={isLoggedIn ? "hidden" : ""}
-          id="login-btn"
-          onClick={showLoginPage}
-        >
-          Login
         </button>
         <button
           className={isLoggedIn ? "" : "hidden"}

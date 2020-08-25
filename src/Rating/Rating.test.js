@@ -24,8 +24,8 @@ describe('Rating', () => {
   })
 
   it('should fire an event when a star is clicked', () => {
-    const stars = screen.getAllByAltText('empty star icon')
-    fireEvent.click(stars[0])
+    const emptyStars = screen.getAllByAltText('empty star icon')
+    fireEvent.click(emptyStars[0])
     expect(mockRateMovie).toHaveBeenCalledTimes(1)
     expect(mockRateMovie).toHaveBeenCalledWith({movie_id:149, rating: 2})
   })

@@ -4,7 +4,15 @@ import Nav from '../Nav/Nav'
 import './Header.scss'
 import PropTypes from "prop-types"
 
-const Header = ({isLoggedIn, showLoginPage, showHomePage, user, logout, searchMovies}) => {
+const Header = ({
+  isLoggedIn,
+  showLoginPage, 
+  showHomePage, 
+  user, 
+  logout, 
+  searchMovies,
+  showUserFavoritesPage
+  }) => {
     return (
       <header id='header'>
         <h1 className='logo'>R🍅asted<br/> T🍅mahtoes</h1>
@@ -15,6 +23,7 @@ const Header = ({isLoggedIn, showLoginPage, showHomePage, user, logout, searchMo
           isLoggedIn={isLoggedIn} 
           showLoginPage={showLoginPage}
           showHomePage={showHomePage}
+          showUserFavoritePage={showUserFavoritesPage}
           user={user} 
           logout={logout}
           id='search'

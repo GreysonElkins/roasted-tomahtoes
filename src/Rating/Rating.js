@@ -16,13 +16,17 @@ class Rating extends Component {
     let stars = [];
     for (let i = 0; i < 5; i++) {
       let starSource = emptyStar
-      if (i < numberOfStars) starSource = selectedStar
+      let starAltText = 'empty star icon'
+      if (i < numberOfStars) {
+        starSource = selectedStar
+        starAltText = 'selected star icon'
+      }
       stars.push(
         <div className="stars-box" key={i}>
           <img
             key={i}
             className="star-image"
-            alt="empty star icon"
+            alt={starAltText}
             src={starSource}
             id={i + 1}
             onMouseEnter={() => this.setState({ currentValue: i + 1 })}

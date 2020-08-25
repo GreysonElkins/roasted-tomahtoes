@@ -44,6 +44,7 @@ class App extends Component {
         .then(ratings => {
         this.convertRatingsToStarValues(ratings)
         this.setState({
+          movies,
           userRatings: ratings, 
           pageView: "Home",
           error: ''
@@ -66,6 +67,32 @@ class App extends Component {
    this.setState({pageView: "MoviePage", error: error});
   }
  };
+
+ showUserFavoritesPage = async () => {
+  if (this.state.userRatings.length === 0) {
+      try {
+        API.getData(`users/${this.state.user.id}/ratings`)
+        .then(data => this.setState({userRatings: data}))
+        .then(() => { 
+          if (this.state.userRatings.length === 0) {
+            this.setState({error:"You haven't rated any movies yet! They'll be here when you do"})
+          } else {
+            this.setState({movies: this.filterFavoriteMovies(), pageView: 'UserRatings'})
+          }
+        }) 
+      } catch (error) {
+         this.setState({error: "No movies were found. Please refine your search."})
+      }
+  } else {
+    this.setState({movies: this.filterFavoriteMovies(), pageView: 'UserRatings'})
+  }
+ }
+
+ filterFavoriteMovies = () => {
+   return this.state.movies.filter(movie => {
+     return this.state.userRatings.some(rating => rating.movie_id === movie.id)
+    })
+ }
 
  findMovieUserRating = (movie_id) => {
     let rating = this.state.userRatings.find(rating => rating.movie_id === movie_id) 
@@ -209,20 +236,26 @@ class App extends Component {
     <div className="App">
       <Helmet>
         <title>Roasted Tomahtoes</title>
-        <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1"
+        ></meta>
       </Helmet>
       <Header
         isLoggedIn={this.state.isLoggedIn}
         logout={this.logout}
         showLoginPage={this.showLoginPage}
         showHomePage={this.showHomePage}
+        showUserFavoritesPage={this.showUserFavoritesPage}
         searchMovies={this.searchMovies}
         user={this.state.user}
       />
       {page === "Login" && (
         <Login login={this.login} error={this.state.error} />
       )}
-      {(page === "Home" || page === "SearchResults") && (
+      {(page === "Home" ||
+        page === "SearchResults" ||
+        page === "UserRatings") && (
         <Main
           isLoggedIn={this.state.isLoggedIn}
           movies={sortedMovies}

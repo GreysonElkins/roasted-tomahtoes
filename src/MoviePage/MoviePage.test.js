@@ -27,7 +27,7 @@ describe('MoviePage', () => {
     render(
      <MoviePage
       rateMovie={jest.fn()}
-      userRating={rating: 5}
+      userRating={{rating: 5}}
       trailers={[{id: 1, movie_id: 1, key: "SUXWAEX2jlg", site: "YouTube", type: "Trailer"}]}
       movie={movie}
       error={'No movie found. Please try again.'}

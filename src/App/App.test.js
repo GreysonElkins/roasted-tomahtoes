@@ -1,17 +1,15 @@
 import React from 'react'
 import { render, screen, getByPlaceholderText, getByText, waitFor } from '@testing-library/react'
 import App from './App'
+import API from '../API/API'
 // import Header from '../Header/Header'
 import '@testing-library/jest-dom'
 
 describe('App', () => {
-  let movies
- beforeEach(() => {
-  movies = [ 
+  beforeEach(() => {
+  App.
 
-  ]
-
-   render(<App/>)
+  render(<App/>)
  })
 
   it('should start with default login state', () => {

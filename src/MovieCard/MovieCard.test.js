@@ -32,7 +32,7 @@ describe('MovieCard', () => {
     const poster = screen.getByAltText('Donkey Kong movie poster')
     const title = screen.getByRole('heading', {name: 'Donkey Kong'})
     const rating = screen.getByRole("heading", { name: '🍅 60%'})
-    const stars = screen.getAllByAltText('empty star icon')
+    const stars = screen.getAllByAltText('selected star icon')
     expect(poster).toBeInTheDocument()
     expect(title).toBeInTheDocument()
     expect(rating).toBeInTheDocument('🍅 60%')

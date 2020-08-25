@@ -50,7 +50,7 @@ class App extends Component {
           error: ''
         })})
     } else {
-      this.setState({ pageView: "Home", error: '', movies })
+      this.setState({ pageView: "Home", error: '', movies: this.sortMoviesByTitle(movies) })
     }
   } catch (error) {
    this.setState({ pageView: "Home", error: error });

@@ -4,7 +4,16 @@ import './Main.scss'
 import Error from '../Error/Error'
 import PropTypes from "prop-types"
 
-const Main = ({error, movies, showMoviePage, isLoggedIn, rateMovie, userRatings}) => {
+const Main = ({
+  error, 
+  movies, 
+  showMoviePage, 
+  isLoggedIn, 
+  rateMovie, 
+  userRatings,
+  deleteRating,
+  pageView
+  }) => {
   const matchUserRatingWithMovie = (movie) => {
     if (userRatings.some((rating) => rating.movie_id === movie.id)) {
       return userRatings.find((rating) => rating.movie_id === movie.id);
@@ -23,6 +32,8 @@ const Main = ({error, movies, showMoviePage, isLoggedIn, rateMovie, userRatings}
         isLoggedIn={isLoggedIn}
         rateMovie={rateMovie}
         userRating={matchingUserRating}
+        pageView={pageView}
+        deleteRating={deleteRating}
     />
   })
 

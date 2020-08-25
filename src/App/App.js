@@ -75,13 +75,21 @@ class App extends Component {
         .then(data => this.setState({userRatings: data}))
         .then(() => { 
           if (this.state.userRatings.length === 0) {
-            this.setState({error:"You haven't rated any movies yet! They'll be here when you do"})
+            this.setState({
+              error:`You haven't rated any movies yet! 
+                They'll be here when you do`
+            })
           } else {
-            this.setState({movies: this.filterFavoriteMovies(), pageView: 'UserRatings'})
+            this.setState({
+              movies: this.filterFavoriteMovies(), 
+              pageView: 'UserRatings'})
           }
         }) 
       } catch (error) {
-         this.setState({error: "No movies were found. Please refine your search."})
+         this.setState({
+           error: `You haven't rated any movies yet! 
+            They'll be here when you do`,
+         });
       }
   } else {
     this.setState({movies: this.filterFavoriteMovies(), pageView: 'UserRatings'})
@@ -99,7 +107,6 @@ class App extends Component {
    movies.forEach(movie => {
      movie.userRating = this.state.userRatings.find(rating => rating.movie_id === movie.id)
     })
-    debugger
    
    return movies.sort((a, b) => {
     // const aRating = this.findMovieUserRating
@@ -164,6 +171,23 @@ class App extends Component {
    return true;
   }
  }
+
+  deleteRating = (ratingID, userID = this.state.user.id) => {
+    try {
+      API.deleteData(userID, ratingID)
+      .then(() => API.getData(`users/${userID}/ratings`))
+      .then((ratings) => {
+        console.log(ratings)
+        this.setState({userRatings: ratings})
+        this.showUserFavoritesPage()
+      })
+    } catch (error) {
+      this.setState({
+        error: `Sorry, we couldn't delete that
+          please try again.`
+      })
+    }
+  }
 
  changeDataToLowerCase(data) {
   let args = data;
@@ -284,11 +308,13 @@ class App extends Component {
         page === "SearchResults" ||
         page === "UserRatings") && (
         <Main
+          pageView={this.state.pageView}
           isLoggedIn={this.state.isLoggedIn}
           movies={this.state.movies}
           showMoviePage={this.showMoviePage}
           rateMovie={this.rateMovie}
           userRatings={this.state.userRatings}
+          deleteRating={this.deleteRating}
           error={this.state.error}
         />
       )}

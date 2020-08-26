@@ -13,6 +13,7 @@ const Main = ({
   deleteRating,
   showDeleteBtns
   }) => {
+    
   const matchUserRatingWithMovie = (movie) => {
     if (userRatings.some((rating) => rating.movie_id === movie.id)) {
       return userRatings.find((rating) => rating.movie_id === movie.id);

@@ -36,8 +36,8 @@ class App extends Component {
    const user = JSON.parse(localStorage.getItem('user'))
    if (user) {
      const userRatings = await API.getData(`users/${user.id}/ratings`)
-     const ratings = this.convertRatingsToStarValues(userRatings) 
-     this.setState({user: user, isLoggedIn: true, userRatings: ratings})
+    //  const ratings = this.convertRatingsToStarValues(userRatings) 
+     this.setState({user: user, isLoggedIn: true, userRatings: userRatings})
    }
  }
 

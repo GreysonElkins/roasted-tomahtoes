@@ -15,6 +15,7 @@ Roasted Tomahtoes is a functionally effective, sensible, and aesthetically pleas
 ## Technologies / Systems
 
 - React
+- React Router
 - JSX
 - ECMAScript 6 
 - TDD with Mocha/Chai & Spies
@@ -24,19 +25,17 @@ Roasted Tomahtoes is a functionally effective, sensible, and aesthetically pleas
 - API Fetch
 - Webpack & Babel
 
-## Developer Set Up 
+
+## Set Up 
 
 <!-- To interact with the app without cloning / downloading the file, click [here](https://leighlars.github.io/overlook-solo/). -->
 
-1. Clone down this repo. Since you don't want to name your project "webpack-starter-kit", you can use an optional argument when you run git clone (you replace the [...] with the terminal command arguments): git clone [remote-address] [what you want to name the repo]
-2. Remove the default remote: git remote rm origin (notice that git remote -v not gives you back nothing)
-3. Create a new repo on GitHub with the name of [what you want to name the repo] to be consistent with naming
-4. Add this remote to your cloned down repo: git remote add origin [address you copied in the previous step] - do not include the brackets
-5. Now try to commit something and push it up to your new repo. If everything is setup correctly, you should see the changes on GitHub.
-6. Once you have cloned the repo, change into the directory and install the project dependencies by running `npm install`.
-7. To verify that it is setup correctly, run `npm start` in your terminal. Go to `http://localhost:3000/` to interact with the application. 
-<!-- 8. To log in as , the username is 'manager'. To login as a customer, enter the username '', or any ending number up to 50. Both passwords are 'overlook2020'. -->
-9. Enter `control + c` in your terminal to stop the server at any time.
+1. Fork and clone down this repo
+2. Once you have cloned the repo, change into the directory and install the project dependencies by running `npm install`.
+3. To verify that it is setup correctly, run `npm start` in your terminal. Go to `http://localhost:3000/` to interact with the application. 
+4. To log in, use the email `charlie@turing.io` and password `qwerty`
+5. Rate stars, read about movies, watch movie trailers-- explore! 
+6. Enter `control + c` in your terminal to stop the server at any time.
 
 ## Gif Showcase
 

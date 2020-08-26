@@ -10,7 +10,7 @@ Mod 3 Paired Project
 
 ## Abstract 
 
-Roasted Tomahtoes is a functionally effective, sensible, and aesthetically pleasing UX/UI movie review app. The user can log-in, and rate movies the user loved or hated. 
+Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie review app. The user can log-in, read about movies, watch movie trailers, and rate movies the user loved or hated. 
 
 ## Technologies / Systems
 

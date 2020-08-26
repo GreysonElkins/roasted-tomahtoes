@@ -16,7 +16,6 @@ class Search extends Component {
   
   searchMovies = (event) => {
     event.preventDefault() 
-    console.log('search comp', this.state.searchQuery)
     this.props.searchMovies(this.state.searchQuery)
     this.setState({searchQuery: ''})
   }

@@ -5,9 +5,7 @@ import Login from '../Login/Login'
 import Main from '../Main/Main'
 import MoviePage from '../MoviePage/MoviePage'
 import API from '../API/API'
-import Helmet from 'react-helmet'
 import { Route, withRouter } from 'react-router-dom'
-// import history from './history'
 
 class App extends Component {
  constructor() {
@@ -35,7 +33,7 @@ class App extends Component {
  };
 
  showLoginPage = () => {
-  this.setState({ pageView: "Login", error: '' });
+  this.setState({ error: '' });
  };
 
  showHomePage = async () => {
@@ -48,14 +46,13 @@ class App extends Component {
         this.setState({
           movies: this.sortMoviesByTitle(movies),
           userRatings: ratings, 
-          pageView: "Home",
           error: ''
         })})
     } else {
-      this.setState({ pageView: "Home", error: '', movies: this.sortMoviesByTitle(movies) })
+      this.setState({ error: '', movies: this.sortMoviesByTitle(movies) })
     }
   } catch (error) {
-   this.setState({ pageView: "Home", error: error });
+   this.setState({ error: error });
   }
  }
 
@@ -66,11 +63,12 @@ class App extends Component {
     const trailers = await API.getData(`movies/${id}/videos`)
     this.setState({singleMovie: movie, trailers: trailers, singleMovieUserRating: rating, error: ""});
   } catch (error) {
-   this.setState({pageView: "MoviePage", error: error});
+   this.setState({error: error});
   }
  };
 
  showUserFavoritesPage = async () => {
+   console.log('hello')
   if (this.state.userRatings.length === 0) {
       try {
         API.getData(`users/${this.state.user.id}/ratings`)
@@ -82,9 +80,7 @@ class App extends Component {
                 They'll be here when you do`
             })
           } else {
-            this.setState({
-              movies: this.filterFavoriteMovies(), 
-              pageView: 'UserRatings'})
+           this.setState({movies: this.filterFavoriteMovies()})
           }
         }) 
       } catch (error) {
@@ -94,7 +90,7 @@ class App extends Component {
          });
       }
   } else {
-    this.setState({movies: this.filterFavoriteMovies(), pageView: 'UserRatings'})
+    this.setState({movies: this.filterFavoriteMovies()})
   }
  }
 
@@ -109,11 +105,8 @@ class App extends Component {
    movies.forEach(movie => {
      movie.userRating = this.state.userRatings.find(rating => rating.movie_id === movie.id)
     })
-   
    return movies.sort((a, b) => {
-    // const aRating = this.findMovieUserRating
     return b.userRating.rating - a.userRating.rating
-    // return a.userRating.rating - b.userRating.rating
     })
  }
 
@@ -211,7 +204,6 @@ class App extends Component {
  login = async (loginState) => {
   const response = await API.postData(loginState);
   const user = await response.json();
-  console.log(response)
   if (response.status === 201) {
     API.getData(`users/${user.user.id}/ratings`)
       .then((ratings) => {
@@ -221,7 +213,6 @@ class App extends Component {
       .then(() => {
         this.props.history.push('/')
         this.setState({
-          // pageView: "Home",
           isLoggedIn: true,
           user: user.user,
           error: "",
@@ -280,39 +271,18 @@ class App extends Component {
  }
 
  render() {
-  const page = this.state.pageView;
-  // const sortedMovies = this.state.movies.sort((a, b) => {
-  //  if (a.title < b.title) {
-  //   return -1;
-  //  }
-  //  if (a.title > b.title) {
-  //   return 1;
-  //  } else {
-  //   return 0;
-  //  }
-  // });
   return (
     <div className="App">
-      <Helmet>
-        <title>Roasted Tomahtoes</title>
-        <meta
-          name="viewport"
-          content="width=device-width,initial-scale=1"
-        ></meta>
-      </Helmet>
       <Header
         isLoggedIn={this.state.isLoggedIn}
         logout={this.logout}
-        showLoginPage={this.showLoginPage}
-        showHomePage={this.showHomePage}
-        showUserFavoritesPage={this.showUserFavoritesPage}
         searchMovies={this.searchMovies}
         user={this.state.user}
+        showUserFavoritesPage={this.showUserFavoritesPage}
       />
       <Route 
         exact path ='/'
         render={()=>{
-          // this.setState({error: ''})
           return (
             <Main
               isLoggedIn={this.state.isLoggedIn}
@@ -336,16 +306,28 @@ class App extends Component {
             this.getSingleMovie(+match.params.id)
             return (
               <MoviePage 
-              isLoggedIn={this.state.isLoggedIn}
-              movie={this.state.singleMovie}
-              error={this.state.error}
-              rateMovie={this.rateMovie}
-              userRating={this.state.singleMovieUserRating}
-              trailers={this.state.trailers}
-            />)
+                isLoggedIn={this.state.isLoggedIn}
+                movie={this.state.singleMovie}
+                error={this.state.error}
+                rateMovie={this.rateMovie}
+                userRating={this.state.singleMovieUserRating}
+                trailers={this.state.trailers}
+              />)
         }} /> 
-        <Route exact path='/search-results'
-          render={({match}) => {
+      <Route exact path='/search-results'
+        render={() => {
+          return (
+            <Main 
+              isLoggedIn={this.state.isLoggedIn}
+              movies={this.state.movies}
+              rateMovie={this.rateMovie}
+              userRatings={this.state.userRatings}
+              deleteRating={this.deleteRating}
+              error={this.state.error}
+          />)
+        }} />
+        <Route exact path='/user-ratings'
+          render={() => {
             return (
               <Main 
                 isLoggedIn={this.state.isLoggedIn}
@@ -355,24 +337,8 @@ class App extends Component {
                 deleteRating={this.deleteRating}
                 error={this.state.error}
             />)
-          }} />
-      {(
-        // page === "Home" ||
-        // page === "SearchResults" ||
-        page === "UserRatings") && (
-        <Main
-          // pageView={this.state.pageView}
-          isLoggedIn={this.state.isLoggedIn}
-          movies={this.state.movies}
-          rateMovie={this.rateMovie}
-          userRatings={this.state.userRatings}
-          deleteRating={this.deleteRating}
-          error={this.state.error}
-          // getSingleMovie={this.getSingleMovie}
-          />
-          )}
-
-
+        }
+        } />
     </div>
   );
  }

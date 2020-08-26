@@ -5,11 +5,9 @@ import { NavLink } from 'react-router-dom'
 
 const Nav = ({
   isLoggedIn, 
-  showHomePage, 
-  showLoginPage, 
   logout, 
   user,
-  showUserFavoritePage
+  showUserFavoritesPage
   }) => {
   return (
     <nav>
@@ -18,23 +16,16 @@ const Nav = ({
         <NavLink to="/" className="nav-btn">
             Home
         </NavLink>
-        <NavLink
-          to="/login"
-          className={`nav-btn ${ isLoggedIn ? "hidden" : ""}`}
-          // className='nav-btn'
-        >
+        <NavLink to="/login" className={`nav-btn ${ isLoggedIn ? "hidden" : ""}`}>
           Login
         </NavLink>
+        <NavLink to='/user-ratings' className={isLoggedIn ? "" : "hidden"}>
+          <button className='nav-btn' onClick={showUserFavoritesPage}>
+            Your Ratings
+          </button>
+        </NavLink>
         <button
-          className={isLoggedIn ? "" : "hidden"}
-          id="ratings-header-btn"
-          onClick={showUserFavoritePage}
-        >
-          Your Ratings
-        </button>
-        <button
-          className={isLoggedIn ? "" : "hidden"}
-          id="logout-btn"
+          className={`nav-btn ${isLoggedIn ? "" : "hidden"}`}
           onClick={logout}
         >
           Logout

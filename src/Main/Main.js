@@ -7,12 +7,11 @@ import PropTypes from "prop-types"
 const Main = ({
   error, 
   movies, 
-  showMoviePage, 
   isLoggedIn, 
   rateMovie, 
   userRatings,
   deleteRating,
-  pageView
+  showDeleteBtns
   }) => {
   const matchUserRatingWithMovie = (movie) => {
     if (userRatings.some((rating) => rating.movie_id === movie.id)) {
@@ -25,16 +24,17 @@ const Main = ({
   const movieCards = movies.map((movie, i) => {
       let matchingUserRating = matchUserRatingWithMovie(movie)
       
-      return <MovieCard 
+      return (
+       <MovieCard
         key={i}
-        movie={movie} 
-        showMoviePage={showMoviePage}
+        movie={movie}
         isLoggedIn={isLoggedIn}
         rateMovie={rateMovie}
         userRating={matchingUserRating}
-        pageView={pageView}
         deleteRating={deleteRating}
-    />
+        showDeleteBtns={showDeleteBtns}
+       />
+      );
   })
 
   return (

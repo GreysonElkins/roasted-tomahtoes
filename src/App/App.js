@@ -5,7 +5,7 @@ import Login from '../Login/Login'
 import Main from '../Main/Main'
 import MoviePage from '../MoviePage/MoviePage'
 import API from '../API/API'
-import Helmet from 'react-helmet'
+import { Route, withRouter } from 'react-router-dom'
 
 class App extends Component {
  constructor() {
@@ -14,120 +14,183 @@ class App extends Component {
    isLoggedIn: false,
    movies: [],
    error: "",
-   pageView: "Home",
    user: { id: "", email: "", name: "" },
-   singleMovie: {},
+   singleMovie: { genres: [] },
    trailers: [],
    singleMovieUserRating: {},
-   userRatings: []
+   userRatings: [],
   };
  }
 
  componentDidMount = async () => {
-  try {
-   const movies = await API.getData('movies');
-   this.setState({ movies: this.sortMoviesByTitle(movies) });
+   try {
+      const movies = await API.getData("movies");
+      this.setState({movies: movies})
+      this.setCurrentPage()
+// setState({ movies: this.sortMoviesByTitle(movies) });
   } catch (error) {
    this.setState({ error: "Oops, something went wrong! 🙁 Please try again." });
   }
  };
 
- showLoginPage = () => {
-  this.setState({ pageView: "Login", error: '' });
- };
+ checkLoggedIn = async () => {
+   const user = JSON.parse(localStorage.getItem('user'))
+   if (user) {
+     const userRatings = await API.getData(`users/${user.id}/ratings`)
+    //  const ratings = this.convertRatingsToStarValues(userRatings) 
+     this.setState({user: user, isLoggedIn: true, userRatings: userRatings})
+     return true
+   } else {
+     return false
+   }
+ }
+
+ setCurrentPage = () => {
+   const currentPage = this.props.history.location.pathname
+ 
+   this.checkLoggedIn().then((user) => {
+    if (currentPage === '/') {
+      this.setState({movies: this.sortMoviesByTitle(this.state.movies)})
+    } else if (user && currentPage === '/user-ratings') {
+      this.showUserFavoritesPage()
+    } else {
+      this.showHomePage()
+      this.props.history.push('/')
+    }
+  })
+ }
 
  showHomePage = async () => {
   try {
-    const movies = await API.getData('movies')
-    if(this.state.isLoggedIn === true) {
-      API.getData(`users/${this.state.user.id}/ratings`)
-        .then(ratings => {
-        this.convertRatingsToStarValues(ratings)
-        this.setState({
-          movies: this.sortMoviesByTitle(movies),
-          userRatings: ratings, 
-          pageView: "Home",
-          error: ''
-        })})
-    } else {
-      this.setState({ pageView: "Home", error: '', movies: this.sortMoviesByTitle(movies) })
-    }
+   const movies = await API.getData("movies");
+   if (this.state.isLoggedIn === true) {
+    API.getData(`users/${this.state.user.id}/ratings`).then((ratings) => {
+     this.convertRatingsToStarValues(ratings);
+     this.setState({
+      movies: this.sortMoviesByTitle(movies),
+      userRatings: ratings,
+      error: "",
+     });
+    });
+   } else {
+    this.setState({ error: "", movies: this.sortMoviesByTitle(movies) });
+   }
   } catch (error) {
-   this.setState({ pageView: "Home", error: error });
+   this.setState({ error: error });
   }
- }
+ };
 
- showMoviePage = async (id) => {
+ showLoginPage = () => {
+  this.setState({ error: '' });
+ };
+
+ login = async (loginState) => {
+  const response = await API.postData(loginState);
+  const user = await response.json();
+  if (response.status === 201) {
+   API.getData(`users/${user.user.id}/ratings`)
+    .then((ratings) => {
+     this.convertRatingsToStarValues(ratings);
+     this.setState({ userRatings: ratings });
+    })
+    .then(() => {
+     this.props.history.push("/");
+     this.setState({
+      isLoggedIn: true,
+      user: user.user,
+      error: "",
+     });
+     localStorage.setItem(`user`, JSON.stringify(this.state.user));
+    });
+  } else {
+   this.setState({
+    error: "Incorrect email or password. Please try again.",
+   });
+  }
+ };
+
+ logout = () => {
+  this.setState({ isLoggedIn: false, user: "" });
+  localStorage.removeItem('user');
+  this.showHomePage();
+ };
+
+ getSingleMovie = async (id) => {
   try {
-    const movie = await API.getData(`movies/${id}`);
-    const rating = this.findMovieUserRating(id)
-    const trailers = await API.getData(`movies/${id}/videos`)
-    this.setState({ pageView: "MoviePage", singleMovie: movie, singleMovieUserRating: rating, error: "", trailers: trailers });
+   const movie = await API.getData(`movies/${id}`);
+   const rating = this.findMovieUserRating(id);
+   const trailers = await API.getData(`movies/${id}/videos`);
+   this.setState({
+    singleMovie: movie,
+    trailers: trailers,
+    singleMovieUserRating: rating,
+    error: "",
+   });
   } catch (error) {
-   this.setState({pageView: "MoviePage", error: error});
+   this.setState({ error: error });
   }
  };
 
  showUserFavoritesPage = async () => {
   if (this.state.userRatings.length === 0) {
-      try {
-        API.getData(`users/${this.state.user.id}/ratings`)
-        .then(data => this.setState({userRatings: data}))
-        .then(() => { 
-          if (this.state.userRatings.length === 0) {
-            this.setState({
-              error:`You haven't rated any movies yet! 
-                They'll be here when you do`
-            })
-          } else {
-            this.setState({
-              movies: this.filterFavoriteMovies(), 
-              pageView: 'UserRatings'})
-          }
-        }) 
-      } catch (error) {
-         this.setState({
-           error: `You haven't rated any movies yet! 
-            They'll be here when you do`,
-         });
+   try {
+    API.getData(`users/${this.state.user.id}/ratings`)
+     .then((data) => this.setState({ userRatings: data }))
+     .then(() => {
+      if (this.state.userRatings.length === 0) {
+       this.setState({
+        error: `You haven't rated any movies yet! 
+                They'll be here when you do`,
+       });
+      } else {
+       this.setState({ movies: this.filterFavoriteMovies() });
       }
+     });
+   } catch (error) {
+    this.setState({
+     error: `You haven't rated any movies yet! 
+            They'll be here when you do`,
+    });
+   }
   } else {
-    this.setState({movies: this.filterFavoriteMovies(), pageView: 'UserRatings'})
+   this.setState({ movies: this.filterFavoriteMovies() });
   }
- }
+ };
 
  filterFavoriteMovies = () => {
-    const favoriteMovies = this.state.movies.filter(movie => {
-      return this.state.userRatings.some(rating => rating.movie_id === movie.id)
-    })
-    return this.sortByRating(favoriteMovies)
- }
+  const favoriteMovies = this.state.movies.filter((movie) => {
+   return this.state.userRatings.some((rating) => rating.movie_id === movie.id);
+  });
+  return this.sortByRating(favoriteMovies);
+ };
 
  sortByRating = (movies) => {
-   movies.forEach(movie => {
-     movie.userRating = this.state.userRatings.find(rating => rating.movie_id === movie.id)
-    })
-   
-   return movies.sort((a, b) => {
-    // const aRating = this.findMovieUserRating
-    return b.userRating.rating - a.userRating.rating
-    // return a.userRating.rating - b.userRating.rating
-    })
- }
+  movies.forEach((movie) => {
+   movie.userRating = this.state.userRatings.find(
+    (rating) => rating.movie_id === movie.id
+   );
+  });
+  return movies.sort((a, b) => {
+   return b.userRating.rating - a.userRating.rating;
+  });
+ };
 
  findMovieUserRating = (movie_id) => {
-    let rating = this.state.userRatings.find(rating => rating.movie_id === movie_id) 
-    return rating ? rating : { rating: 0 }
-  }  
-    // this is doubled in Main.js
- 
+  let rating = this.state.userRatings.find(
+   (rating) => rating.movie_id === movie_id
+  );
+  return rating ? rating : { rating: 0 };
+ };
+ // this is doubled in Main.js
 
- showSearchResultsPage = async () => {
+ refreshMoviesForSearch = async () => {
   try {
    this.setState({ pageView: "SearchResults" });
-   return await API.getData('movies');
+   return await API.getData("movies");
   } catch (error) {
-   this.setState({pageView: "SearchResults", error: "No movies were found. Please refine your search.",
+   this.setState({
+    pageView: "SearchResults",
+    error: "No movies were found. Please refine your search.",
    });
   }
  };
@@ -135,7 +198,7 @@ class App extends Component {
  searchMovies = async (query) => {
   query = query.toLowerCase();
   const searchQueries = query.split(" ");
-  const allMovies = await this.showSearchResultsPage();
+  const allMovies = await this.refreshMoviesForSearch();
   const checkedMovies = [];
   await allMovies.forEach(async (movie) => {
    let fullMovie;
@@ -145,15 +208,25 @@ class App extends Component {
      ? fullMovie.release_date.substring(0, 4)
      : null;
     if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
-     checkedMovies.push(fullMovie)
+     checkedMovies.push(fullMovie);
     }
     if (checkedMovies.length > 0) {
-     this.setState({ movies: this.sortMoviesByTitle(checkedMovies), error: "" });
+     this.setState({
+      movies: this.sortMoviesByTitle(checkedMovies),
+      error: "",
+     });
+     this.props.history.push("/search-results");
     } else {
-     this.setState({movies: checkedMovies, error: "No movies were found. Please refine your search."});
+     this.setState({
+      movies: checkedMovies,
+      error: "No movies were found. Please refine your search.",
+     });
+     this.props.history.push("/search-results");
     }
    } catch (error) {
-    this.setState({error: "No movies were found. Please refine your search."});
+    this.setState({
+     error: "No movies were found. Please refine your search.",
+    });
    }
   });
  };
@@ -172,22 +245,22 @@ class App extends Component {
   }
  }
 
-  deleteRating = (ratingID, userID = this.state.user.id) => {
-    try {
-      API.deleteData(userID, ratingID)
-      .then(() => API.getData(`users/${userID}/ratings`))
-      .then((ratings) => {
-        console.log(ratings)
-        this.setState({userRatings: ratings})
-        this.showUserFavoritesPage()
-      })
-    } catch (error) {
-      this.setState({
-        error: `Sorry, we couldn't delete that
-          please try again.`
-      })
-    }
+ deleteRating = (ratingID, userID = this.state.user.id) => {
+  try {
+   API.deleteData(userID, ratingID)
+    .then(() => API.getData(`users/${userID}/ratings`))
+    .then((ratings) => {
+     console.log(ratings);
+     this.setState({ userRatings: ratings });
+     this.showUserFavoritesPage();
+    });
+  } catch (error) {
+   this.setState({
+    error: `Sorry, we couldn't delete that
+          please try again.`,
+   });
   }
+ };
 
  changeDataToLowerCase(data) {
   let args = data;
@@ -204,133 +277,137 @@ class App extends Component {
   return changedData;
  }
 
- login = async (loginState) => {
-  const response = await API.postData(loginState);
-  const user = await response.json();
-  if (response.status === 201) {
-    API.getData(`users/${user.user.id}/ratings`)
-      .then((ratings) => {
-        this.convertRatingsToStarValues(ratings)
-        this.setState({userRatings: ratings})
-      })
-      .then(() => {this.setState({
-        pageView: "Home",
-        isLoggedIn: true,
-        user: user.user,
-        error: "",
-      })})
-  } else {
-   this.setState({
-    error: "Incorrect email or password. Please try again.",
-   });
-  }
- };
-
  convertRatingsToStarValues = (ratings) => {
-  ratings.forEach((rating) => rating.rating = rating.rating / 2)
- }
-
- logout = () => {
-  this.setState({ pageView: "Home", isLoggedIn: false, user: "" });
+  ratings.forEach((rating) => (rating.rating = rating.rating / 2));
  };
 
  rateMovie = async (rating) => {
-  const oldRating = this.state.userRatings.find(oldRating => oldRating.movie_id === rating.movie_id)
-  const user = this.state.user.id
-    this.removeRating(oldRating, user)
-      .then(() => API.postData(rating, user))
-      .then(() => API.getData(`users/${this.state.user.id}/ratings`))
-      .then((ratings) => {
-        this.convertRatingsToStarValues(ratings)
-        this.setState({userRatings: ratings})
-          if (this.state.singleMovieUserRating !== {}) {
-            const newRating = this.findMovieUserRating(
-              this.state.singleMovieUserRating.movie_id
-              )
-              this.setState({singleMovieUserRating: newRating})
-          }
-      })    
- }
+  const oldRating = this.state.userRatings.find(
+   (oldRating) => oldRating.movie_id === rating.movie_id
+  );
+  const user = this.state.user.id;
+  this.removeRating(oldRating, user)
+   .then(() => API.postData(rating, user))
+   .then(() => API.getData(`users/${this.state.user.id}/ratings`))
+   .then((ratings) => {
+    this.convertRatingsToStarValues(ratings);
+    this.setState({ userRatings: ratings });
+    if (this.state.singleMovieUserRating !== {}) {
+     const newRating = this.findMovieUserRating(
+      this.state.singleMovieUserRating.movie_id
+     );
+     this.setState({ singleMovieUserRating: newRating });
+    }
+   });
+ };
 
  removeRating = async (oldRating, user) => {
-   if (oldRating) {
-    return await API.deleteData(user, oldRating.id)
-   } 
- }
+  if (oldRating) {
+   return await API.deleteData(user, oldRating.id);
+  }
+ };
 
  sortMoviesByTitle(movies) {
-    return movies.sort((a, b) => {
-      if (a.title < b.title) {
-        return -1;
-      }
-      if (a.title > b.title) {
-        return 1;
-      } else {
-        return 0;
-      }
-    })
+  return movies.sort((a, b) => {
+   if (a.title < b.title) {
+    return -1;
+   }
+   if (a.title > b.title) {
+    return 1;
+   } else {
+    return 0;
+   }
+  });
  }
 
  render() {
-  const page = this.state.pageView;
-  // const sortedMovies = this.state.movies.sort((a, b) => {
-  //  if (a.title < b.title) {
-  //   return -1;
-  //  }
-  //  if (a.title > b.title) {
-  //   return 1;
-  //  } else {
-  //   return 0;
-  //  }
-  // });
   return (
-    <div className="App">
-      <Helmet>
-        <title>Roasted Tomahtoes</title>
-        <meta
-          name="viewport"
-          content="width=device-width,initial-scale=1"
-        ></meta>
-      </Helmet>
-      <Header
+   <div className="App">
+    <Header
+     isLoggedIn={this.state.isLoggedIn}
+     logout={this.logout}
+     searchMovies={this.searchMovies}
+     user={this.state.user}
+     showUserFavoritesPage={this.showUserFavoritesPage}
+     showHomePage={this.showHomePage}
+    />
+    <Route
+     exact
+     path="/"
+     render={() => {
+      return (
+       <Main
+        showDeleteBtns={false}
         isLoggedIn={this.state.isLoggedIn}
-        logout={this.logout}
-        showLoginPage={this.showLoginPage}
-        showHomePage={this.showHomePage}
-        showUserFavoritesPage={this.showUserFavoritesPage}
-        searchMovies={this.searchMovies}
-        user={this.state.user}
-      />
-      {page === "Login" && (
-        <Login login={this.login} error={this.state.error} />
-      )}
-      {(page === "Home" ||
-        page === "SearchResults" ||
-        page === "UserRatings") && (
-        <Main
-          pageView={this.state.pageView}
-          isLoggedIn={this.state.isLoggedIn}
-          movies={this.state.movies}
-          showMoviePage={this.showMoviePage}
-          rateMovie={this.rateMovie}
-          userRatings={this.state.userRatings}
-          deleteRating={this.deleteRating}
-          error={this.state.error}
-        />
-      )}
-      {page === "MoviePage" && (
-        <MoviePage
-          isLoggedIn={this.state.isLoggedIn}
-          movie={this.state.singleMovie}
-          error={this.state.error}
-          rateMovie={this.rateMovie}
-          userRating={this.state.singleMovieUserRating}
-          trailers={this.state.trailers}
-        />
-      )}
-    </div>
+        movies={this.state.movies}
+        rateMovie={this.rateMovie}
+        userRatings={this.state.userRatings}
+        deleteRating={this.deleteRating}
+        error={this.state.error}
+       />
+      );
+     }}
+    />
+    <Route
+     exact
+     path="/login"
+     render={() => {
+      return <Login login={this.login} error={this.state.error} />;
+     }}
+    />
+    <Route
+     exact
+     path="/movies/:id"
+     render={({ match }) => {
+      this.getSingleMovie(+match.params.id);
+      return (
+       <MoviePage
+        isLoggedIn={this.state.isLoggedIn}
+        movie={this.state.singleMovie}
+        error={this.state.error}
+        rateMovie={this.rateMovie}
+        userRating={this.state.singleMovieUserRating}
+        trailers={this.state.trailers}
+       />
+      );
+     }}
+    />
+    <Route
+     exact
+     path="/search-results"
+     render={() => {
+      return (
+       <Main
+        isLoggedIn={this.state.isLoggedIn}
+        movies={this.state.movies}
+        rateMovie={this.rateMovie}
+        userRatings={this.state.userRatings}
+        deleteRating={this.deleteRating}
+        error={this.state.error}
+       />
+      );
+     }}
+    />
+    <Route
+     exact
+     path="/user-ratings"
+     render={() => {
+      return (
+       <Main
+        showDeleteBtns={true}
+        isLoggedIn={this.state.isLoggedIn}
+        movies={this.state.movies}
+        rateMovie={this.rateMovie}
+        userRatings={this.state.userRatings}
+        deleteRating={this.deleteRating}
+        error={this.state.error}
+       />
+      );
+     }}
+    />
+   </div>
   );
  }
 }
 
-export default App
+export default withRouter(App)

@@ -13,12 +13,18 @@ nav {
 
   .button-box {
     @include rowDisplay();
-    button {
+    width: 250px;
+    .nav-btn {
       background: $slateBlack;
+      border-top: 1px solid white;
+      border-left: 1px solid white;
       border-radius: 6px;
       @include fontStyle();
       font-size: 1.3em;
+      text-decoration: none;
+      text-align: center;
       margin: 5px 3px;
+      padding: 2%;
         &:hover {
           box-shadow: 1px 1px 35px rgb(255, 255, 255);
         }

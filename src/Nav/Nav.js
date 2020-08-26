@@ -1,45 +1,41 @@
 import React from 'react'
 import './Nav.scss'
 import PropTypes from "prop-types"
+import { NavLink } from 'react-router-dom'
 
 const Nav = ({
   isLoggedIn, 
-  showHomePage, 
-  showLoginPage, 
   logout, 
   user,
-  showUserFavoritePage
+  showUserFavoritesPage,
+  showHomePage
   }) => {
   return (
-    <nav>
-      <h3 className={isLoggedIn ? "" : "hidden"}>Welcome, {user.name}!</h3>
-      <div className="button-box">
-        <button id="home-btn" onClick={showHomePage}>
-          Home
-        </button>
-        <button
-          className={isLoggedIn ? "" : "hidden"}
-          id="ratings-header-btn"
-          onClick={showUserFavoritePage}
-        >
-          Your Ratings
-        </button>
-        <button
-          className={isLoggedIn ? "hidden" : ""}
-          id="login-btn"
-          onClick={showLoginPage}
-        >
-          Login
-        </button>
-        <button
-          className={isLoggedIn ? "" : "hidden"}
-          id="logout-btn"
-          onClick={logout}
-        >
-          Logout
-        </button>
-      </div>
-    </nav>
+   <nav>
+    <h3 className={isLoggedIn ? "" : "hidden"}>Welcome, {user.name}!</h3>
+    <div className="button-box">
+     <NavLink to="/" className="nav-btn" onClick={showHomePage}>
+      Home
+     </NavLink>
+     <NavLink to="/login" className={`nav-btn ${isLoggedIn ? "hidden" : ""}`}>
+      Login
+     </NavLink>
+     <NavLink
+      to="/user-ratings"
+      className={`nav-btn ${isLoggedIn ? "" : "hidden"}`}
+      onClick={showUserFavoritesPage}
+     >
+      Your Ratings
+     </NavLink>
+     <NavLink
+      to='/'
+      className={`nav-btn ${isLoggedIn ? "" : "hidden"}`}
+      onClick={logout}
+     >
+      Logout
+     </NavLink>
+    </div>
+   </nav>
   );
 }
 

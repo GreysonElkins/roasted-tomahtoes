@@ -2,6 +2,7 @@ import React from 'react'
 import './MovieCard.scss'
 import PropTypes from "prop-types"
 import Rating from '../Rating/Rating'
+import {Link} from 'react-router-dom'
 
 const MovieCard = (props) => {
   const altText = `${props.movie.title} movie poster`
@@ -12,7 +13,7 @@ const MovieCard = (props) => {
   return (
     <article className="card" tabIndex="0">
       <div>
-      {props.pageView === "UserRatings" && 
+      {props.showDeleteBtns === true && 
         <button 
           className="delete-btn"
           onClick={() => props.deleteRating(props.userRating.id)}
@@ -20,12 +21,14 @@ const MovieCard = (props) => {
           Ⓧ
         </button>
       } 
-      <img
-        className="poster"
-        onClick={showMoviePage}
-        src={props.movie.poster_path}
-        alt={altText}
-      />
+      <Link to={`/movies/${props.movie.id}`}>
+        <img
+          className="poster"
+          // onClick={showMoviePage}
+          src={props.movie.poster_path}
+          alt={altText}
+        />
+      </Link>
       </div>
       <span className="card-info-box">
         <h4 className="movie-title">{props.movie.title}</h4>

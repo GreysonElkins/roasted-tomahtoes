@@ -13,14 +13,14 @@ const MovieCard = (props) => {
   return (
     <article className="card" tabIndex="0">
       <div>
-      {/* {props.pageView === "UserRatings" && 
+      {props.showDeleteBtns === true && 
         <button 
           className="delete-btn"
           onClick={() => props.deleteRating(props.userRating.id)}
         >
           Ⓧ
         </button>
-      }  */}
+      } 
       <Link to={`/movies/${props.movie.id}`}>
         <img
           className="poster"

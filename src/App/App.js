@@ -14,7 +14,6 @@ class App extends Component {
    isLoggedIn: false,
    movies: [],
    error: "",
-  //  pageView: "Home",
    user: { id: "", email: "", name: "" },
    singleMovie: {genres:[]},
    trailers: [],
@@ -285,6 +284,7 @@ class App extends Component {
         render={()=>{
           return (
             <Main
+              showDeleteBtns={false}
               isLoggedIn={this.state.isLoggedIn}
               movies={this.state.movies}
               rateMovie={this.rateMovie}
@@ -329,7 +329,8 @@ class App extends Component {
         <Route exact path='/user-ratings'
           render={() => {
             return (
-              <Main 
+              <Main
+                showDeleteBtns={true} 
                 isLoggedIn={this.state.isLoggedIn}
                 movies={this.state.movies}
                 rateMovie={this.rateMovie}

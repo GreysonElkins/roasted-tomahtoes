@@ -11,6 +11,7 @@ const Main = ({
   rateMovie, 
   userRatings,
   deleteRating,
+  showDeleteBtns
   }) => {
   const matchUserRatingWithMovie = (movie) => {
     if (userRatings.some((rating) => rating.movie_id === movie.id)) {
@@ -23,14 +24,17 @@ const Main = ({
   const movieCards = movies.map((movie, i) => {
       let matchingUserRating = matchUserRatingWithMovie(movie)
       
-      return <MovieCard 
+      return (
+       <MovieCard
         key={i}
-        movie={movie} 
+        movie={movie}
         isLoggedIn={isLoggedIn}
         rateMovie={rateMovie}
         userRating={matchingUserRating}
         deleteRating={deleteRating}
-    />
+        showDeleteBtns={showDeleteBtns}
+       />
+      );
   })
 
   return (

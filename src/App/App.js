@@ -23,6 +23,7 @@ class App extends Component {
  }
 
  componentDidMount = async () => {
+  this.checkLoggedIn() 
   try {
    const movies = await API.getData("movies");
    this.setState({ movies: this.sortMoviesByTitle(movies) });
@@ -30,6 +31,15 @@ class App extends Component {
    this.setState({ error: "Oops, something went wrong! 🙁 Please try again." });
   }
  };
+
+ checkLoggedIn = async () => {
+   const user = JSON.parse(localStorage.getItem('user'))
+   if (user) {
+     const userRatings = await API.getData(`users/${user.id}/ratings`)
+     const ratings = this.convertRatingsToStarValues(userRatings) 
+     this.setState({user: user, isLoggedIn: true, userRatings: ratings})
+   }
+ }
 
  showHomePage = async () => {
   try {
@@ -52,7 +62,7 @@ class App extends Component {
  };
 
  showLoginPage = () => {
-  this.setState({ error: "" });
+  this.setState({ error: '' });
  };
 
  login = async (loginState) => {
@@ -71,6 +81,7 @@ class App extends Component {
       user: user.user,
       error: "",
      });
+     localStorage.setItem(`user`, JSON.stringify(this.state.user));
     });
   } else {
    this.setState({
@@ -80,8 +91,9 @@ class App extends Component {
  };
 
  logout = () => {
-  this.setState({ pageView: "Home", isLoggedIn: false, user: "" });
-  this.showHomePage()
+  this.setState({ isLoggedIn: false, user: "" });
+  localStorage.removeItem('user');
+  this.showHomePage();
  };
 
  getSingleMovie = async (id) => {
@@ -245,7 +257,6 @@ class App extends Component {
   });
   return changedData;
  }
-
 
  convertRatingsToStarValues = (ratings) => {
   ratings.forEach((rating) => (rating.rating = rating.rating / 2));

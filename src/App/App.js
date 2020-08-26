@@ -14,7 +14,7 @@ class App extends Component {
    isLoggedIn: false,
    movies: [],
    error: "",
-   pageView: "Home",
+  //  pageView: "Home",
    user: { id: "", email: "", name: "" },
    singleMovie: {genres:[]},
    trailers: [],
@@ -68,7 +68,6 @@ class App extends Component {
  };
 
  showUserFavoritesPage = async () => {
-   console.log('hello')
   if (this.state.userRatings.length === 0) {
       try {
         API.getData(`users/${this.state.user.id}/ratings`)
@@ -279,6 +278,7 @@ class App extends Component {
         searchMovies={this.searchMovies}
         user={this.state.user}
         showUserFavoritesPage={this.showUserFavoritesPage}
+        showHomePage={this.showHomePage}
       />
       <Route 
         exact path ='/'

@@ -7,13 +7,14 @@ const Nav = ({
   isLoggedIn, 
   logout, 
   user,
-  showUserFavoritesPage
+  showUserFavoritesPage,
+  showHomePage
   }) => {
   return (
    <nav>
     <h3 className={isLoggedIn ? "" : "hidden"}>Welcome, {user.name}!</h3>
     <div className="button-box">
-     <NavLink to="/" className="nav-btn">
+     <NavLink to="/" className="nav-btn" onClick={showHomePage}>
       Home
      </NavLink>
      <NavLink to="/login" className={`nav-btn ${isLoggedIn ? "hidden" : ""}`}>

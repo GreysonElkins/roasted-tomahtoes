@@ -23,10 +23,11 @@ class App extends Component {
  }
 
  componentDidMount = async () => {
-  this.checkLoggedIn() 
-  try {
-   const movies = await API.getData("movies");
-   this.setState({ movies: this.sortMoviesByTitle(movies) });
+   try {
+      const movies = await API.getData("movies");
+      this.setState({movies: movies})
+      this.setCurrentPage()
+// setState({ movies: this.sortMoviesByTitle(movies) });
   } catch (error) {
    this.setState({ error: "Oops, something went wrong! 🙁 Please try again." });
   }
@@ -38,7 +39,25 @@ class App extends Component {
      const userRatings = await API.getData(`users/${user.id}/ratings`)
     //  const ratings = this.convertRatingsToStarValues(userRatings) 
      this.setState({user: user, isLoggedIn: true, userRatings: userRatings})
+     return true
+   } else {
+     return false
    }
+ }
+
+ setCurrentPage = () => {
+   const currentPage = this.props.history.location.pathname
+ 
+   this.checkLoggedIn().then((user) => {
+    if (currentPage === '/') {
+      this.setState({movies: this.sortMoviesByTitle(this.state.movies)})
+    } else if (user && currentPage === '/user-ratings') {
+      this.showUserFavoritesPage()
+    } else {
+      this.showHomePage()
+      this.props.history.push('/')
+    }
+  })
  }
 
  showHomePage = async () => {

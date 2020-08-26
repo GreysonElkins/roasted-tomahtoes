@@ -10,28 +10,31 @@ const Nav = ({
   showUserFavoritesPage
   }) => {
   return (
-    <nav>
-      <h3 className={isLoggedIn ? "" : "hidden"}>Welcome, {user.name}!</h3>
-      <div className="button-box">
-        <NavLink to="/" className="nav-btn">
-            Home
-        </NavLink>
-        <NavLink to="/login" className={`nav-btn ${ isLoggedIn ? "hidden" : ""}`}>
-          Login
-        </NavLink>
-        <NavLink to='/user-ratings' className={isLoggedIn ? "" : "hidden"}>
-          <button className='nav-btn' onClick={showUserFavoritesPage}>
-            Your Ratings
-          </button>
-        </NavLink>
-        <button
-          className={`nav-btn ${isLoggedIn ? "" : "hidden"}`}
-          onClick={logout}
-        >
-          Logout
-        </button>
-      </div>
-    </nav>
+   <nav>
+    <h3 className={isLoggedIn ? "" : "hidden"}>Welcome, {user.name}!</h3>
+    <div className="button-box">
+     <NavLink to="/" className="nav-btn">
+      Home
+     </NavLink>
+     <NavLink to="/login" className={`nav-btn ${isLoggedIn ? "hidden" : ""}`}>
+      Login
+     </NavLink>
+     <NavLink
+      to="/user-ratings"
+      className={`nav-btn ${isLoggedIn ? "" : "hidden"}`}
+      onClick={showUserFavoritesPage}
+     >
+      Your Ratings
+     </NavLink>
+     <NavLink
+      to='/'
+      className={`nav-btn ${isLoggedIn ? "" : "hidden"}`}
+      onClick={logout}
+     >
+      Logout
+     </NavLink>
+    </div>
+   </nav>
   );
 }
 

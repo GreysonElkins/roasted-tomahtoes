@@ -27,6 +27,7 @@ class App extends Component {
       const movies = await API.getData("movies");
       this.setState({movies: movies})
       this.setCurrentPage()
+// setState({ movies: this.sortMoviesByTitle(movies) });
   } catch (error) {
    this.setState({ error: "Oops, something went wrong! 🙁 Please try again." });
   }
@@ -35,7 +36,8 @@ class App extends Component {
  checkLoggedIn = async () => {
    const user = JSON.parse(localStorage.getItem('user'))
    if (user) {
-     const userRatings = await API.getData('ratings', this.state.user.id)
+     const userRatings = await API.getData(`users/${user.id}/ratings`)
+    //  const ratings = this.convertRatingsToStarValues(userRatings) 
      this.setState({user: user, isLoggedIn: true, userRatings: userRatings})
      return true
    } else {
@@ -62,7 +64,7 @@ class App extends Component {
   try {
    const movies = await API.getData("movies");
    if (this.state.isLoggedIn === true) {
-    API.getData('ratings').then((ratings) => {
+    API.getData(`users/${this.state.user.id}/ratings`).then((ratings) => {
      this.convertRatingsToStarValues(ratings);
      this.setState({
       movies: this.sortMoviesByTitle(movies),
@@ -86,7 +88,7 @@ class App extends Component {
   const response = await API.postData(loginState);
   const user = await response.json();
   if (response.status === 201) {
-   API.getData('ratings')
+   API.getData(`users/${user.user.id}/ratings`)
     .then((ratings) => {
      this.convertRatingsToStarValues(ratings);
      this.setState({ userRatings: ratings });
@@ -113,11 +115,11 @@ class App extends Component {
   this.showHomePage();
  };
 
- getSingleMovie = async (movieId) => {
+ getSingleMovie = async (id) => {
   try {
-   const movie = await API.getData('movies', movieId);
-   const rating = this.findMovieUserRating(movieId);
-   const trailers = await API.getData('movies', movieId);
+   const movie = await API.getData(`movies/${id}`);
+   const rating = this.findMovieUserRating(id);
+   const trailers = await API.getData(`movies/${id}/videos`);
    this.setState({
     singleMovie: movie,
     trailers: trailers,
@@ -132,7 +134,7 @@ class App extends Component {
  showUserFavoritesPage = async () => {
   if (this.state.userRatings.length === 0) {
    try {
-    API.getData('ratings', this.state.user.id)
+    API.getData(`users/${this.state.user.id}/ratings`)
      .then((data) => this.setState({ userRatings: data }))
      .then(() => {
       if (this.state.userRatings.length === 0) {
@@ -246,7 +248,7 @@ class App extends Component {
  deleteRating = (ratingID, userID = this.state.user.id) => {
   try {
    API.deleteData(userID, ratingID)
-    .then(() => API.getData("ratings", this.state.user.id))
+    .then(() => API.getData(`users/${userID}/ratings`))
     .then((ratings) => {
      console.log(ratings);
      this.setState({ userRatings: ratings });
@@ -286,7 +288,7 @@ class App extends Component {
   const user = this.state.user.id;
   this.removeRating(oldRating, user)
    .then(() => API.postData(rating, user))
-   .then(() => API.getData("ratings", this.state.user.id))
+   .then(() => API.getData(`users/${this.state.user.id}/ratings`))
    .then((ratings) => {
     this.convertRatingsToStarValues(ratings);
     this.setState({ userRatings: ratings });

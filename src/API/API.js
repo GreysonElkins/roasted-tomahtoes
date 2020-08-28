@@ -20,12 +20,9 @@ class API {
 
   static findRelevantPathAndData = (location, id) => {
     const pathAndData = {path: '', data: ''}
-    if (location === "movies" && !id) {
-      pathAndData.path = `${apiHead}/movies`;
-      pathAndData.data = `movies`;
-    } else if (location === "movies" && id) {
-      pathAndData.path = `${apiHead}/movies/${id}`;
-      pathAndData.data = `movie`;
+    if (location === "movies") {
+      pathAndData.path = `${apiHead}/movies/${id ? id : ''}`;
+      pathAndData.data = id ? `movie` : `movies`;
     } else if (location === "videos" && id) {
       pathAndData.path = `${apiHead}/movies/${id}/videos`;
       pathAndData.data = `videos`;
@@ -38,38 +35,34 @@ class API {
     return pathAndData
   }
 
-  
-
   static postData = async (info, id) => {
-    if (this.postInfoIsOk(info, id)) {
-      const path = id ? `users/${id}/ratings` : 'login'
-      try {
-        const response = await fetch(`${apiHead}/${path}`, {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(
-            info
-          )
-        })
-        return response
-      } catch (error) {
-        return error
-      }
+    const path = this.findPostPath(info, id)
+    try {
+      const response = await fetch(`${apiHead}/${path}`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+          info
+        )
+      })
+      return response
+    } catch (error) {
+      return error
     }
   }
-
-  static postInfoIsOk = (info, id) => {
+  
+  static findPostPath = (info, id) => {
     const acceptableUserInfo = ['email', 'password']
     const acceptableRatingInfo = ['rating', 'movie_id']
     const infoValues = Object.keys(info)
     if (id && infoValues.every(
-      value=> acceptableRatingInfo.includes(value))) {
-      return true
+        value=> acceptableRatingInfo.includes(value))) {
+      return `${apiHead}/${id}ratings`
     } else if (infoValues.every(
-      value => acceptableUserInfo.includes(value))) {
-      return true
+        value => acceptableUserInfo.includes(value))) {
+      return `${apiHead}/login`
     } else {
       throw new Error ('Something is wrong with the data for POST')
     }

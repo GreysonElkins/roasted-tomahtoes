@@ -37,6 +37,25 @@ class API {
     }
   }
 
+  findRelevantPathAndData = (location, id) => {
+    const pathAndData = {path: '', data: ''}
+    if (location === 'movies' && !id) {
+      pathAndData.path = `${apiHead}/movies`
+      pathAndData.data = `movies`
+    } else if (location === 'movies' && id) {
+      pathAndData.path = `${apiHead}/movies${id}`
+      pathAndData.data = `movie`
+    } else if (location === 'videos' && id) {
+      pathAndData.path = `${apiHead}/movies/${id}/videos`
+      pathAndData.data = `videos`
+    } else if (location === `ratings` && id) {
+      pathAndData.path = `${apiHead}/users/${id}/ratings`;
+      pathAndData.data = `ratings`;
+    }
+  }
+
+  
+
   static postData = async (info, id) => {
     if (this.postInfoIsOk(info, id)) {
       const path = id ? `users/${id}/ratings` : 'login'

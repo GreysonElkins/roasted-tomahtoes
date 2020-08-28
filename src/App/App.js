@@ -51,8 +51,13 @@ class App extends Component {
   checkIfLoggedIn = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
-      const userRatings = await API.getData(`ratings`, user.id);
-      this.setState({ user: user, isLoggedIn: true, userRatings: userRatings });
+      const userRatings = await API.getData(`ratings`, user.id)
+      this.convertRatingsToStarValues(userRatings);
+      this.setState({ 
+        user: user, 
+        isLoggedIn: true, 
+        userRatings: userRatings
+      });
       return true;
     } else {
       return false;
@@ -271,13 +276,10 @@ class App extends Component {
   };
 // HANDLE RATING
   rateMovie = async (rating) => {
-    const oldRating = this.state.userRatings.find(
-      (oldRating) => oldRating.movie_id === rating.movie_id
-    );
-    const user = this.state.user.id;
-    this.removeRating(oldRating, user)
-      .then(() => API.postData(rating, user))
-      .then(() => API.getData(`ratings`, this.state.user.id))
+    const userId = this.state.user.id;
+    await this.checkForOldRating(rating, userId)
+      .then(() => API.postData(rating, userId))
+      .then(() => API.getData(`ratings`, userId))
       .then((ratings) => {
         this.convertRatingsToStarValues(ratings);
         this.setState({ userRatings: ratings });
@@ -290,7 +292,10 @@ class App extends Component {
       });
   };
 
-  removeRating = async (oldRating, user) => {
+  checkForOldRating = async (rating, user) => {
+    const oldRating = this.state.userRatings.find(
+      (oldRating) => oldRating.movie_id === rating.movie_id
+    )
     if (oldRating) {
       return await API.deleteData(user, oldRating.id);
     }

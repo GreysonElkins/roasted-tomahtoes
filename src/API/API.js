@@ -38,7 +38,7 @@ class API {
   static postData = async (info, id) => {
     const path = this.findPostPath(info, id)
     try {
-      const response = await fetch(`${apiHead}/${path}`, {
+      const response = await fetch(path, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +59,7 @@ class API {
     const infoValues = Object.keys(info)
     if (id && infoValues.every(
         value=> acceptableRatingInfo.includes(value))) {
-      return `${apiHead}/${id}ratings`
+      return `${apiHead}/users/${id}/ratings`
     } else if (infoValues.every(
         value => acceptableUserInfo.includes(value))) {
       return `${apiHead}/login`

@@ -21,16 +21,16 @@ class App extends Component {
       userRatings: [],
     };
   }
-  // ONLOAD and RELOAD
+// ONLOAD and RELOAD
   componentDidMount = async () => {
     try {
-      const movies = await API.getData('movies')
-      this.setState({ movies: this.sortMoviesByTitle(movies) })
-      this.setCurrentPage()
+      const movies = await API.getData("movies");
+      this.setState({ movies: this.sortMoviesByTitle(movies) });
+      this.setCurrentPage();
     } catch (error) {
       this.setState({
         error: "Oops, something went wrong! 🙁 Please try again.",
-      })
+      });
     }
   };
 
@@ -58,7 +58,7 @@ class App extends Component {
       return false;
     }
   };
-  // PAGE VIEWS
+// PAGE VIEWS
   showHomePage = async () => {
     try {
       const movies = await API.getData("movies");
@@ -104,7 +104,7 @@ class App extends Component {
       this.setState({ movies: this.filterFavoriteMovies() });
     }
   };
-  // USER HANDLING
+// USER HANDLING
   login = async (loginState) => {
     const response = await API.postData(loginState);
     const user = await response.json();
@@ -192,7 +192,7 @@ class App extends Component {
       return b.userRating.rating - a.userRating.rating;
     });
   };
-  // SEARCH
+// SEARCH
   searchMovies = async (query) => {
     query = query.toLowerCase();
     const searchQueries = query.split(" ");
@@ -260,12 +260,12 @@ class App extends Component {
 
   refreshMoviesForSearch = async () => {
     try {
-      this.setState({ pageView: 'SearchResults' });
-      return await API.getData('movies');
+      this.setState({ pageView: "SearchResults" });
+      return await API.getData("movies");
     } catch (error) {
       this.setState({
-        pageView: 'SearchResults',
-        error: 'No movies were found. Please refine your search.',
+        pageView: "SearchResults",
+        error: "No movies were found. Please refine your search.",
       });
     }
   };
@@ -274,10 +274,10 @@ class App extends Component {
     const oldRating = this.state.userRatings.find(
       (oldRating) => oldRating.movie_id === rating.movie_id
     );
-    const userId = this.state.user.id;
-    this.deleteRating(oldRating.id)
-      .then(() => API.postData(rating, userId))
-      .then(() => API.getData(`ratings`, userId))
+    const user = this.state.user.id;
+    this.removeRating(oldRating, user)
+      .then(() => API.postData(rating, user))
+      .then(() => API.getData(`ratings`, this.state.user.id))
       .then((ratings) => {
         this.convertRatingsToStarValues(ratings);
         this.setState({ userRatings: ratings });
@@ -299,8 +299,9 @@ class App extends Component {
   deleteRating = (ratingID, userID = this.state.user.id) => {
     try {
       API.deleteData(userID, ratingID)
-        .then(() => API.getData(`ratings`, userID))
+        .then(() => API.getData(`users/${userID}/ratings`))
         .then((ratings) => {
+          console.log(ratings);
           this.setState({ userRatings: ratings });
           this.showUserFavoritesPage();
         });

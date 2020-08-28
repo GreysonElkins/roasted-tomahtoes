@@ -19,6 +19,7 @@ class App extends Component {
       trailers: [],
       singleMovieUserRating: {},
       userRatings: [],
+      userComments: []
     };
   }
 // ONLOAD and RELOAD
@@ -98,7 +99,7 @@ class App extends Component {
             } else {
               this.setState({ movies: this.filterFavoriteMovies() });
             }
-          });
+          })
       } catch (error) {
         this.setState({
           error: `You haven't rated any movies yet! 
@@ -146,16 +147,20 @@ class App extends Component {
       const movie = await API.getData(`movies`, movie_id);
       const rating = this.findMovieUserRating(movie_id);
       const trailers = await API.getData(`videos`, movie_id);
+      // const comments = await API.getData(`comments`, movie_id )
       this.setState({
         singleMovie: movie,
         trailers: trailers,
         singleMovieUserRating: rating,
         error: "",
+        // userComments: comments
       });
     } catch (error) {
       this.setState({ error: error });
     }
   };
+
+
 
   findMovieUserRating = (movie_id) => {
     let rating = this.state.userRatings.find(
@@ -370,6 +375,7 @@ class App extends Component {
                 rateMovie={this.rateMovie}
                 userRating={this.state.singleMovieUserRating}
                 trailers={this.state.trailers}
+                userComments={this.state.userComments}
               />
             );
           }}

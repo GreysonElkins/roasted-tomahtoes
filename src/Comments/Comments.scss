@@ -1,0 +1,5 @@
+@import '../styles/_variables.scss';
+
+.comments-section {
+  @include rowDisplay()
+}

@@ -6,8 +6,9 @@ import moment from 'moment'
 import Trailer from '../Trailer/Trailer'
 import Rating from '../Rating/Rating'
 import Overview from '../Overview/Overview'
+import Comments from '../Comments/Comments'
 
-const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) => {
+const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating, userComments}) => {
   const altText = `${movie.title} movie poster`
   let trailerClips = trailers.map((trailer, i) => {
     return (
@@ -54,6 +55,7 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) 
           <div className='trailerList'>{trailerClips}</div>}
         </section>
       </section>
+        <Comments userComments={userComments} />
   </section>
   ); 
 }

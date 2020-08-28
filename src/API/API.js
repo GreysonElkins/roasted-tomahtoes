@@ -7,66 +7,62 @@ class API {
     // can I not use this in static methods because the API wasn't constructed?
   // }
 
-  static getData = async location => {
-    let response
-    let data
-    let key = this.findRelevantData(location)
+  static getData = async (location, id) => {
+    let pathAndData = this.findRelevantPathAndData(location, id);
     try {
-      response = await fetch(`${apiHead}/${location}`)
-      data = await response.json()
+      let response = await fetch(pathAndData.path)
+      let data = await response.json()
+      return data[pathAndData.data]
     } catch (error) {
       return error
     }
-    return data[key]
-    //should this get moved into the `try` block?
   }
-  
-  static findRelevantData = location => {
-    const acceptableData = ['movies', 'movie', 'videos', 'ratings']
-    const apiPath = location.split('/') 
-    if (apiPath.length === 3 
-      && acceptableData.includes(apiPath[2])) {
-      return apiPath[2]
-    } else if (apiPath.length === 2 
-      && acceptableData.includes('movies')) {
-      return 'movie'
-    } else if (location.includes('movies')) {
-      return 'movies'
+
+  static findRelevantPathAndData = (location, id) => {
+    const pathAndData = {path: '', data: ''}
+    if (location === "movies") {
+      pathAndData.path = `${apiHead}/movies/${id ? id : ''}`;
+      pathAndData.data = id ? `movie` : `movies`;
+    } else if (location === "videos" && id) {
+      pathAndData.path = `${apiHead}/movies/${id}/videos`;
+      pathAndData.data = `videos`;
+    } else if (location === `ratings` && id) {
+      pathAndData.path = `${apiHead}/users/${id}/ratings`;
+      pathAndData.data = `ratings`;
     } else {
-      throw new Error("A bad path was provided for fetching data")
+      throw new Error("A bad path was provided for fetching data");
     }
+    return pathAndData
   }
 
   static postData = async (info, id) => {
-    if (this.postInfoIsOk(info, id)) {
-      const path = id ? `users/${id}/ratings` : 'login'
-      try {
-        const response = await fetch(`${apiHead}/${path}`, {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(
-            info
-          )
-        })
-        return response
-      } catch (error) {
-        return error
-      }
+    const path = this.findPostPath(info, id)
+    try {
+      const response = await fetch(path, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+          info
+        )
+      })
+      return response
+    } catch (error) {
+      return error
     }
   }
-
-  static postInfoIsOk = (info, id) => {
+  
+  static findPostPath = (info, id) => {
     const acceptableUserInfo = ['email', 'password']
     const acceptableRatingInfo = ['rating', 'movie_id']
     const infoValues = Object.keys(info)
     if (id && infoValues.every(
-      value=> acceptableRatingInfo.includes(value))) {
-      return true
+        value=> acceptableRatingInfo.includes(value))) {
+      return `${apiHead}/users/${id}/ratings`
     } else if (infoValues.every(
-      value => acceptableUserInfo.includes(value))) {
-      return true
+        value => acceptableUserInfo.includes(value))) {
+      return `${apiHead}/login`
     } else {
       throw new Error ('Something is wrong with the data for POST')
     }

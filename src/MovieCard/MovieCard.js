@@ -6,9 +6,9 @@ import {Link} from 'react-router-dom'
 
 const MovieCard = (props) => {
   const altText = `${props.movie.title} movie poster`
-    const showMoviePage = () => {
-      props.showMoviePage(props.movie.id);
-    }; 
+    // const showMoviePage = () => {
+    //   props.showMoviePage(props.movie.id);
+    // }; 
 
   return (
     <article className="card" tabIndex="0">

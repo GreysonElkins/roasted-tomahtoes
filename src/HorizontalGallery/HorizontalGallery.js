@@ -1,8 +1,10 @@
-import React, { component } from 'react'
+import React from 'react'
+import MovieCard from '../MovieCard/MovieCard'
 
 const HorizontalScroll = ({
   movieSelection, 
   galleryTitle,
+  allMovies,
   isLoggedIn,
   rateMovie,
   userRatings,
@@ -17,25 +19,38 @@ const HorizontalScroll = ({
     }
   }
 
+  const findRelevantMovies = () => {
+    debugger
+    if (galleryTitle === 'favorites') {
+      return movieSelection.map(movie_id => {
+        return allMovies.find(movie => movie_id === movie.id)
+      })
+    }
+  }
+
+  let relevantMovies = findRelevantMovies()
   let movieCards
   
-  if (movieSelection.length > 0) {
-    movieCards movieSelection.map((movie, i), () => {
+  if (relevantMovies.length > 0) {
+    movieCards = relevantMovies.map((movie, i) => {
       return (<MovieCard 
-        key={`fav${i}`}
+        key={`${galleryTitle}${i}`}
         movie={movie}
         isLoggedIn={isLoggedIn}
         rateMovie={rateMovie}
-        userRating={this.matchingUserWithMovie(movie)}
+        userRating={matchUserRatingWithMovie(movie)}
         deleteRating={deleteRating}
         showDeleteBtns={false}
       />)
     })
-    } 
+  } 
 
   return (
     <div class="HorizontalScroll">
+      <h2>{galleryTitle}</h2>
       {movieCards}
     </div>
   )
 }
+
+export default HorizontalScroll

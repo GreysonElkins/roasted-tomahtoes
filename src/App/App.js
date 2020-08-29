@@ -3,6 +3,7 @@ import './App.scss'
 import Header from '../Header/Header'
 import Login from '../Login/Login'
 import Main from '../Main/Main'
+import HorizontalGallery from '../HorizontalGallery/HorizontalGallery'
 import MoviePage from '../MoviePage/MoviePage'
 import API from '../API/API'
 import { Route, withRouter } from 'react-router-dom'
@@ -405,15 +406,26 @@ class App extends Component {
           path="/user-ratings"
           render={() => {
             return (
-              <Main
-                showDeleteBtns={true}
-                isLoggedIn={this.state.isLoggedIn}
-                movies={this.state.movies}
-                rateMovie={this.rateMovie}
-                userRatings={this.state.userRatings}
-                deleteRating={this.deleteRating}
-                error={this.state.error}
-              />
+              <>
+                <HorizontalGallery
+                  movieSelection={this.state.userFavorites}
+                  galleryTitle={"favorites"}
+                  allMovies={this.state.movies}
+                  isLoggedIn={this.state.isLoggedIn}
+                  rateMovie={this.rateMovie}
+                  userRatings={this.state.userRatings}
+                  deleteRating={this.deleteRating}
+                />
+                <Main
+                  showDeleteBtns={true}
+                  isLoggedIn={this.state.isLoggedIn}
+                  movies={this.state.movies}
+                  rateMovie={this.rateMovie}
+                  userRatings={this.state.userRatings}
+                  deleteRating={this.deleteRating}
+                  error={this.state.error}
+                />
+              </>
             );
           }}
         />

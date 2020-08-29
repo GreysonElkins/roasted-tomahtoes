@@ -19,6 +19,7 @@ class App extends Component {
       trailers: [],
       singleMovieUserRating: {},
       userRatings: [],
+      userFavorites: []
     };
   }
 // ONLOAD and RELOAD
@@ -116,8 +117,9 @@ class App extends Component {
     if (response.status === 201) {
       API.getData(`ratings`, this.state.user.id)
         .then((ratings) => {
-          this.convertRatingsToStarValues(ratings);
-          this.setState({ userRatings: ratings });
+          this.convertRatingsToStarValues(ratings)
+          this.setState({ userRatings: ratings })
+          this.getUserFavorites()
         })
         .then(() => {
           this.props.history.push("/");
@@ -133,13 +135,17 @@ class App extends Component {
         error: "Incorrect email or password. Please try again.",
       });
     }
-  };
+  }
 
   logout = () => {
     this.setState({ isLoggedIn: false, user: "" });
     localStorage.removeItem("user");
     this.showHomePage();
-  };
+  }
+
+  getUserFavorites = () => {
+    API.getData('favorites', this.user.id)
+  }
   //MOVIE HANDLING and SORTING
   getSingleMovie = async (movie_id) => {
     try {

@@ -1,6 +1,7 @@
 import React from 'react'
 
 const apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
+const localHost = `localhost:3001/api/v1`;
 class API {
   // constructor() {
     // this.apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
@@ -21,14 +22,17 @@ class API {
   static findRelevantPathAndData = (location, id) => {
     const pathAndData = {path: '', data: ''}
     if (location === "movies") {
-      pathAndData.path = `${apiHead}/movies/${id ? id : ''}`;
-      pathAndData.data = id ? `movie` : `movies`;
+      pathAndData.path = `${apiHead}/movies/${id ? id : ''}`
+      pathAndData.data = id ? `movie` : `movies`
     } else if (location === "videos" && id) {
-      pathAndData.path = `${apiHead}/movies/${id}/videos`;
-      pathAndData.data = `videos`;
+      pathAndData.path = `${apiHead}/movies/${id}/videos`
+      pathAndData.data = `videos`
     } else if (location === `ratings` && id) {
-      pathAndData.path = `${apiHead}/users/${id}/ratings`;
-      pathAndData.data = `ratings`;
+      pathAndData.path = `${apiHead}/users/${id}/ratings`
+      pathAndData.data = `ratings`
+    } else if (location === `favorites`) {
+      pathAndData.path = `${localHost}/favorites`
+      pathAndData.data = `favorites`
     } else {
       throw new Error("A bad path was provided for fetching data");
     }

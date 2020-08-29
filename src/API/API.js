@@ -70,7 +70,7 @@ class API {
         return `${apiHead}/login`
     } else if (infoValues.every(
         value => acceptableFavoriteInfo.includes(value))) {
-        return `${localHost}/'favorites`
+        return `${localHost}/favorites`
     } else {
       throw new Error ('Something is wrong with the data for POST')
     }
@@ -95,7 +95,7 @@ class API {
     if (ratingID) {
       return `${apiHead}/users/${id}/ratings/${ratingID}`;
     } else {
-      return `${localHost}/favorites/${ratingID}`
+      return `${localHost}/favorites/${id}`
     }
   }
 }

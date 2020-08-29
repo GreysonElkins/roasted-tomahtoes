@@ -9,7 +9,8 @@ const HorizontalGallery = ({
   rateMovie,
   userRatings,
   deleteRating,
-  checkIfFavorite
+  checkIfFavorite,
+  toggleFavorite
   }) => {
   
   const matchUserRatingWithMovie = (movie) => {
@@ -33,16 +34,19 @@ const HorizontalGallery = ({
   const movieCards = movieSelection.map((movie, i) => {
       let rating = matchUserRatingWithMovie(movie)
       let isFavorite = checkIfFavorite(movie)
-      return (<MovieCard 
-        key={`${galleryTitle}${i}`}
-        movie={movie}
-        isFavorite={isFavorite}
-        isLoggedIn={isLoggedIn}
-        rateMovie={rateMovie}
-        userRating={rating}
-        deleteRating={deleteRating}
-        showDeleteBtns={false}
-      />)
+      return (
+        <MovieCard
+          key={`${galleryTitle}${i}`}
+          movie={movie}
+          isFavorite={isFavorite}
+          isLoggedIn={isLoggedIn}
+          toggleFavorite={toggleFavorite}
+          rateMovie={rateMovie}
+          userRating={rating}
+          deleteRating={deleteRating}
+          showDeleteBtns={false}
+        />
+      );
     })
    
 

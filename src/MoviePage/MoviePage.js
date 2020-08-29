@@ -15,6 +15,7 @@ const MoviePage = ({
   trailers, 
   rateMovie, 
   userRating, 
+  toggleFavorite,
   checkIfFavorite
 }) => {
   const altText = `${movie.title} movie poster`
@@ -33,7 +34,9 @@ const MoviePage = ({
           <h1 className="movie-title">
             {movie.title} {isLoggedIn 
               && <FavoriteButton 
-               isFavorite={isFavorite}
+                movie={movie}
+                isFavorite={isFavorite}
+                toggleFavorite={toggleFavorite}
               />
             }
           </h1>

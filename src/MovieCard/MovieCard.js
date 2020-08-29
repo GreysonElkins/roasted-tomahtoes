@@ -23,8 +23,14 @@ const MovieCard = (props) => {
             Ⓧ
           </button>
         )}
-        <div class="FavoriteButton">
-        {props.isLoggedIn && <FavoriteButton isFavorite={props.isFavorite}/>}
+        <div className="FavoriteButton">
+        {props.isLoggedIn 
+          && <FavoriteButton 
+            movie={props.movie}
+            isFavorite={props.isFavorite}
+            toggleFavorite={props.toggleFavorite}
+          />
+        }
         </div>
         <Link to={`/movies/${props.movie.id}`}>
           <img

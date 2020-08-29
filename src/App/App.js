@@ -318,15 +318,11 @@ class App extends Component {
     return this.state.userFavorites.some(favorite => favorite.id === movie.id)
   }
 
-  toggleFavorite = (isFavorite, movie_id) => {
-    if (isFavorite) {
+  toggleFavorite = (movie_id) => {
       const body = {id: movie_id}
       API.postData(body)
         .then(() => this.getUserFavorites())
-    } else {
-      API.deleteData(movie_id)
-        .then(() => this.getUserFavorites())
-    }
+    
   } 
   // APP
   render() {

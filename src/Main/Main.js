@@ -12,7 +12,8 @@ const Main = ({
   checkIfFavorite,
   userRatings,
   deleteRating,
-  showDeleteBtns
+  showDeleteBtns,
+  toggleFavorite
   }) => {
     
   const matchUserRatingWithMovie = (movie) => {
@@ -27,16 +28,17 @@ const Main = ({
       let matchingUserRating = matchUserRatingWithMovie(movie)
       let isFavorite = checkIfFavorite(movie)
       return (
-       <MovieCard
-        key={i}
-        movie={movie}
-        isLoggedIn={isLoggedIn}
-        rateMovie={rateMovie}
-        isFavorite={isFavorite}
-        userRating={matchingUserRating}
-        deleteRating={deleteRating}
-        showDeleteBtns={showDeleteBtns}
-       />
+        <MovieCard
+          key={i}
+          movie={movie}
+          isLoggedIn={isLoggedIn}
+          toggleFavorite={toggleFavorite}
+          rateMovie={rateMovie}
+          isFavorite={isFavorite}
+          userRating={matchingUserRating}
+          deleteRating={deleteRating}
+          showDeleteBtns={showDeleteBtns}
+        />
       );
   })
 

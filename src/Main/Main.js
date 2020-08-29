@@ -9,6 +9,7 @@ const Main = ({
   movies, 
   isLoggedIn, 
   rateMovie, 
+  checkIfFavorite,
   userRatings,
   deleteRating,
   showDeleteBtns
@@ -24,13 +25,14 @@ const Main = ({
   
   const movieCards = movies.map((movie, i) => {
       let matchingUserRating = matchUserRatingWithMovie(movie)
-      
+      let isFavorite = checkIfFavorite(movie)
       return (
        <MovieCard
         key={i}
         movie={movie}
         isLoggedIn={isLoggedIn}
         rateMovie={rateMovie}
+        isFavorite={isFavorite}
         userRating={matchingUserRating}
         deleteRating={deleteRating}
         showDeleteBtns={showDeleteBtns}

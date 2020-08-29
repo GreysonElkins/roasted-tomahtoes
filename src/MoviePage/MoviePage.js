@@ -8,13 +8,22 @@ import Rating from '../Rating/Rating'
 import Overview from '../Overview/Overview'
 import FavoriteButton from '../FavoriteButton/FavoriteButton'
 
-const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) => {
+const MoviePage = ({
+  error, 
+  movie, 
+  isLoggedIn, 
+  trailers, 
+  rateMovie, 
+  userRating, 
+  checkIfFavorite
+}) => {
   const altText = `${movie.title} movie poster`
   let trailerClips = trailers.map((trailer, i) => {
     return (
      <Trailer trailer={trailer} key={i} />
     )
   })
+  const isFavorite = checkIfFavorite(movie)
   return (
     <section className="movie-page">
       {error && <Error error={error} />}
@@ -22,7 +31,11 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) 
         <img src={movie.poster_path} alt={altText} />
         <section className="movie-content">
           <h1 className="movie-title">
-            {movie.title} {isLoggedIn && <FavoriteButton />}
+            {movie.title} {isLoggedIn 
+              && <FavoriteButton 
+               isFavorite={isFavorite}
+              />
+            }
           </h1>
             <span className='ratings-box'>
               <h3 className="avg-rating">🍅 {(movie.average_rating * 10).toFixed(0)}% </h3>

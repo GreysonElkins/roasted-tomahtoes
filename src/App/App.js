@@ -12,15 +12,15 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      isLoggedIn: false,
       movies: [],
       error: "",
+      isLoggedIn: false,
       user: { id: "", email: "", name: "" },
+      userRatings: [],
+      userFavorites: [],
       singleMovie: { genres: [] },
       trailers: [],
       singleMovieUserRating: {},
-      userRatings: [],
-      userFavorites: [],
     };
   }
   // ONLOAD and RELOAD
@@ -30,6 +30,7 @@ class App extends Component {
       this.setState({ movies: this.sortMoviesByTitle(movies) });
       this.setCurrentPage();
     } catch (error) {
+      console.log(error)
       this.setState({
         error: "Oops, something went wrong! 🙁 Please try again.",
       });
@@ -39,14 +40,16 @@ class App extends Component {
   setCurrentPage = () => {
     const currentPage = this.props.history.location.pathname;
     this.checkIfLoggedIn().then((user) => {
+      this.getUserFavorites()
       if (currentPage === "/") {
         this.setState({ movies: this.sortMoviesByTitle(this.state.movies) });
       } else if (user && currentPage === "/user-ratings") {
-        this.showUserRatingsAndFavoritesPage();
+        this.showRatingsPage();
       } else {
         this.showHomePage();
         this.props.history.push("/");
       }
+      // figure out how to do a single movie page
     });
   };
 
@@ -55,7 +58,7 @@ class App extends Component {
     if (user) {
       const userRatings = await API.getData(`ratings`, user.id);
       this.convertRatingsToStarValues(userRatings)
-      this.getUserFavorites()
+      // this.getUserFavorites()
       this.setState({
         user: user,
         isLoggedIn: true,
@@ -70,56 +73,32 @@ class App extends Component {
   showHomePage = async () => {
     try {
       const movies = await API.getData("movies");
-      if (this.state.isLoggedIn === true) {
-        API.getData(`ratings`, this.state.user.id).then((ratings) => {
-          this.convertRatingsToStarValues(ratings);
-          this.setState({
-            movies: this.sortMoviesByTitle(movies),
-            userRatings: ratings,
-            error: "",
-          });
-        });
-      } else {
-        this.setState({ error: "", movies: this.sortMoviesByTitle(movies) });
-      }
+        this.setState({ movies: this.sortMoviesByTitle(movies), error: "" });
+        this.props.history.push("/");
     } catch (error) {
       this.setState({ error: error });
     }
   };
 
-  showUserRatingsAndFavoritesPage = async () => {
+  showRatingsPage = async () => {
     if (this.state.userRatings.length === 0) {
-      try {
-        API.getData(`ratings`, this.state.user.id)
-          .then((data) => this.setState({ userRatings: data }))
-          .then(() => {
-            if (this.state.userRatings.length === 0) {
-              this.setState({
-                error: `You haven't rated any movies yet! 
-                They'll be here when you do`,
-              });
-            } else {
-              this.setState({ movies: this.filterFavoriteMovies() });
-            }
-          });
-      } catch (error) {
-        this.setState({
-          error: `You haven't rated any movies yet! 
-            They'll be here when you do`,
-        });
-      }
+      this.setState({
+        error: `You haven't rated any movies yet! 
+        They'll be here when you do`,
+        // this should get checked again
+      });
     } else {
-      this.setState({ movies: this.filterFavoriteMovies() });
+      this.setState({ movies: this.filterRatedMovies() });
     }
   };
 
   getUserFavorites = async () => {
-    const userFavs = await API.getData("favorites", this.state.user.id);
-    this.setState({ userFavorites: userFavs })
+    const userFavIds = await API.getData("favorites", this.state.user.id)
+    const favoriteMovies = this.state.movies.filter(movie => userFavIds.includes(movie.id))
+    this.setState({ userFavorites: favoriteMovies })
   }
   // USER HANDLING
   login = async (loginState) => {
-    debugger
     const response = await API.postData(loginState);
     const user = await response.json();
     if (response.status === 201) {
@@ -130,12 +109,12 @@ class App extends Component {
           this.getUserFavorites();
         })
         .then(() => {
-          this.props.history.push("/");
           this.setState({
             isLoggedIn: true,
             user: user.user,
             error: "",
           });
+          this.showHomePage()
           localStorage.setItem(`user`, JSON.stringify(this.state.user));
         });
     } else {
@@ -176,13 +155,13 @@ class App extends Component {
   };
   // this is doubled in Main.js
 
-  filterFavoriteMovies = () => {
-    const favoriteMovies = this.state.movies.filter((movie) => {
+  filterRatedMovies = () => {
+    const ratedMovies = this.state.movies.filter((movie) => {
       return this.state.userRatings.some(
         (rating) => rating.movie_id === movie.id
       );
     });
-    return this.sortByRating(favoriteMovies);
+    return this.sortByRating(ratedMovies);
   };
 
   sortMoviesByTitle(movies) {
@@ -319,7 +298,7 @@ class App extends Component {
         .then((ratings) => {
           console.log(ratings);
           this.setState({ userRatings: ratings });
-          this.showUserRatingsAndFavoritesPage();
+          this.showRatingsPage();
         });
     } catch (error) {
       this.setState({
@@ -341,7 +320,7 @@ class App extends Component {
           logout={this.logout}
           searchMovies={this.searchMovies}
           user={this.state.user}
-          showUserRatingsAndFavoritesPage={this.showUserRatingsAndFavoritesPage}
+          showRatingsPage={this.showRatingsPage}
           showHomePage={this.showHomePage}
         />
         <Route
@@ -410,7 +389,6 @@ class App extends Component {
                 <HorizontalGallery
                   movieSelection={this.state.userFavorites}
                   galleryTitle={"favorites"}
-                  allMovies={this.state.movies}
                   isLoggedIn={this.state.isLoggedIn}
                   rateMovie={this.rateMovie}
                   userRatings={this.state.userRatings}

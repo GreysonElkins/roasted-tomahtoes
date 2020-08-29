@@ -2,6 +2,7 @@ import React from 'react'
 import './MovieCard.scss'
 import PropTypes from "prop-types"
 import Rating from '../Rating/Rating'
+import FavoriteButton from '../FavoriteButton/FavoriteButton'
 import {Link} from 'react-router-dom'
 
 const MovieCard = (props) => {
@@ -21,6 +22,7 @@ const MovieCard = (props) => {
           Ⓧ
         </button>
       } 
+      <FavoriteButton />
       <Link to={`/movies/${props.movie.id}`}>
         <img
           className="poster"

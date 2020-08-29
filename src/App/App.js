@@ -41,7 +41,7 @@ class App extends Component {
       if (currentPage === "/") {
         this.setState({ movies: this.sortMoviesByTitle(this.state.movies) });
       } else if (user && currentPage === "/user-ratings") {
-        this.showUserFavoritesPage();
+        this.showUserRatingsAndFavoritesPage();
       } else {
         this.showHomePage();
         this.props.history.push("/");
@@ -86,7 +86,7 @@ class App extends Component {
     }
   };
 
-  showUserFavoritesPage = async () => {
+  showUserRatingsAndFavoritesPage = async () => {
     if (this.state.userRatings.length === 0) {
       try {
         API.getData(`ratings`, this.state.user.id)
@@ -318,7 +318,7 @@ class App extends Component {
         .then((ratings) => {
           console.log(ratings);
           this.setState({ userRatings: ratings });
-          this.showUserFavoritesPage();
+          this.showUserRatingsAndFavoritesPage();
         });
     } catch (error) {
       this.setState({
@@ -340,7 +340,7 @@ class App extends Component {
           logout={this.logout}
           searchMovies={this.searchMovies}
           user={this.state.user}
-          showUserFavoritesPage={this.showUserFavoritesPage}
+          showUserRatingsAndFavoritesPage={this.showUserRatingsAndFavoritesPage}
           showHomePage={this.showHomePage}
         />
         <Route

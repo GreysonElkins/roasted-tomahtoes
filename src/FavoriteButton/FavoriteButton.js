@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 
+
 class FavoriteButton extends Component {
   constructor(props) {
     super(props)
@@ -16,7 +17,7 @@ class FavoriteButton extends Component {
         id="emptyFavoriteIcon"
         onClick={() => {}}
         onMouseEnter={() => this.setState({ currentValue: true })}
-        onMoustLeave={() => this.setState({ currentValue: undefined })}>
+        onMouseLeave={() => this.setState({ currentValue: undefined })}>
           {heart}
       </span>
     )

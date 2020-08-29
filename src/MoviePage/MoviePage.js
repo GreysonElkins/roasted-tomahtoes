@@ -6,6 +6,7 @@ import moment from 'moment'
 import Trailer from '../Trailer/Trailer'
 import Rating from '../Rating/Rating'
 import Overview from '../Overview/Overview'
+import FavoriteButton from '../FavoriteButton/FavoriteButton'
 
 const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) => {
   const altText = `${movie.title} movie poster`
@@ -20,7 +21,7 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) 
       <section className='all-movie-info'>
         <img src={movie.poster_path} alt={altText} />
         <section className="movie-content">
-          <h1 className="movie-title">{movie.title}</h1>
+          <h1 className="movie-title">{movie.title} <FavoriteButton /></h1>
             <span className='ratings-box'>
               <h3 className="avg-rating">🍅 {(movie.average_rating * 10).toFixed(0)}% </h3>
               {isLoggedIn 

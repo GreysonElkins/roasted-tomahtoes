@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import Rating from '../Rating/Rating'
 import FavoriteButton from '../FavoriteButton/FavoriteButton'
 import {Link} from 'react-router-dom'
+import "../FavoriteButton/FavoriteButton.scss";
 
 const MovieCard = (props) => {
   const altText = `${props.movie.title} movie poster`
@@ -14,23 +15,25 @@ const MovieCard = (props) => {
   return (
     <article className="card" tabIndex="0">
       <div>
-      {props.showDeleteBtns === true && 
-        <button 
-          className="delete-btn"
-          onClick={() => props.deleteRating(props.userRating.id)}
-        >
-          Ⓧ
-        </button>
-      } 
-      <FavoriteButton />
-      <Link to={`/movies/${props.movie.id}`}>
-        <img
-          className="poster"
-          // onClick={showMoviePage}
-          src={props.movie.poster_path}
-          alt={altText}
-        />
-      </Link>
+        {props.showDeleteBtns === true && (
+          <button
+            className="delete-btn"
+            onClick={() => props.deleteRating(props.userRating.id)}
+          >
+            Ⓧ
+          </button>
+        )}
+        <div class="FavoriteButton">
+        <FavoriteButton />
+        </div>
+        <Link to={`/movies/${props.movie.id}`}>
+          <img
+            className="poster"
+            // onClick={showMoviePage}
+            src={props.movie.poster_path}
+            alt={altText}
+          />
+        </Link>
       </div>
       <span className="card-info-box">
         <h4 className="movie-title">{props.movie.title}</h4>

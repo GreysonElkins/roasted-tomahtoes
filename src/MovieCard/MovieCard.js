@@ -24,7 +24,7 @@ const MovieCard = (props) => {
           </button>
         )}
         <div class="FavoriteButton">
-        <FavoriteButton />
+        {props.isLoggedIn && <FavoriteButton />}
         </div>
         <Link to={`/movies/${props.movie.id}`}>
           <img

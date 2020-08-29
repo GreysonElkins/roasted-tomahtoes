@@ -21,7 +21,9 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating}) 
       <section className='all-movie-info'>
         <img src={movie.poster_path} alt={altText} />
         <section className="movie-content">
-          <h1 className="movie-title">{movie.title} <FavoriteButton /></h1>
+          <h1 className="movie-title">
+            {movie.title} {isLoggedIn && <FavoriteButton />}
+          </h1>
             <span className='ratings-box'>
               <h3 className="avg-rating">🍅 {(movie.average_rating * 10).toFixed(0)}% </h3>
               {isLoggedIn 

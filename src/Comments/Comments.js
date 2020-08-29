@@ -10,9 +10,18 @@ const Comments = ({userComments, isLoggedIn}) => {
   //   </div>)
   // })
   return (
-    <section className='comment-section'>
-      <p><b>JohnDoe:</b> This movie is awesome!</p>
-    </section>)
+   <section className="comment-section">
+    <p>
+     <b>JohnDoe:</b> This movie is awesome!
+    </p>
+    <p>
+     <b>JohnDoe:</b> This movie is awesome!
+    </p>
+    <p>
+     <b>JohnDoe:</b> This movie is awesome!
+    </p>
+   </section>
+  );
 }
 
 

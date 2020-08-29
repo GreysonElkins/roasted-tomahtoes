@@ -1,5 +1,6 @@
 @import '../styles/_variables.scss';
 
-.comments-section {
-  @include rowDisplay()
+.comment-section {
+  @include rowDisplay();
+  width: 600px;
 }

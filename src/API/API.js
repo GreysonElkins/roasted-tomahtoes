@@ -60,21 +60,26 @@ class API {
   static findPostPath = (info, id) => {
     const acceptableUserInfo = ['email', 'password']
     const acceptableRatingInfo = ['rating', 'movie_id']
+    const acceptableFavoriteInfo = ['id']
     const infoValues = Object.keys(info)
     if (id && infoValues.every(
         value=> acceptableRatingInfo.includes(value))) {
-      return `${apiHead}/users/${id}/ratings`
+        return `${apiHead}/users/${id}/ratings`
     } else if (infoValues.every(
         value => acceptableUserInfo.includes(value))) {
-      return `${apiHead}/login`
+        return `${apiHead}/login`
+    } else if (infoValues.every(
+        value => acceptableFavoriteInfo.includes(value))) {
+        return `${localHost}/'favorites`
     } else {
       throw new Error ('Something is wrong with the data for POST')
     }
   }
 
-  static deleteData = async (userID, ratingID) => {
+  static deleteData = async (id, ratingID) => {
+    const path = this.findDeletePath(id, ratingID)
     try {
-      const response = await fetch(`${apiHead}/users/${userID}/ratings/${ratingID}`, {
+      const response = await fetch(path, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -85,6 +90,15 @@ class API {
       return error
     }
   }
+  
+  static findDeletePath = (id, ratingID) => {
+    if (ratingID) {
+      return `${apiHead}/users/${id}/ratings/${ratingID}`;
+    } else {
+      return `${localHost}/favorites/${ratingID}`
+    }
+  }
 }
+
 
 export default API

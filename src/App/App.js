@@ -296,7 +296,7 @@ class App extends Component {
   deleteRating = (ratingID, userID = this.state.user.id) => {
     try {
       API.deleteData(userID, ratingID)
-        .then(() => API.getData(`users/${userID}/ratings`))
+        .then(() => API.getData(`ratings`, this.state.user.id))
         .then((ratings) => {
           console.log(ratings);
           this.setState({ userRatings: ratings });
@@ -317,6 +317,15 @@ class App extends Component {
   checkIfFavorite = (movie) => {
     return this.state.userFavorites.some(favorite => favorite.id === movie.id)
   }
+
+  // toggleFavorite = (isFavorite, movie_id) => {
+  //   if (isFavorite) {
+  //     const body = {id: movie_id}
+  //     API.postData(body)
+  //   } else {
+  //     API.
+  //   }
+  // } 
   // APP
   render() {
     return (

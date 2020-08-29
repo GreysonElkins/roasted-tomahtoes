@@ -318,14 +318,16 @@ class App extends Component {
     return this.state.userFavorites.some(favorite => favorite.id === movie.id)
   }
 
-  // toggleFavorite = (isFavorite, movie_id) => {
-  //   if (isFavorite) {
-  //     const body = {id: movie_id}
-  //     API.postData(body)
-  //   } else {
-  //     API.
-  //   }
-  // } 
+  toggleFavorite = (isFavorite, movie_id) => {
+    if (isFavorite) {
+      const body = {id: movie_id}
+      API.postData(body)
+        .then(() => this.getUserFavorites())
+    } else {
+      API.deleteData(movie_id)
+        .then(() => this.getUserFavorites())
+    }
+  } 
   // APP
   render() {
     return (
@@ -347,6 +349,7 @@ class App extends Component {
                 showDeleteBtns={false}
                 isLoggedIn={this.state.isLoggedIn}
                 checkIfFavorite={this.checkIfFavorite}
+                toggleFavorite={this.toggleFavorite}
                 movies={this.state.movies}
                 rateMovie={this.rateMovie}
                 userRatings={this.state.userRatings}
@@ -372,6 +375,7 @@ class App extends Component {
               <MoviePage
                 isLoggedIn={this.state.isLoggedIn}
                 checkIfFavorite={this.checkIfFavorite}
+                toggleFavorite={this.toggleFavorite}
                 movie={this.state.singleMovie}
                 error={this.state.error}
                 rateMovie={this.rateMovie}
@@ -389,6 +393,7 @@ class App extends Component {
               <Main
                 isLoggedIn={this.state.isLoggedIn}
                 checkIfFavorite={this.checkIfFavorite}
+                toggleFavorite={this.toggleFavorite}
                 movies={this.state.movies}
                 rateMovie={this.rateMovie}
                 userRatings={this.state.userRatings}
@@ -407,6 +412,7 @@ class App extends Component {
                 <HorizontalGallery
                   movieSelection={this.state.userFavorites}
                   checkIfFavorite={this.checkIfFavorite}
+                  toggleFavorite={this.toggleFavorite}
                   galleryTitle={"favorites"}
                   isLoggedIn={this.state.isLoggedIn}
                   rateMovie={this.rateMovie}
@@ -417,6 +423,7 @@ class App extends Component {
                   showDeleteBtns={true}
                   isLoggedIn={this.state.isLoggedIn}
                   checkIfFavorite={this.checkIfFavorite}
+                  toggleFavorite={this.toggleFavorite}
                   movies={this.state.ratedMovies}
                   rateMovie={this.rateMovie}
                   userRatings={this.state.userRatings}

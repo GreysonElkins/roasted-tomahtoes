@@ -11,7 +11,7 @@ const Header = ({
   user, 
   logout, 
   searchMovies,
-  showUserFavoritesPage
+  showRatingsPage
   }) => {
     return (
       <header id='header'>
@@ -23,7 +23,7 @@ const Header = ({
           isLoggedIn={isLoggedIn} 
           showLoginPage={showLoginPage}
           showHomePage={showHomePage}
-          showUserFavoritesPage={showUserFavoritesPage}
+          showRatingsPage={showRatingsPage}
           user={user} 
           logout={logout}
           id='search'

@@ -1,10 +1,9 @@
 import React from 'react'
 import MovieCard from '../MovieCard/MovieCard'
 
-const HorizontalScroll = ({
+const HorizontalGallery = ({
   movieSelection, 
   galleryTitle,
-  allMovies,
   isLoggedIn,
   rateMovie,
   userRatings,
@@ -19,38 +18,37 @@ const HorizontalScroll = ({
     }
   }
 
-  const findRelevantMovies = () => {
-    debugger
-    if (galleryTitle === 'favorites') {
-      return movieSelection.map(movie_id => {
-        return allMovies.find(movie => movie_id === movie.id)
-      })
-    }
-  }
+  // const findRelevantMovies = (movieSelection, allMovies) => {
+  //   debugger
+  //   if (galleryTitle === 'favorites') {
+  //     return movieSelection.map(movie_id => {
+  //       return allMovies.find(movie => movie_id === movie.id)
+  //     })
+  //   }
+  // }
 
-  let relevantMovies = findRelevantMovies()
-  let movieCards
-  
-  if (relevantMovies.length > 0) {
-    movieCards = relevantMovies.map((movie, i) => {
+  // let relevantMovies = findRelevantMovies(movieSelection, allMovies);
+  const movieCards = movieSelection.map((movie, i) => {
+      let rating = matchUserRatingWithMovie(movie)
+
       return (<MovieCard 
         key={`${galleryTitle}${i}`}
         movie={movie}
         isLoggedIn={isLoggedIn}
         rateMovie={rateMovie}
-        userRating={matchUserRatingWithMovie(movie)}
+        userRating={rating}
         deleteRating={deleteRating}
         showDeleteBtns={false}
       />)
     })
-  } 
+   
 
   return (
-    <div class="HorizontalScroll">
+    <div className="HorizontalGallery">
       <h2>{galleryTitle}</h2>
       {movieCards}
     </div>
   )
 }
 
-export default HorizontalScroll
+export default HorizontalGallery

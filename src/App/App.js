@@ -415,7 +415,17 @@ class App extends Component {
                   userRatings={this.state.userRatings}
                   deleteRating={this.deleteRating}
                 />
-                <Main
+                <HorizontalGallery
+                  movieSelection={this.state.ratedMovies}
+                  checkIfFavorite={this.checkIfFavorite}
+                  toggleFavorite={this.toggleFavorite}
+                  galleryTitle={"5-stars"}
+                  isLoggedIn={this.state.isLoggedIn}
+                  rateMovie={this.rateMovie}
+                  userRatings={this.state.userRatings}
+                  deleteRating={this.deleteRating}
+                />
+                {/* <Main
                   showDeleteBtns={true}
                   isLoggedIn={this.state.isLoggedIn}
                   checkIfFavorite={this.checkIfFavorite}
@@ -425,7 +435,7 @@ class App extends Component {
                   userRatings={this.state.userRatings}
                   deleteRating={this.deleteRating}
                   error={this.state.error}
-                />
+                /> */}
               </>
             );
           }}

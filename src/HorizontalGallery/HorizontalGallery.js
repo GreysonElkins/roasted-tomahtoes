@@ -21,14 +21,11 @@ const HorizontalGallery = ({
     }
   }
 
-  // const findRelevantMovies = (movieSelection, allMovies) => {
-  //   debugger
-  //   if (galleryTitle === 'favorites') {
-  //     return movieSelection.map(movie_id => {
-  //       return allMovies.find(movie => movie_id === movie.id)
-  //     })
-  //   }
-  // }
+  if (galleryTitle.includes('star')) {
+    debugger
+    const requiredRating = +galleryTitle.substring(0, 1)
+    movieSelection = movieSelection.filter(movie => movie.userRating.rating === requiredRating)
+  }
 
   // let relevantMovies = findRelevantMovies(movieSelection, allMovies);
   const movieCards = movieSelection.map((movie, i) => {
@@ -49,15 +46,18 @@ const HorizontalGallery = ({
       );
     })
    
-
-  return (
-    <>
-    <h2>{galleryTitle}</h2>
-    <div className="HorizontalGallery">
-    {movieCards}
-    </div>
-    </>
-  )
+  if(movieCards.length > 0) {
+    return (
+      <>
+      <h2>{galleryTitle}</h2>
+      <div className="HorizontalGallery">
+      {movieCards}
+      </div>
+      </>
+    )
+  } else {
+    return ''
+  }
 }
 
 export default HorizontalGallery

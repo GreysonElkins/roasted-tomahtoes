@@ -403,6 +403,22 @@ class App extends Component {
           exact
           path="/user-ratings"
           render={() => {
+            let ratingGalleries = []
+            for (let i = 5; i > 0; i--) {
+              ratingGalleries.push(
+                <HorizontalGallery
+                  movieSelection={this.state.ratedMovies}
+                  checkIfFavorite={this.checkIfFavorite}
+                  toggleFavorite={this.toggleFavorite}
+                  galleryTitle={`${i}-star Movies`}
+                  isLoggedIn={this.state.isLoggedIn}
+                  rateMovie={this.rateMovie}
+                  userRatings={this.state.userRatings}
+                  deleteRating={this.deleteRating}
+                />
+              );
+            }
+
             return (
               <>
                 <HorizontalGallery
@@ -415,16 +431,7 @@ class App extends Component {
                   userRatings={this.state.userRatings}
                   deleteRating={this.deleteRating}
                 />
-                <HorizontalGallery
-                  movieSelection={this.state.ratedMovies}
-                  checkIfFavorite={this.checkIfFavorite}
-                  toggleFavorite={this.toggleFavorite}
-                  galleryTitle={"5-stars"}
-                  isLoggedIn={this.state.isLoggedIn}
-                  rateMovie={this.rateMovie}
-                  userRatings={this.state.userRatings}
-                  deleteRating={this.deleteRating}
-                />
+                {ratingGalleries}
                 {/* <Main
                   showDeleteBtns={true}
                   isLoggedIn={this.state.isLoggedIn}

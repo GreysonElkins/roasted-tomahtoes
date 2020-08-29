@@ -1,5 +1,6 @@
 import React from 'react'
 import MovieCard from '../MovieCard/MovieCard'
+import './HorizontalGallery.scss'
 
 const HorizontalGallery = ({
   movieSelection, 
@@ -44,10 +45,12 @@ const HorizontalGallery = ({
    
 
   return (
+    <>
+    <h2>{galleryTitle}</h2>
     <div className="HorizontalGallery">
-      <h2>{galleryTitle}</h2>
-      {movieCards}
+    {movieCards}
     </div>
+    </>
   )
 }
 

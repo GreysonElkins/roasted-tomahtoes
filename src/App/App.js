@@ -274,6 +274,7 @@ class App extends Component {
       .then((ratings) => {
         this.convertRatingsToStarValues(ratings);
         this.setState({ userRatings: ratings });
+        this.filterRatedMovies()
         if (this.state.singleMovieUserRating !== {}) {
           const newRating = this.findMovieUserRating(
             this.state.singleMovieUserRating.movie_id

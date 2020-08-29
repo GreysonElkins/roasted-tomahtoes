@@ -1,6 +1,17 @@
 @import '../styles/_variables.scss';
 
-.HorizontalScroll {
+h2 {
+  @include fontStyle;
+  margin: 7em 2em 0em 2em;
+}
+.HorizontalGallery {
+  display: flex;
+  border: red inset 3px;
+  justify-content: center;
+  margin: .5em auto -7em auto;
+  flex-direction: row;
+  flex-wrap: none;
   height: 30em;
+  width: 98%;
   overflow: scroll;
 }

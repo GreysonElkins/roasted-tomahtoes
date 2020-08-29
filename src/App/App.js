@@ -19,10 +19,10 @@ class App extends Component {
       trailers: [],
       singleMovieUserRating: {},
       userRatings: [],
-      userFavorites: []
+      userFavorites: [],
     };
   }
-// ONLOAD and RELOAD
+  // ONLOAD and RELOAD
   componentDidMount = async () => {
     try {
       const movies = await API.getData("movies");
@@ -52,19 +52,20 @@ class App extends Component {
   checkIfLoggedIn = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
-      const userRatings = await API.getData(`ratings`, user.id)
-      this.convertRatingsToStarValues(userRatings);
-      this.setState({ 
-        user: user, 
-        isLoggedIn: true, 
-        userRatings: userRatings
+      const userRatings = await API.getData(`ratings`, user.id);
+      this.convertRatingsToStarValues(userRatings)
+      this.getUserFavorites()
+      this.setState({
+        user: user,
+        isLoggedIn: true,
+        userRatings: userRatings,
       });
       return true;
     } else {
       return false;
     }
   };
-// PAGE VIEWS
+  // PAGE VIEWS
   showHomePage = async () => {
     try {
       const movies = await API.getData("movies");
@@ -110,16 +111,22 @@ class App extends Component {
       this.setState({ movies: this.filterFavoriteMovies() });
     }
   };
-// USER HANDLING
+
+  getUserFavorites = async () => {
+    const userFavs = await API.getData("favorites", this.state.user.id);
+    this.setState({ userFavorites: userFavs })
+  }
+  // USER HANDLING
   login = async (loginState) => {
+    debugger
     const response = await API.postData(loginState);
     const user = await response.json();
     if (response.status === 201) {
-      API.getData(`ratings`, this.state.user.id)
+      API.getData(`ratings`, user.user.id)
         .then((ratings) => {
-          this.convertRatingsToStarValues(ratings)
-          this.setState({ userRatings: ratings })
-          this.getUserFavorites()
+          this.convertRatingsToStarValues(ratings);
+          this.setState({ userRatings: ratings });
+          this.getUserFavorites();
         })
         .then(() => {
           this.props.history.push("/");
@@ -135,17 +142,14 @@ class App extends Component {
         error: "Incorrect email or password. Please try again.",
       });
     }
-  }
+  };
 
   logout = () => {
     this.setState({ isLoggedIn: false, user: "" });
     localStorage.removeItem("user");
     this.showHomePage();
-  }
+  };
 
-  getUserFavorites = () => {
-    API.getData('favorites', this.user.id)
-  }
   //MOVIE HANDLING and SORTING
   getSingleMovie = async (movie_id) => {
     try {
@@ -203,7 +207,7 @@ class App extends Component {
       return b.userRating.rating - a.userRating.rating;
     });
   };
-// SEARCH
+  // SEARCH
   searchMovies = async (query) => {
     query = query.toLowerCase();
     const searchQueries = query.split(" ");
@@ -280,7 +284,7 @@ class App extends Component {
       });
     }
   };
-// HANDLE RATING
+  // HANDLE RATING
   rateMovie = async (rating) => {
     const userId = this.state.user.id;
     await this.checkForOldRating(rating, userId)
@@ -301,7 +305,7 @@ class App extends Component {
   checkForOldRating = async (rating, user) => {
     const oldRating = this.state.userRatings.find(
       (oldRating) => oldRating.movie_id === rating.movie_id
-    )
+    );
     if (oldRating) {
       return await API.deleteData(user, oldRating.id);
     }
@@ -327,7 +331,7 @@ class App extends Component {
   convertRatingsToStarValues = (ratings) => {
     ratings.forEach((rating) => (rating.rating = rating.rating / 2));
   };
-// APP
+  // APP
   render() {
     return (
       <div className="App">

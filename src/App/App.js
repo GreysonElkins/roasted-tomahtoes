@@ -13,6 +13,7 @@ class App extends Component {
     super();
     this.state = {
       movies: [],
+      ratedMovies: [],
       error: "",
       isLoggedIn: false,
       user: { id: "", email: "", name: "" },
@@ -88,7 +89,7 @@ class App extends Component {
         // this should get checked again
       });
     } else {
-      this.setState({ movies: this.filterRatedMovies() });
+      this.setState({ ratedMovies: this.filterRatedMovies() });
     }
   };
 
@@ -397,7 +398,7 @@ class App extends Component {
                 <Main
                   showDeleteBtns={true}
                   isLoggedIn={this.state.isLoggedIn}
-                  movies={this.state.movies}
+                  movies={this.state.ratedMovies}
                   rateMovie={this.rateMovie}
                   userRatings={this.state.userRatings}
                   deleteRating={this.deleteRating}

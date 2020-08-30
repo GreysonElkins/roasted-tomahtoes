@@ -24,6 +24,7 @@ class App extends Component {
       singleMovie: { genres: [] },
       trailers: [],
       singleMovieUserRating: {},
+      moviesByCategory: {}
     };
   }
   // ONLOAD and RELOAD
@@ -327,32 +328,48 @@ class App extends Component {
         .then(() => this.getUserFavorites())
     
   } 
-
-  findSortingCategories = async (sortValue) => {
-    return (API.getData('movies')
-      .then((movies) => {
-        return movies.reduce(async (categories, movie) => {
-          let fetchData = await categories
-          const allMovieData = await API.getData(`movies`, movie.id)
-          let category = await allMovieData[sortValue]
-          if(sortValue === 'release_date') category = category.substring(0, 4)
-          // if(allMovieData === undefined) console.log('broken', movie)
-          fetchData = fetchData.concat(category)
-          return fetchData
-        }, Promise.resolve([]))
-      })
-      .then((categories) => {
-        let sortCategories = categories.filter((category, i) => categories.indexOf(category) === i)
-        sortValue === 'release_date' 
-          && sortCategories.sort((a, b) => +b - +a)
-        return sortCategories
-      })
-    )
+  //SORT CATEGORICALLY
+  storeMoviesWithAllData = async () => {
+    const allMovies = await API.getData(`movies`)
+    return await allMovies.reduce(async (allMoviesWithData, movie) => {
+      const moviesData = await allMoviesWithData
+      const newMovie = await API.getData(`movies`, movie.id)
+      newMovie && moviesData.push(newMovie)
+      return moviesData
+    }, Promise.resolve([]))
   }
 
-  createGalleriesPerCategory = (category) => {
-    this.findSortingCategories(category) 
-      .then(categories => categories.forEach(category => console.log(category)))
+  findSortingCategories = async (movies, sortValue) => {
+      const categories = await movies.reduce(async (categories, movie) => {
+          let fetchData = await categories
+          const allMovieData = await API.getData(`movies`, movie.id)
+          let category = await allMovieData && allMovieData[sortValue]
+          if(sortValue === 'release_date' && category) category = category.substring(0, 4)
+          // if(allMovieData === undefined) console.log('broken', movie)
+          if(category) fetchData = fetchData.concat(category)
+          return fetchData
+        }, Promise.resolve([]))
+  
+      let sortCategories = await categories.filter((category, i) => categories.indexOf(category) === i)
+      sortValue === 'release_date' 
+        && sortCategories.sort((a, b) => +a - +b)
+      console.log(sortCategories)
+      return sortCategories
+  }
+  
+
+  sortMoviesByCategory = async (sortValue) => {
+    const allMoviesWithData = await this.storeMoviesWithAllData()
+    const sortCategories = await this.findSortingCategories(allMoviesWithData, sortValue)
+    const sortedMovies = sortCategories.reduce((sortedMovies, category) => {
+      sortedMovies[category] = allMoviesWithData.filter(movie => movie[sortValue].includes(category))
+      return sortedMovies
+    }, {})
+    this.setState({moviesByCategory: sortedMovies})
+  }
+
+  createCategoricalMovieGalleries = async (category) => {
+    
   }
   // APP
   render() {
@@ -467,19 +484,31 @@ class App extends Component {
         />
         <Route 
           exact path="/test-sort/:category"
-          render={async ({ match }) => {
-            this.createGalleriesPerCategory(match.params.category)
-            return (<HorizontalGallery
-                  movieSelection={this.state.userFavorites}
+          render={({ match }) => {
+            this.sortMoviesByCategory(match.params.category)
+            let galleries = Object.keys(this.state.moviesByCategory)
+            match.params.category === "release_date" 
+            &&  galleries.sort((a, b) => +b - +a);
+            let categoricalGalleries = galleries.map((gallery, i) => {
+              return (
+                <HorizontalGallery
+                  movieSelection={this.state.moviesByCategory[gallery]}
                   checkIfFavorite={this.checkIfFavorite}
                   toggleFavorite={this.toggleFavorite}
-                  galleryTitle={"favorites"}
+                  galleryTitle={galleries[i]}
                   isLoggedIn={this.state.isLoggedIn}
                   rateMovie={this.rateMovie}
                   userRatings={this.state.userRatings}
                   deleteRating={this.deleteRating}
-                />)
-            
+                />
+              );
+            })
+            return (
+              <>
+                <span className="spacer"></span>
+                {categoricalGalleries}
+              </>
+            )
           }}
         />
       </div>

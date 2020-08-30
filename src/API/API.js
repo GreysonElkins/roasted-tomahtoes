@@ -61,6 +61,7 @@ class API {
   static findPostPath = (info, id) => {
     const acceptableUserInfo = ['email', 'password']
     const acceptableRatingInfo = ['rating', 'movie_id']
+    const acceptableCommentsInfo = ['comment', 'author']
     const infoValues = Object.keys(info)
     if (id && infoValues.every(
         value=> acceptableRatingInfo.includes(value))) {
@@ -68,6 +69,9 @@ class API {
     } else if (infoValues.every(
         value => acceptableUserInfo.includes(value))) {
       return `${apiHead}/login`
+    } else if (infoValues.every(
+        value => acceptableCommentsInfo.includes(value))) {
+      return `${localHost}/movies/${id}/comments`
     } else {
       throw new Error ('Something is wrong with the data for POST')
     }

@@ -8,7 +8,7 @@ import Rating from '../Rating/Rating'
 import Overview from '../Overview/Overview'
 import Comments from '../Comments/Comments'
 
-const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating, userComments}) => {
+const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating, userComments, submitMovieComment, user}) => {
   const altText = `${movie.title} movie poster`
   let trailerClips = trailers.map((trailer, i) => {
     return (
@@ -55,7 +55,7 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating, u
           <div className='trailerList'>{trailerClips}</div>}
         </section>
       </section>
-        <Comments userComments={userComments} error={error} isLoggedIn={isLoggedIn} />
+        <Comments userComments={userComments} error={error} isLoggedIn={isLoggedIn} submitMovieComment={submitMovieComment} movie={movie} user={user}/>
   </section>
   ); 
 }

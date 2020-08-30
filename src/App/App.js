@@ -147,13 +147,13 @@ class App extends Component {
       const movie = await API.getData(`movies`, movie_id);
       const rating = this.findMovieUserRating(movie_id);
       const trailers = await API.getData(`videos`, movie_id);
-      // const comments = await API.getData(`comments`, movie_id )
+      const comments = await API.getData(`comments`, movie_id )
       this.setState({
         singleMovie: movie,
         trailers: trailers,
         singleMovieUserRating: rating,
         error: "",
-        // userComments: comments
+        userComments: comments
       });
     } catch (error) {
       this.setState({ error: error });

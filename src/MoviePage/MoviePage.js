@@ -55,7 +55,7 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating, u
           <div className='trailerList'>{trailerClips}</div>}
         </section>
       </section>
-        <Comments userComments={userComments} />
+        <Comments userComments={userComments} error={error} />
   </section>
   ); 
 }

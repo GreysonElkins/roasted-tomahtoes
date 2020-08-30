@@ -2,16 +2,22 @@
 
 h2 {
   @include fontStyle;
-  margin: 7em 2em 0em 2em;
+  margin: 5em 2em -2em 2em;
 }
+
+.linebreak {
+  // color: red
+  border-top: 1px inset red;
+}
+
 .HorizontalGallery {
   display: flex;
-  border: red inset 3px;
-  justify-content: center;
+  border-bottom: red inset 3px;
+  justify-content: start;
   margin: .5em auto -7em auto;
   flex-direction: row;
   flex-wrap: none;
-  height: 30em;
-  width: 98%;
+  // height: 30em;
+  width: 90%;
   overflow: scroll;
 }

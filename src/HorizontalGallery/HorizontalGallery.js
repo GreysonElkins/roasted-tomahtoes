@@ -22,7 +22,6 @@ const HorizontalGallery = ({
   }
 
   if (galleryTitle.includes('star')) {
-    debugger
     const requiredRating = +galleryTitle.substring(0, 1)
     movieSelection = movieSelection.filter(movie => movie.userRating.rating === requiredRating)
   }
@@ -53,6 +52,7 @@ const HorizontalGallery = ({
       <div className="HorizontalGallery">
       {movieCards}
       </div>
+      <hr className="linebreak"/>
       </>
     )
   } else {

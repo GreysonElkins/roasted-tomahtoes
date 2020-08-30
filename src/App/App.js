@@ -432,17 +432,6 @@ class App extends Component {
                   deleteRating={this.deleteRating}
                 />
                 {ratingGalleries}
-                {/* <Main
-                  showDeleteBtns={true}
-                  isLoggedIn={this.state.isLoggedIn}
-                  checkIfFavorite={this.checkIfFavorite}
-                  toggleFavorite={this.toggleFavorite}
-                  movies={this.state.ratedMovies}
-                  rateMovie={this.rateMovie}
-                  userRatings={this.state.userRatings}
-                  deleteRating={this.deleteRating}
-                  error={this.state.error}
-                /> */}
               </>
             );
           }}

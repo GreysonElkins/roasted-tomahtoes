@@ -3,4 +3,25 @@
 .comment-section {
   @include rowDisplay();
   width: 600px;
+  form {
+    @include rowDisplay()
+  }
+   input { 
+    @include input();
+    margin: 10px;
+    width: 300px;
+    padding: .5%;
+  }
+
+  button {
+    color: white;
+    background: red;
+    border-radius: 6px;
+    margin-top: 5px;
+    @include fontStyle();
+    font-size: 1em;
+    &:hover {
+       box-shadow: 1px 1px 35px rgb(255, 255, 255);
+    }
+  }
 }

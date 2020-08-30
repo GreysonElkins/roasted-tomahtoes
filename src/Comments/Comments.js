@@ -1,33 +1,51 @@
-import React from 'react'
+import React, { Component } from 'react'
 import moment from 'moment'
 import './Comments.scss'
 import PropTypes from 'prop-types'
 import Error from '../Error/Error'
 
-const Comments = ({userComments, isLoggedIn, error}) => {
-  const comments = userComments.map(comment => {
+class Comments extends Component {
+ constructor(props) {
+  super(props);
+  this.state = { newComment: {} };
+ }
+
+ handleChange = (event) => {
+  this.setState({ newComment: event.target.value });
+ };
+
+ getComments = () => {
+   this.props.userComments.map((comment) => {
     return (
-      <p><b>{comment.author}:</b> {comment.comment}</p>)
-  })
+     <p>
+      <b>{comment.author}:</b> {comment.comment}
+     </p>
+    );
+   });
+ } 
+
+
+ render() {
   return (
    <section className="comment-section">
-    {error && <Error error={error} />}
-    {comments}
-    {isLoggedIn && (
-     <form className="comment-form">
+    {this.props.error && <Error error={this.props.error} />}
+    {this.getComments()}
+    {this.props.isLoggedIn && (
+     <form className="comment-form" onSubmit={this.submitComment}>
       <input
        aria-label="comment-input"
-      //  type="password"
        name="comment"
-       placeholder="Password"
-      //  onChange={this.handleChange}
+       type='text'
+       placeholder="Add movie comment"
+       onChange={this.handleChange}
+       max="140"
       />
-      <button className="comment-btn">Submit Comment</button>
+      <button className="comment-btn">Submit</button>
      </form>
     )}
    </section>
   );
+ }
 }
-
 
 export default Comments

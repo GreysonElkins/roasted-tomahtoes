@@ -161,7 +161,6 @@ class App extends Component {
   };
 
 
-
   findMovieUserRating = (movie_id) => {
     let rating = this.state.userRatings.find(
       (rating) => rating.movie_id === movie_id

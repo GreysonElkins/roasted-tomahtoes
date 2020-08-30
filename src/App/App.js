@@ -19,6 +19,7 @@ class App extends Component {
       trailers: [],
       singleMovieUserRating: {},
       userRatings: [],
+      userComments : []
     };
   }
 // ONLOAD and RELOAD
@@ -146,10 +147,12 @@ class App extends Component {
       const movie = await API.getData(`movies`, movie_id);
       const rating = this.findMovieUserRating(movie_id);
       const trailers = await API.getData(`videos`, movie_id);
+      const comments = await API.getData('comments', movie_id)
       this.setState({
         singleMovie: movie,
         trailers: trailers,
         singleMovieUserRating: rating,
+        userComments: comments,
         error: "",
       });
     } catch (error) {
@@ -369,6 +372,7 @@ class App extends Component {
                 error={this.state.error}
                 rateMovie={this.rateMovie}
                 userRating={this.state.singleMovieUserRating}
+                userComments={this.state.userComments}
                 trailers={this.state.trailers}
               />
             );

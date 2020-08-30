@@ -2,7 +2,7 @@
 
 h2 {
   @include fontStyle;
-  margin: 5em 2em -2em 2em;
+  margin: 0 2em -2em 2em;
 }
 
 .linebreak {
@@ -10,14 +10,20 @@ h2 {
   border-top: 1px inset $tomahtoRed;
 }
 
+.spacer {
+  height: 9em;
+}
+
 .HorizontalGallery {
   display: flex;
+  position: relative;
   border-bottom: red inset 3px;
   justify-content: start;
-  margin: .5em auto -7em auto;
+  margin: .5em auto 0 auto;
   flex-direction: row;
   flex-wrap: none;
   // height: 30em;
   width: 90%;
   overflow: scroll;
+  // z-index: 3;
 }

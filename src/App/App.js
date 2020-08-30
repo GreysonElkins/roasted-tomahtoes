@@ -7,6 +7,7 @@ import HorizontalGallery from '../HorizontalGallery/HorizontalGallery'
 import MoviePage from '../MoviePage/MoviePage'
 import API from '../API/API'
 import { Route, withRouter } from 'react-router-dom'
+import '../HorizontalGallery/HorizontalGallery.scss'
 import { array } from 'prop-types'
 
 class App extends Component {
@@ -47,7 +48,7 @@ class App extends Component {
         this.setState({ movies: this.sortMoviesByTitle(this.state.movies) });
       } else if (user && currentPage === "/user-ratings") {
         this.showRatingsPage();
-      }
+      } 
       //  else {
       //   this.showHomePage();
       //   this.props.history.push("/");
@@ -327,15 +328,31 @@ class App extends Component {
     
   } 
 
-  findSortingCategories = (sortValue) => {
-    let sortCategories = []
-    this.state.movies.forEach(async (movie) => {
-      const allMovieData = await API.getData(`movies`, movie.id)
-      let category = allMovieData[sortValue]
-      if(sortValue === 'release_date') category = category.substring(0, 4)
-      sortCategories = sortCategories.concat(category)
-    })
-    return sortCategories.filter((category, i) => sortCategories.indexOf(category) === i)
+  findSortingCategories = async (sortValue) => {
+    return (API.getData('movies')
+      .then((movies) => {
+        return movies.reduce(async (categories, movie) => {
+          let fetchData = await categories
+          const allMovieData = await API.getData(`movies`, movie.id)
+          let category = await allMovieData[sortValue]
+          if(sortValue === 'release_date') category = category.substring(0, 4)
+          // if(allMovieData === undefined) console.log('broken', movie)
+          fetchData = fetchData.concat(category)
+          return fetchData
+        }, Promise.resolve([]))
+      })
+      .then((categories) => {
+        let sortCategories = categories.filter((category, i) => categories.indexOf(category) === i)
+        sortValue === 'release_date' 
+          && sortCategories.sort((a, b) => +b - +a)
+        return sortCategories
+      })
+    )
+  }
+
+  createGalleriesPerCategory = (category) => {
+    this.findSortingCategories(category) 
+      .then(categories => categories.forEach(category => console.log(category)))
   }
   // APP
   render() {
@@ -432,6 +449,7 @@ class App extends Component {
             }
             return (
               <>
+                <span className="spacer"></span>
                 <HorizontalGallery
                   movieSelection={this.state.userFavorites}
                   checkIfFavorite={this.checkIfFavorite}
@@ -448,8 +466,9 @@ class App extends Component {
           }}
         />
         <Route 
-          exact path="/test-sort"
-          render={() => {
+          exact path="/test-sort/:category"
+          render={async ({ match }) => {
+            this.createGalleriesPerCategory(match.params.category)
             return (<HorizontalGallery
                   movieSelection={this.state.userFavorites}
                   checkIfFavorite={this.checkIfFavorite}
@@ -460,10 +479,11 @@ class App extends Component {
                   userRatings={this.state.userRatings}
                   deleteRating={this.deleteRating}
                 />)
+            
           }}
         />
       </div>
-    );
+    )
   }
 }
 

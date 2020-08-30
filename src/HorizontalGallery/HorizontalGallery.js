@@ -21,15 +21,19 @@ const HorizontalGallery = ({
     }
   }
 
+  let showDeleteBtns = false
+  
   if (galleryTitle.includes('star')) {
     const requiredRating = +galleryTitle.substring(0, 1)
+    showDeleteBtns = true
     movieSelection = movieSelection.filter(movie => movie.userRating.rating === requiredRating)
-  }
 
+  }
+  
   // let relevantMovies = findRelevantMovies(movieSelection, allMovies);
   const movieCards = movieSelection.map((movie, i) => {
-      let rating = matchUserRatingWithMovie(movie)
-      let isFavorite = checkIfFavorite(movie)
+    let rating = matchUserRatingWithMovie(movie)
+    let isFavorite = checkIfFavorite(movie)
       return (
         <MovieCard
           key={`${galleryTitle}${i}`}
@@ -40,7 +44,7 @@ const HorizontalGallery = ({
           rateMovie={rateMovie}
           userRating={rating}
           deleteRating={deleteRating}
-          showDeleteBtns={false}
+          showDeleteBtns={showDeleteBtns}
         />
       );
     })

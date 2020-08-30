@@ -27,7 +27,6 @@ const HorizontalGallery = ({
     const requiredRating = +galleryTitle.substring(0, 1)
     showDeleteBtns = true
     movieSelection = movieSelection.filter(movie => movie.userRating.rating === requiredRating)
-
   }
   
   // let relevantMovies = findRelevantMovies(movieSelection, allMovies);

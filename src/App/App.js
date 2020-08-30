@@ -7,6 +7,7 @@ import HorizontalGallery from '../HorizontalGallery/HorizontalGallery'
 import MoviePage from '../MoviePage/MoviePage'
 import API from '../API/API'
 import { Route, withRouter } from 'react-router-dom'
+import { array } from 'prop-types'
 
 class App extends Component {
   constructor() {
@@ -46,10 +47,11 @@ class App extends Component {
         this.setState({ movies: this.sortMoviesByTitle(this.state.movies) });
       } else if (user && currentPage === "/user-ratings") {
         this.showRatingsPage();
-      } else {
-        this.showHomePage();
-        this.props.history.push("/");
       }
+      //  else {
+      //   this.showHomePage();
+      //   this.props.history.push("/");
+      // }
       // figure out how to do a single movie page
     });
   };
@@ -324,6 +326,17 @@ class App extends Component {
         .then(() => this.getUserFavorites())
     
   } 
+
+  findSortingCategories = (sortValue) => {
+    let sortCategories = []
+    this.state.movies.forEach(async (movie) => {
+      const allMovieData = await API.getData(`movies`, movie.id)
+      let category = allMovieData[sortValue]
+      if(sortValue === 'release_date') category = category.substring(0, 4)
+      sortCategories = sortCategories.concat(category)
+    })
+    return sortCategories.filter((category, i) => sortCategories.indexOf(category) === i)
+  }
   // APP
   render() {
     return (
@@ -400,8 +413,7 @@ class App extends Component {
           }}
         />
         <Route
-          exact
-          path="/user-ratings"
+          exact path="/user-ratings"
           render={() => {
             let ratingGalleries = []
             for (let i = 5; i > 0; i--) {
@@ -418,7 +430,6 @@ class App extends Component {
                 />
               );
             }
-
             return (
               <>
                 <HorizontalGallery
@@ -434,6 +445,21 @@ class App extends Component {
                 {ratingGalleries}
               </>
             );
+          }}
+        />
+        <Route 
+          exact path="/test-sort"
+          render={() => {
+            return (<HorizontalGallery
+                  movieSelection={this.state.userFavorites}
+                  checkIfFavorite={this.checkIfFavorite}
+                  toggleFavorite={this.toggleFavorite}
+                  galleryTitle={"favorites"}
+                  isLoggedIn={this.state.isLoggedIn}
+                  rateMovie={this.rateMovie}
+                  userRatings={this.state.userRatings}
+                  deleteRating={this.deleteRating}
+                />)
           }}
         />
       </div>

@@ -21,10 +21,9 @@ const MovieCard = (props) => {
           Ⓧ
         </button>
       } 
-      <Link to={`/movies/${props.movie.id}`}>
+      <Link to={`/movies/${props.movie.id}`} onClick={()=> {props.getSingleMovie(props.movie.id)}}>
         <img
           className="poster"
-          // onClick={showMoviePage}
           src={props.movie.poster_path}
           alt={altText}
         />

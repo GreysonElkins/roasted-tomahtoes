@@ -11,7 +11,8 @@ const Main = ({
   rateMovie, 
   userRatings,
   deleteRating,
-  showDeleteBtns
+  showDeleteBtns,
+  getSingleMovie
   }) => {
     
   const matchUserRatingWithMovie = (movie) => {
@@ -24,7 +25,6 @@ const Main = ({
   
   const movieCards = movies.map((movie, i) => {
       let matchingUserRating = matchUserRatingWithMovie(movie)
-      
       return (
        <MovieCard
         key={i}
@@ -34,6 +34,7 @@ const Main = ({
         userRating={matchingUserRating}
         deleteRating={deleteRating}
         showDeleteBtns={showDeleteBtns}
+        getSingleMovie={getSingleMovie}
        />
       );
   })

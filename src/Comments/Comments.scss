@@ -1,0 +1,40 @@
+@import '../styles/_variables.scss';
+
+.comment-section {
+  @include columnDisplay();
+  .comment-box {
+    @include rowDisplay();
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: scroll;
+    height: 150px;
+    width: 500px;
+    .user-comment {
+      border: 1px solid $tomahtoRed;
+      border-radius: 5px;
+      margin: 5px;
+      width: 130px;
+      padding: 2%;
+    }
+  }
+  form {
+    @include rowDisplay()
+  }
+   input { 
+    @include input();
+    margin: 10px;
+    width: 300px;
+    padding: .5%;
+  }
+  button {
+    color: white;
+    background: red;
+    border-radius: 6px;
+    margin-top: 5px;
+    @include fontStyle();
+    font-size: 1em;
+    &:hover {
+       box-shadow: 1px 1px 35px rgb(255, 255, 255);
+    }
+  }
+}

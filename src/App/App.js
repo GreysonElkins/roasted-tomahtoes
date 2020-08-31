@@ -69,19 +69,19 @@ class App extends Component {
   try {
    const movies = await API.getData("movies");
    if (this.state.isLoggedIn === true) {
-    API.getData(`ratings`, this.state.user.id).then((ratings) => {
-     this.convertRatingsToStarValues(ratings);
-     this.setState({
-      movies: this.sortMoviesByTitle(movies),
-      userRatings: ratings,
-      error: "",
-      user: { id: "", email: "", name: "" },
-      singleMovie: { genres: [] },
-      trailers: [],
-      singleMovieUserRating: {},
-      userRatings: [],
-      userComments : []
-    });
+      API.getData(`ratings`, this.state.user.id).then((ratings) => {
+      this.convertRatingsToStarValues(ratings);
+      this.setState({
+        movies: this.sortMoviesByTitle(movies),
+        userRatings: ratings,
+        error: "",
+        user: { id: "", email: "", name: "" },
+        singleMovie: { genres: [] },
+        trailers: [],
+        singleMovieUserRating: {},
+        userRatings: [],
+        userComments : []
+      });
     });
    } else {
     this.setState({ error: "", movies: this.sortMoviesByTitle(movies) });

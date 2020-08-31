@@ -22,7 +22,7 @@ class Rating extends Component {
         starAltText = 'selected star icon'
       }
       stars.push(
-        <div className="stars-box" key={i} tabindex='0'>
+        <div className="stars-box" key={i} tabIndex='0'>
           <img
             key={i}
             className="star-image"

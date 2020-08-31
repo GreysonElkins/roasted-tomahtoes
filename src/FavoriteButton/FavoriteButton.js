@@ -18,7 +18,7 @@ class FavoriteButton extends Component {
     return (
       <span 
         id="emptyFavoriteIcon"
-        tabindex='0'
+        tabIndex='0'
         onClick={() => {props.toggleFavorite(props.movie.id)}}
         onMouseEnter={() => this.setState({ currentValue: true })}
         onMouseLeave={() => this.setState({ currentValue: undefined })}>

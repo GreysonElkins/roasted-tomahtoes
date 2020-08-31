@@ -11,7 +11,8 @@ const Main = ({
   rateMovie, 
   userRatings,
   deleteRating,
-  showDeleteBtns
+  showDeleteBtns,
+  getSingleMovie
   }) => {
     
   const matchUserRatingWithMovie = (movie) => {
@@ -33,6 +34,7 @@ const Main = ({
         userRating={matchingUserRating}
         deleteRating={deleteRating}
         showDeleteBtns={showDeleteBtns}
+        getSingleMovie={getSingleMovie}
        />
       );
   })

@@ -144,6 +144,13 @@ class App extends Component {
  //MOVIE HANDLING and SORTING
  getSingleMovie = async (movie_id) => {
   try {
+   this.setState({
+    singleMovie: {genres:[]},
+    trailers: [],
+    singleMovieUserRating: {},
+    error: "",
+    userComments: [],
+   }); 
    const movie = await API.getData(`movies`, movie_id);
    const rating = this.findMovieUserRating(movie_id);
    const trailers = await API.getData(`videos`, movie_id);
@@ -346,6 +353,7 @@ class App extends Component {
      render={() => {
       return (
        <Main
+        getSingleMovie={this.getSingleMovie}
         showDeleteBtns={false}
         isLoggedIn={this.state.isLoggedIn}
         movies={this.state.movies}
@@ -368,7 +376,6 @@ class App extends Component {
      exact
      path="/movies/:id"
      render={({ match }) => {
-      this.getSingleMovie(+match.params.id);
       return (
        <MoviePage
         isLoggedIn={this.state.isLoggedIn}

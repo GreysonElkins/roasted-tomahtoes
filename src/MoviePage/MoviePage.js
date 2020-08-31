@@ -19,19 +19,26 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating, u
     <section className="movie-page">
       {error && <Error error={error} />}
       <section className='all-movie-info'>
-        <img src={movie.poster_path} alt={altText} />
-        <section className="movie-content">
+          <div className='movie-header'>
           <h1 className="movie-title">{movie.title}</h1>
-            <span className='ratings-box'>
-              <h3 className="avg-rating">🍅 {(movie.average_rating * 10).toFixed(0)}% </h3>
-              {isLoggedIn 
-              && <Rating 
-                userRating={userRating} 
-                rateMovie={rateMovie}
-                movie_id={movie.id}/>}
-            </span>
+          <span className='ratings-box'>
+            <h3 className="avg-rating">🍅 {(movie.average_rating * 10).toFixed(0)}% </h3>
+            {isLoggedIn 
+            && <Rating 
+              userRating={userRating} 
+              rateMovie={rateMovie}
+              movie_id={movie.id}/>}
+          </span>
+          </div>
+        </section>
+        <section className="movie-content">
+          <div className='movie-graphics'>
+            <img src={movie.poster_path} alt={altText} />
+              {trailers.length > 0 && 
+              <div className='trailerList'>{trailerClips}</div>}
+          </div>
           <article className="movie-information">
-            <Overview movie={movie}/>
+              <Overview movie={movie}/>
             <p className="movie-genre">
             <b>Genre(s):</b> {movie.genres.join(", ")}
             </p>
@@ -51,12 +58,10 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating, u
             <b>Tagline:</b> {movie.tagline ? movie.tagline : "None"}
             </p>
           </article>
-          {trailers.length > 0 && 
-          <div className='trailerList'>{trailerClips}</div>}
+        <Comments userComments={userComments} error={error} isLoggedIn={isLoggedIn} submitMovieComment={submitMovieComment} movie={movie} user={user}/>
         </section>
       </section>
-        <Comments userComments={userComments} error={error} isLoggedIn={isLoggedIn} submitMovieComment={submitMovieComment} movie={movie} user={user}/>
-  </section>
+  // </section>
   ); 
 }
 

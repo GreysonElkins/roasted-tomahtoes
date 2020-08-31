@@ -19,7 +19,7 @@ class Comments extends Component {
 
 
  displayComments = () => {
-   this.props.userComments.map((comment) => {
+   return this.props.userComments.map((comment) => {
     return (
      <p>
       <b>{comment.author}:</b> {comment.comment}
@@ -38,7 +38,6 @@ class Comments extends Component {
   return (
    <section className="comment-section">
     {this.props.error && <Error error={this.props.error} />}
-    {this.displayComments()}
     {this.props.isLoggedIn && (
      <form className="comment-form" onSubmit={this.submitMovieComment}>
       <input
@@ -52,6 +51,9 @@ class Comments extends Component {
       <button className="comment-btn">Submit</button>
      </form>
     )}
+    <div className='comment-box'>
+    {this.displayComments()}
+    </div>
    </section>
   );
  }

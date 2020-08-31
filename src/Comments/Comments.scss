@@ -1,8 +1,9 @@
 @import '../styles/_variables.scss';
 
 .comment-section {
-  @include rowDisplay();
+  @include columnDisplay();
   width: 600px;
+  
   form {
     @include rowDisplay()
   }

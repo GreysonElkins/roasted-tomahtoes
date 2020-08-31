@@ -2,8 +2,20 @@
 
 .comment-section {
   @include columnDisplay();
-  width: 600px;
-  
+  // width: 600px;
+
+  .comment-box {
+    @include rowDisplay();
+    justify-content: space-between;
+    overflow: scroll;
+    width: 500px;
+    p {
+      margin: 5px;
+    }
+
+  }
+
+
   form {
     @include rowDisplay()
   }

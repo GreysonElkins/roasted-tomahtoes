@@ -20,15 +20,15 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating, u
       {error && <Error error={error} />}
       <section className='all-movie-info'>
           <div className='movie-header'>
-          <h1 className="movie-title">{movie.title}</h1>
-          <span className='ratings-box'>
-            <h3 className="avg-rating">🍅 {(movie.average_rating * 10).toFixed(0)}% </h3>
-            {isLoggedIn 
-            && <Rating 
-              userRating={userRating} 
-              rateMovie={rateMovie}
-              movie_id={movie.id}/>}
-          </span>
+            <h1 className="movie-title">{movie.title}</h1>
+            <span className='ratings-box'>
+              <h3 className="avg-rating">🍅 {(movie.average_rating * 10).toFixed(0)}% </h3>
+              {isLoggedIn 
+              && <Rating 
+                userRating={userRating} 
+                rateMovie={rateMovie}
+                movie_id={movie.id}/>}
+            </span>
           </div>
         </section>
         <section className="movie-content">
@@ -72,5 +72,8 @@ MoviePage.propTypes = {
   trailers: PropTypes.array,
   error: PropTypes.string,
   rateMovie: PropTypes.func,
-  userRating: PropTypes.object
+  userRating: PropTypes.object,
+  userComments: PropTypes.array,
+  user: PropTypes.object,
+  submitMovieComment: PropTypes.func
 }

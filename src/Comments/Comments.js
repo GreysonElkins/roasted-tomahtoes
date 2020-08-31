@@ -21,16 +21,19 @@ class Comments extends Component {
  displayComments = () => {
    return this.props.userComments.map((comment) => {
     return (
-     <p>
-      <b>{comment.author}:</b> {comment.comment}
-     </p>
+      <div className='user-comment'>
+        <p> {comment.comment} <br/>
+        <i>-{comment.author}</i> 
+        </p>
+      </div>
     );
    });
  }
  
  submitMovieComment = (event) => { 
    event.preventDefault();
-   return this.props.submitMovieComment(this.state, this.props.movie.id)
+   this.props.submitMovieComment(this.state, this.props.movie.id)
+   this.setState({comment: ''})
   }
 
 
@@ -44,15 +47,16 @@ class Comments extends Component {
        aria-label="comment-input"
        name="comment"
        type='text'
-       placeholder="Add movie comment"
+       placeholder="Add movie comment (140 chars)"
        onChange={this.handleChange}
+       value={this.state.comment}
        max="140"
       />
       <button className="comment-btn">Submit</button>
      </form>
     )}
     <div className='comment-box'>
-    {this.displayComments()}
+      {this.displayComments()}
     </div>
    </section>
   );

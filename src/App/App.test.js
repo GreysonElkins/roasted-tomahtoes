@@ -1,5 +1,4 @@
-import React from 'react'
-// import React-DOM from 'react-dom'
+import React from 'react';
 import { render, screen, getByPlaceholderText, getByText, waitFor, getByAltText } from '@testing-library/react'
 import App from './App'
 import '@testing-library/jest-dom'
@@ -9,12 +8,14 @@ jest.mock('../API/API.js')
 
 
 describe('App', () => {
-
+  // let router
+  beforeEach(() => {
+    // render(<App/>)
+  })
   it('should start with default state', () => {       
-    const defaultApp = render(<App />)
+    const defaultApp = new App()
     expect(defaultApp.state.movies).toStrictEqual([])
     expect(defaultApp.state.error).toBe('')
-    expect(defaultApp.state.pageView).toBe('Home')
     expect(defaultApp.state.userRatings).toStrictEqual([])
     expect(defaultApp.state.singleMovie).toStrictEqual({})
     expect(defaultApp.state.singleMovieUserRating).toStrictEqual({})
@@ -24,7 +25,7 @@ describe('App', () => {
   })
   
   it('should render header', () => {
-    const {getByPlaceholderText, getByText} = render(<App/>)
+    const {getByText, getByPlaceholderText} = render(<App/>)
     expect(getByText('Home')).toBeInTheDocument()
     expect(getByPlaceholderText('Search by title, genre, year')).toBeInTheDocument()
     expect(getByText("Your Ratings").className).toBe("hidden")
@@ -41,7 +42,6 @@ describe('App', () => {
   // test for rendered stars
 
   describe('Fetch Successful', () => {
-
   
     it.skip('should welcome user after successful login', async () => {
       API.postData.mockResolvedValueOnce({ id: 1, email: 'charlie@turing.io', name: "Charlie" })

@@ -34,7 +34,7 @@ const Nav = ({
      >
       Logout
      </NavLink>
-    </div>
+    </div> 
    </nav>
   );
 }

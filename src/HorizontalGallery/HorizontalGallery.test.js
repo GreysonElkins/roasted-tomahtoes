@@ -1,11 +1,7 @@
 import React from 'react'
 import {render, screen} from '@testing-library/react'
 import HorizontalGallery from './HorizontalGallery'
-import { MemoryRouter } from "react-router-dom";
-import { isExportDeclaration } from 'typescript';
-// import "@testing-library/jest-dom";
-// jest.mock ('../API/API.js')
-// import API from '../API/API'
+import { MemoryRouter } from 'react-router-dom'
 
 describe('Horizontal Galleries', () => {
   let movieSelection, userRating

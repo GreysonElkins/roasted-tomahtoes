@@ -6,7 +6,7 @@ import Main from '../Main/Main'
 import HorizontalGallery from '../HorizontalGallery/HorizontalGallery'
 import MoviePage from '../MoviePage/MoviePage'
 import API from '../API/API'
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, NavLink } from 'react-router-dom'
 import '../HorizontalGallery/HorizontalGallery.scss'
 import { array } from 'prop-types'
 
@@ -24,7 +24,16 @@ class App extends Component {
       singleMovie: { genres: [] },
       trailers: [],
       singleMovieUserRating: {},
-      moviesByCategory: {}
+      moviesByCategory: {},
+      categoricalGalleries: [
+        <>
+          <img 
+            src="../../public/loading-tomato.gif" 
+            alt="A tomato being inflated, the page is loading" 
+          />
+          <p>Pardon us while we sort these tomahtoes</p>
+        </>
+      ]
     };
   }
   // ONLOAD and RELOAD
@@ -49,12 +58,9 @@ class App extends Component {
         this.setState({ movies: this.sortMoviesByTitle(this.state.movies) });
       } else if (user && currentPage === "/user-ratings") {
         this.showRatingsPage();
-      } 
-      //  else {
-      //   this.showHomePage();
-      //   this.props.history.push("/");
-      // }
-      // figure out how to do a single movie page
+      }  else if (currentPage === '/sort-by/genres' || currentPage === '/sort-by/genres')
+        this.showHomePage();
+        this.props.history.push("/");
     });
   };
 
@@ -330,8 +336,9 @@ class App extends Component {
   } 
   //SORT CATEGORICALLY
   storeMoviesWithAllData = async () => {
-    const allMovies = await API.getData(`movies`)
-    return await allMovies.reduce(async (allMoviesWithData, movie) => {
+    // const allMovies = await API.getData(`movies`)
+    // return await allMovies.reduce(async (allMoviesWithData, movie) => {
+    return this.state.movies.reduce(async (allMoviesWithData, movie) => {
       const moviesData = await allMoviesWithData
       const newMovie = await API.getData(`movies`, movie.id)
       newMovie && moviesData.push(newMovie)
@@ -369,7 +376,27 @@ class App extends Component {
   }
 
   createCategoricalMovieGalleries = async (category) => {
-    
+    await this.sortMoviesByCategory(category);
+    let galleries = Object.keys(this.state.moviesByCategory);
+    category === "release_date" &&
+      galleries.sort((a, b) => +b - +a);
+    // let categoricalGalleries = []
+    const loadedGalleries = galleries.map((gallery, i) => {
+      return (
+        <HorizontalGallery
+          key={`${category}-row-${i}`}
+          movieSelection={this.state.moviesByCategory[gallery]}
+          checkIfFavorite={this.checkIfFavorite}
+          toggleFavorite={this.toggleFavorite}
+          galleryTitle={galleries[i]}
+          isLoggedIn={this.state.isLoggedIn}
+          rateMovie={this.rateMovie}
+          userRatings={this.state.userRatings}
+          deleteRating={this.deleteRating}
+        />
+      );
+    });
+    this.setState({ categoricalGalleries: loadedGalleries });
   }
   // APP
   render() {
@@ -388,17 +415,33 @@ class App extends Component {
           path="/"
           render={() => {
             return (
-              <Main
-                showDeleteBtns={false}
-                isLoggedIn={this.state.isLoggedIn}
-                checkIfFavorite={this.checkIfFavorite}
-                toggleFavorite={this.toggleFavorite}
-                movies={this.state.movies}
-                rateMovie={this.rateMovie}
-                userRatings={this.state.userRatings}
-                deleteRating={this.deleteRating}
-                error={this.state.error}
-              />
+              <>
+                <span className="spacer"></span>
+                <div id="sortByLinks">
+                  Sort by:
+                  <NavLink 
+                    to="/sort-by/genres"
+                    onClick={() => {this.createCategoricalMovieGalleries('genres')}}  
+                  >Genre</NavLink> |
+                  <NavLink 
+                    to="/sort-by/release_date"
+                    onClick={() => {this.createCategoricalMovieGalleries('release_date')}}
+                  >
+                    Year
+                  </NavLink>
+                </div>
+                <Main
+                  showDeleteBtns={false}
+                  isLoggedIn={this.state.isLoggedIn}
+                  checkIfFavorite={this.checkIfFavorite}
+                  toggleFavorite={this.toggleFavorite}
+                  movies={this.state.movies}
+                  rateMovie={this.rateMovie}
+                  userRatings={this.state.userRatings}
+                  deleteRating={this.deleteRating}
+                  error={this.state.error}
+                />
+              </>
             );
           }}
         />
@@ -483,32 +526,35 @@ class App extends Component {
           }}
         />
         <Route 
-          exact path="/test-sort/:category"
+          exact path="/sort-by/:category"
           render={({ match }) => {
-            this.sortMoviesByCategory(match.params.category)
-            let galleries = Object.keys(this.state.moviesByCategory)
-            match.params.category === "release_date" 
-            &&  galleries.sort((a, b) => +b - +a);
-            let categoricalGalleries = galleries.map((gallery, i) => {
-              return (
-                <HorizontalGallery
-                  movieSelection={this.state.moviesByCategory[gallery]}
-                  checkIfFavorite={this.checkIfFavorite}
-                  toggleFavorite={this.toggleFavorite}
-                  galleryTitle={galleries[i]}
-                  isLoggedIn={this.state.isLoggedIn}
-                  rateMovie={this.rateMovie}
-                  userRatings={this.state.userRatings}
-                  deleteRating={this.deleteRating}
-                />
-              );
-            })
+            // this.createCategoricalMovieGalleries(match.params.category)
             return (
               <>
                 <span className="spacer"></span>
-                {categoricalGalleries}
+                <div id="sortByLinks">
+                  Sort by:
+                  <NavLink
+                    to="/sort-by/genres"
+                    onClick={() => {
+                      this.createCategoricalMovieGalleries("genres");
+                    }}
+                  >
+                    Genre
+                  </NavLink>{" "}
+                  |
+                  <NavLink
+                    to="/sort-by/release_date"
+                    onClick={() => {
+                      this.createCategoricalMovieGalleries("release_date");
+                    }}
+                  >
+                    Year
+                  </NavLink>
+                </div>
+                {this.state.categoricalGalleries}
               </>
-            )
+            );
           }}
         />
       </div>

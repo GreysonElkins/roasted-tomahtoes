@@ -2,6 +2,7 @@ import React from 'react'
 import MovieCard from '../MovieCard/MovieCard'
 import './HorizontalGallery.scss'
 
+
 const HorizontalGallery = ({
   movieSelection, 
   galleryTitle,

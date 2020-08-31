@@ -38,7 +38,7 @@ const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating, u
               <div className='trailerList'>{trailerClips}</div>}
           </div>
           <article className="movie-information">
-              <Overview movie={movie}/>
+            <Overview movie={movie}/>
             <p className="movie-genre">
             <b>Genre(s):</b> {movie.genres.join(", ")}
             </p>

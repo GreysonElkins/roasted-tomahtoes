@@ -24,7 +24,6 @@ const Main = ({
   
   const movieCards = movies.map((movie, i) => {
       let matchingUserRating = matchUserRatingWithMovie(movie)
-      
       return (
        <MovieCard
         key={i}

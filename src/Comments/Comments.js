@@ -21,11 +21,9 @@ class Comments extends Component {
  displayComments = () => {
    return this.props.userComments.map((comment) => {
     return (
-      <div className='user-comment'>
-        <p> {comment.comment} <br/>
-        <i>-{comment.author}</i> 
-        </p>
-      </div>
+      <p className='user-comment'> "{comment.comment}"<br/>
+      <i>-{comment.author}</i> 
+      </p>
     );
    });
  }
@@ -55,9 +53,11 @@ class Comments extends Component {
       <button className="comment-btn">Submit</button>
      </form>
     )}
-    <div className='comment-box'>
-      {this.displayComments()}
-    </div>
+    {this.props.userComments.length > 0 && (
+      <div className='comment-box'>
+        {this.displayComments()}
+      </div>
+    )}  
    </section>
   );
  }

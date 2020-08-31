@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './Search.scss'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 class Search extends Component {
   constructor(props) {
     super(props)

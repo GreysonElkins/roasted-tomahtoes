@@ -115,7 +115,7 @@ class App extends Component {
   const response = await API.postData(loginState);
   const user = await response.json();
   if (response.status === 201) {
-   API.getData(`ratings`, this.state.user.id)
+   API.getData(`ratings`, user.user.id)
     .then((ratings) => {
      this.convertRatingsToStarValues(ratings);
      this.setState({ userRatings: ratings });

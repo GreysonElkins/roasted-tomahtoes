@@ -1,4 +1,3 @@
-import React from 'react'
 
 const apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
 const localHost = "http://localhost:3001/api/v1";
@@ -30,7 +29,7 @@ class API {
     } else if (location === `ratings` && id) {
       pathAndData.path = `${apiHead}/users/${id}/ratings`;
       pathAndData.data = `ratings`;
-    }  else if (location === 'comments' && id) {
+    } else if (location === 'comments' && id) {
       pathAndData.path = `${localHost}/movies/${id}/comments`;
       pathAndData.data = `comments`;
     }

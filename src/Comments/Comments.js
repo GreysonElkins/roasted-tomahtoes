@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import moment from 'moment'
 import './Comments.scss'
 import PropTypes from 'prop-types'
 import Error from '../Error/Error'

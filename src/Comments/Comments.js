@@ -21,9 +21,9 @@ class Comments extends Component {
  displayComments = () => {
    return this.props.userComments.map((comment) => {
     return (
-      <p className='user-comment'> "{comment.comment}"<br/>
-      <i>-{comment.author}</i> 
-      </p>
+        <p className='user-comment'> "{comment.comment}"<br/>
+        <i>-{comment.author}</i> 
+        </p>
     );
    });
  }
@@ -48,7 +48,7 @@ class Comments extends Component {
        placeholder="Add movie comment (140 chars)"
        onChange={this.handleChange}
        value={this.state.comment}
-       max="140"
+       maxLength="140"
       />
       <button className="comment-btn">Submit</button>
      </form>
@@ -64,3 +64,10 @@ class Comments extends Component {
 }
 
 export default Comments
+
+Comments.prototypes = {
+  error: PropTypes.string,
+  user: PropTypes.object,
+  isLoggedIn: PropTypes.bool,
+  userComments: PropTypes.array
+}

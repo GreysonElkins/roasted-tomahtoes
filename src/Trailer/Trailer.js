@@ -9,7 +9,7 @@ function Trailer({trailer}) {
         <ReactPlayer
           alt='movie trailer'
           width={350}
-          height={200}
+          height={250}
           url={`www.youtube.com/watch?v=${trailer.key}`}
         />
       </div>

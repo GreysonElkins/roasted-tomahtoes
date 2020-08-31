@@ -1,7 +1,6 @@
-import React from 'react'
 
 const apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
-const localHostHead = "http://localhost:3001/api/v1";
+const localHost = "http://localhost:3001/api/v1";
 class API {
   // constructor() {
     // this.apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
@@ -30,8 +29,8 @@ class API {
     } else if (location === `ratings` && id) {
       pathAndData.path = `${apiHead}/users/${id}/ratings`;
       pathAndData.data = `ratings`;
-    }  else if (location === 'comments' && id) {
-      pathAndData.path = `${localHostHead}/movies/${id}/comments`;
+    } else if (location === 'comments' && id) {
+      pathAndData.path = `${localHost}/movies/${id}/comments`;
       pathAndData.data = `comments`;
     }
     else {
@@ -61,6 +60,7 @@ class API {
   static findPostPath = (info, id) => {
     const acceptableUserInfo = ['email', 'password']
     const acceptableRatingInfo = ['rating', 'movie_id']
+    const acceptableCommentsInfo = ['comment', 'author']
     const infoValues = Object.keys(info)
     if (id && infoValues.every(
         value=> acceptableRatingInfo.includes(value))) {
@@ -68,6 +68,9 @@ class API {
     } else if (infoValues.every(
         value => acceptableUserInfo.includes(value))) {
       return `${apiHead}/login`
+    } else if (infoValues.every(
+        value => acceptableCommentsInfo.includes(value))) {
+      return `${localHost}/movies/${id}/comments`
     } else {
       throw new Error ('Something is wrong with the data for POST')
     }

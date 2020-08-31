@@ -4,10 +4,10 @@
   @include columnDisplay();
   .comment-box {
     @include rowDisplay();
-    justify-content: initial;
+    justify-content: center;
     flex-wrap: wrap;
     overflow: scroll;
-    height: 250px;
+    height: 150px;
     width: 500px;
     .user-comment {
       border: 1px solid $tomahtoRed;

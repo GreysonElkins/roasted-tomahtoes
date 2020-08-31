@@ -38,6 +38,11 @@ class Comments extends Component {
   return (
    <section className="comment-section">
     {this.props.error && <Error error={this.props.error} />}
+    {this.props.userComments.length > 0 && (
+      <div className='comment-box'>
+        {this.displayComments()}
+      </div>
+    )}  
     {this.props.isLoggedIn && (
      <form className="comment-form" onSubmit={this.submitMovieComment}>
       <input
@@ -52,11 +57,6 @@ class Comments extends Component {
       <button className="comment-btn">Submit</button>
      </form>
     )}
-    {this.props.userComments.length > 0 && (
-      <div className='comment-box'>
-        {this.displayComments()}
-      </div>
-    )}  
    </section>
   );
  }

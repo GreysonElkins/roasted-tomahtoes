@@ -69,5 +69,6 @@ Comments.prototypes = {
   error: PropTypes.string,
   user: PropTypes.object,
   isLoggedIn: PropTypes.bool,
-  userComments: PropTypes.array
+  userComments: PropTypes.array,
+  submitMovieComment: PropTypes.func
 }

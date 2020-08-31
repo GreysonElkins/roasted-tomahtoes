@@ -27,13 +27,22 @@ describe('MoviePage', () => {
     render(
      <MoviePage
       rateMovie={jest.fn()}
-      userRating={{rating: 5}}
-      trailers={[{id: 1, movie_id: 1, key: "SUXWAEX2jlg", site: "YouTube", type: "Trailer"}]}
+      userRating={{ rating: 5 }}
+      trailers={[
+       {
+        id: 1,
+        movie_id: 1,
+        key: "SUXWAEX2jlg",
+        site: "YouTube",
+        type: "Trailer",
+       },
+      ]}
       movie={movie}
-      error={'No movie found. Please try again.'}
+      error={"No movie found. Please try again."}
+      user={{ name: "Charlie", email: "charlie@turing.io" }}
       isLoggedIn={true}
      />
-    )
+    );
   })
 
    it('should render poster and information about the selected movie', () => {

@@ -11,7 +11,7 @@ jest.mock('../API/API.js')
 describe('App', () => {
 
   it('should start with default state', () => {       
-    const defaultApp = new App()
+    const defaultApp = render(<App />)
     expect(defaultApp.state.movies).toStrictEqual([])
     expect(defaultApp.state.error).toBe('')
     expect(defaultApp.state.pageView).toBe('Home')

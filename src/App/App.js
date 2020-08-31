@@ -8,7 +8,15 @@ import MoviePage from '../MoviePage/MoviePage'
 import API from '../API/API'
 import { Route, withRouter, NavLink } from 'react-router-dom'
 import '../HorizontalGallery/HorizontalGallery.scss'
-import { array } from 'prop-types'
+import loadingTom from '../images/loading-tomato.gif'
+import { array } from 'prop-types' // I didn't add this, did you add this @Leigh?
+
+const loadingSection = (
+  <div className="loading-img">
+    <img src={loadingTom} alt="A tomato being inflated, the page is loading" />
+    <p>Pardon us while we sort these tomahtoes</p>
+  </div>
+)
 
 class App extends Component {
   constructor() {
@@ -25,15 +33,7 @@ class App extends Component {
       trailers: [],
       singleMovieUserRating: {},
       moviesByCategory: {},
-      categoricalGalleries: [
-        <>
-          <img 
-            src="../../public/loading-tomato.gif" 
-            alt="A tomato being inflated, the page is loading" 
-          />
-          <p>Pardon us while we sort these tomahtoes</p>
-        </>
-      ]
+      categoricalGalleries: [loadingSection]
     };
   }
   // ONLOAD and RELOAD
@@ -376,6 +376,7 @@ class App extends Component {
   }
 
   createCategoricalMovieGalleries = async (category) => {
+    this.setState({ categoricalGalleries: loadingSection });
     await this.sortMoviesByCategory(category);
     let galleries = Object.keys(this.state.moviesByCategory);
     category === "release_date" &&

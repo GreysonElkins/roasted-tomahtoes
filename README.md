@@ -18,6 +18,7 @@ Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie
 - React Router
 - JSX
 - ECMAScript 6 
+- ESLint
 - TDD with Mocha/Chai & Spies
 - VSCode 
 - git / Version control

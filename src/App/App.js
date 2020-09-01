@@ -423,7 +423,7 @@ class App extends Component {
           deleteRating={this.deleteRating}
         />
       );
-    });
+      })
     this.setState({ categoricalGalleries: loadedGalleries });
   }
   // APP

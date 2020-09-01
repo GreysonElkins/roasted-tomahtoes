@@ -84,7 +84,6 @@ const MoviePage = ({
           </section>
         </section>         
     );
-  
 }
 
 export default MoviePage

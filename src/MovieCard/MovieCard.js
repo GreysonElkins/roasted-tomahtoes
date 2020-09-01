@@ -60,6 +60,12 @@ const MovieCard = (props) => {
 export default MovieCard;
 
 MovieCard.propTypes = {
+  getSingleMovie: PropTypes.func,
+  isFavorite: PropTypes.bool,
+  toggleFavorite: PropTypes.func,
+  rateMovie: PropTypes.func,
+  deleteRating: PropTypes.func,
+  showDeleteBtns: PropTypes.bool,
   movie: PropTypes.object,
   showMoviePage: PropTypes.func,
   userRating: PropTypes.object,

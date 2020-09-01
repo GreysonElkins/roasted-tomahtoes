@@ -106,4 +106,7 @@ MoviePage.propTypes = {
   userComments: PropTypes.array,
   user: PropTypes.object,
   submitMovieComment: PropTypes.func,
-};
+  isLoggedIn: PropTypes.bool,
+  checkIfFavorite: PropTypes.func,
+  toggleFavorite: PropTypes.func
+}

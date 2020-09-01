@@ -41,43 +41,36 @@ class App extends Component {
   componentDidMount = async () => {
     try {
       const movies = await API.getData("movies");
-      this.setState({ movies: this.sortMoviesByTitle(movies) });
-      this.setCurrentPage();
+      this.setCurrentPage(movies);
     } catch (error) {
       this.setState({
         error: "Oops, something went wrong! 🙁 Please try again.",
-      });
+      })
     }
-  };
+  }
 
-  setCurrentPage = () => {
+  setCurrentPage = (movies) => {
     const currentPage = this.props.history.location.pathname;
-    this.checkIfLoggedIn().then((user) => {
-      this.getUserFavorites();
-      if (currentPage === "/") {
-        this.setState({ movies: this.sortMoviesByTitle(this.state.movies) });
-      } else if (user && currentPage === "/user-ratings") {
-        this.showRatingsPage();
-      } else if (
-        currentPage === "/sort-by/genres" ||
-        currentPage === "/sort-by/genres"
-      )
-        this.showHomePage();
-      this.props.history.push("/");
-    });
-  };
-
-  // USER HANDLING
+    this.setState({ movies: this.sortMoviesByTitle(movies) });
+    this.checkIfLoggedIn()
+    if (currentPage.includes('/movies/')) {
+      const movie_id = currentPage.split('/')[2]
+      this.getSingleMovie(movie_id)
+    } 
+  }
+ // USER HANDLING
   checkIfLoggedIn = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       const userRatings = await API.getData(`ratings`, user.id);
-      this.convertRatingsToStarValues(userRatings);
+      this.getUserFavorites()
+      this.convertRatingsToStarValues(userRatings)
       this.setState({
         user,
         isLoggedIn: true,
         userRatings,
       });
+      this.setState({ ratedMovies: this.filterRatedMovies() });
       return true;
     }
     return false;
@@ -176,6 +169,7 @@ class App extends Component {
 
   submitMovieComment = async (info, movie_id) => {
     API.postData(info, movie_id)
+
       .then(() => API.getData(`comments`, movie_id))
       .then((comments) => {
         this.setState({ userComments: comments });
@@ -188,16 +182,14 @@ class App extends Component {
     );
     return rating || { rating: 0 };
   };
-  // this is doubled in Main.js
 
-  filterFavoriteMovies = () => {
-    const favoriteMovies = this.state.movies.filter((movie) => {
-      return this.state.userRatings.some(
-        (rating) => rating.movie_id === movie.id
-      );
-    });
-    return this.sortByRating(favoriteMovies);
-  };
+ findMovieUserRating = (movie_id) => {
+  let rating = this.state.userRatings.find(
+   (rating) => rating.movie_id === movie_id
+  );
+  return rating ? rating : { rating: 0 };
+ };
+
 
   filterRatedMovies = () => {
     const ratedMovies = this.state.movies.filter((movie) => {
@@ -344,9 +336,9 @@ class App extends Component {
       API.deleteData(userID, ratingID)
         .then(() => API.getData(`ratings`, this.state.user.id))
         .then((ratings) => {
-          this.convertRatingsToStarValues(ratings);
-          this.setState({ userRatings: ratings });
-          this.showRatingsPage();
+          this.convertRatingsToStarValues(ratings)
+          this.setState({ userRatings: ratings })
+          this.showRatingsPage()
         });
     } catch (error) {
       this.setState({
@@ -374,8 +366,6 @@ class App extends Component {
 
   // SORT CATEGORICALLY
   storeMoviesWithAllData = async () => {
-    // const allMovies = await API.getData(`movies`)
-    // return await allMovies.reduce(async (allMoviesWithData, movie) => {
     return this.state.movies.reduce(async (allMoviesWithData, movie) => {
       const moviesData = await allMoviesWithData;
       const newMovie = await API.getData(`movies`, movie.id);
@@ -391,7 +381,6 @@ class App extends Component {
       let category = (await allMovieData) && allMovieData[sortValue];
       if (sortValue === "release_date" && category)
         category = category.substring(0, 4);
-      // if(allMovieData === undefined) console.log('broken', movie)
       if (category) fetchData = fetchData.concat(category);
       return fetchData;
     }, Promise.resolve([]));
@@ -628,4 +617,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+export default withRouter(App)

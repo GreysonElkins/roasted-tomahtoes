@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, {Component} from 'react'
+import PropTypes from "prop-types";
 
 class FavoriteButton extends Component {
   constructor(props) {
@@ -40,4 +41,10 @@ class FavoriteButton extends Component {
   };
 }
 
-export default FavoriteButton;
+export default FavoriteButton
+
+FavoriteButton.propTypes = {
+  movie: PropTypes.object,
+  isFavorite: PropTypes.bool,
+  toggleFavorite: PropTypes.func
+}

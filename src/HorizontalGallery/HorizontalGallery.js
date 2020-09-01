@@ -1,6 +1,8 @@
-import React from "react";
-import MovieCard from "../MovieCard/MovieCard";
-import "./HorizontalGallery.scss";
+import React from 'react'
+import MovieCard from '../MovieCard/MovieCard'
+import './HorizontalGallery.scss'
+import PropTypes from 'prop-types'
+
 
 const HorizontalGallery = ({
   movieSelection,
@@ -31,10 +33,9 @@ const HorizontalGallery = ({
     );
   }
 
-  // let relevantMovies = findRelevantMovies(movieSelection, allMovies);
   const movieCards = movieSelection.map((movie, i) => {
-    const rating = matchUserRatingWithMovie(movie);
-    const isFavorite = checkIfFavorite(movie);
+    let rating = matchUserRatingWithMovie(movie);
+    let isFavorite = checkIfFavorite(movie);
     return (
       <MovieCard
         getSingleMovie={getSingleMovie}
@@ -64,4 +65,16 @@ const HorizontalGallery = ({
   }
 };
 
-export default HorizontalGallery;
+export default HorizontalGallery
+
+HorizontalGallery.propTypes = {
+  getSingleMovie: PropTypes.func,
+  movieSelection: PropTypes.array,
+  checkIfFavorite: PropTypes.func,
+  toggleFavorite: PropTypes.func,
+  galleryTitle: PropTypes.string,
+  isLoggedIn: PropTypes.bool,
+  rateMovie: PropTypes.func,
+  userRatings: PropTypes.array,
+  deleteRatings: PropTypes.func
+}

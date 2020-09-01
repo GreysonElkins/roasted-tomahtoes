@@ -33,6 +33,7 @@ class Search extends Component {
       />
       <button className="search-btn">Search</button>
      </form>
+  
     );
   }
 }

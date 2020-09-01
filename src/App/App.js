@@ -516,17 +516,20 @@ class App extends Component {
           path="/search-results"
           render={() => {
             return (
+             <>
+              <span className="spacer"></span>
               <Main
-                getSingleMovie={this.getSingleMovie}
-                isLoggedIn={this.state.isLoggedIn}
-                checkIfFavorite={this.checkIfFavorite}
-                toggleFavorite={this.toggleFavorite}
-                movies={this.state.movies}
-                rateMovie={this.rateMovie}
-                userRatings={this.state.userRatings}
-                deleteRating={this.deleteRating}
-                error={this.state.error}
+               getSingleMovie={this.getSingleMovie}
+               isLoggedIn={this.state.isLoggedIn}
+               checkIfFavorite={this.checkIfFavorite}
+               toggleFavorite={this.toggleFavorite}
+               movies={this.state.movies}
+               rateMovie={this.rateMovie}
+               userRatings={this.state.userRatings}
+               deleteRating={this.deleteRating}
+               error={this.state.error}
               />
+             </>
             );
           }}
         />

@@ -29,6 +29,7 @@ const Main = ({
       let matchingUserRating = matchUserRatingWithMovie(movie)
       let isFavorite = checkIfFavorite(movie)
       return (
+
         <MovieCard
           key={i}
           movie={movie}
@@ -46,13 +47,11 @@ const Main = ({
   })
 
   return (
-    <main>
-      {error && <Error error={error} />}
-      <section className='gallery'>
-        {movieCards}
-      </section>
-    </main>
-  )
+   <main>
+    {error && <Error error={error} />}
+    <section className="gallery">{movieCards}</section>
+   </main>
+  );
 }
 
 export default Main

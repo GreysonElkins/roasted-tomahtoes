@@ -4,12 +4,12 @@
   @include rowDisplay();
   box-shadow: 2px 2px 1px #000;
   border-radius: 6px;
-  width: 350px;
+  width: 300px;
   
   input {
     @include input();
     border-radius: 6px 0px 0px 6px;
-    width: 350px;
+    width: 300px;
   }
   
   .search-btn {

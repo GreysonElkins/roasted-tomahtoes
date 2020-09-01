@@ -2,7 +2,6 @@
 
 nav {
   @include columnDisplay();
-  margin-right: 40px;
 
   h3 {
     font-family: $bangersFont;

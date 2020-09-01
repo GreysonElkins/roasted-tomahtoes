@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
-import PropTypes, { object } from "prop-types";
-import Rating from '../Rating/Rating';
-
+import PropTypes from "prop-types";
+// import Rating from '../Rating/Rating';
 
 class FavoriteButton extends Component {
   constructor(props) {

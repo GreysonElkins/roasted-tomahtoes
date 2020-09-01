@@ -60,7 +60,6 @@ export default MovieCard
 
 MovieCard.propTypes = {
   getSingleMovie: PropTypes.func,
-  key: PropTypes.string,
   isFavorite: PropTypes.bool,
   toggleFavorite: PropTypes.func,
   rateMovie: PropTypes.func,

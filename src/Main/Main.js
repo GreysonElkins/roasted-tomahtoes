@@ -60,5 +60,12 @@ export default Main
 Main.propTypes = {
   error: PropTypes.string,
   movies: PropTypes.array,
-  showMoviePage: PropTypes.func
+  showMoviePage: PropTypes.func,
+  getSingleMovie: PropTypes.func,
+  isLoggedIn: PropTypes.bool,
+  checkIfFavorite: PropTypes.func,
+  toggleFavorite: PropTypes.func,
+  rateMovie: PropTypes.func,
+  userRatings: PropTypes.array,
+  deleteRating: PropTypes.func,
 }

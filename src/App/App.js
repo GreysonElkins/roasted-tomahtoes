@@ -9,7 +9,6 @@ import API from '../API/API'
 import { Route, withRouter, NavLink } from 'react-router-dom'
 import '../HorizontalGallery/HorizontalGallery.scss'
 import loadingTom from '../images/loading-tomato.gif'
-import { array } from 'prop-types' // I didn't add this, did you add this @Leigh?
 
 const loadingSection = (
   <div className="loading-img">
@@ -41,39 +40,37 @@ class App extends Component {
   componentDidMount = async () => {
     try {
       const movies = await API.getData("movies");
-      this.setState({ movies: this.sortMoviesByTitle(movies) });
-      this.setCurrentPage();
+      this.setCurrentPage(movies);
     } catch (error) {
       this.setState({
         error: "Oops, something went wrong! 🙁 Please try again.",
-      });
+      })
     }
-  };
+  }
 
-  setCurrentPage = () => {
+  setCurrentPage = (movies) => {
     const currentPage = this.props.history.location.pathname;
-    this.checkIfLoggedIn().then((user) => {
-      this.getUserFavorites()
-      if (currentPage === "/") {
-        this.setState({ movies: this.sortMoviesByTitle(this.state.movies) });
-      } else if (user && currentPage === "/user-ratings") {
-        this.showRatingsPage();
-      }  else if (currentPage === '/sort-by/genres' || currentPage === '/sort-by/genres')
-        this.showHomePage();
-        this.props.history.push("/");
-    })
+    console.log(this.props.history.location.pathname);
+    this.setState({ movies: this.sortMoviesByTitle(movies) });
+    this.checkIfLoggedIn()
+    if (currentPage.includes('/movies/')) {
+      const movie_id = currentPage.split('/')[2]
+      this.getSingleMovie(movie_id)
+    } 
   }
  // USER HANDLING
   checkIfLoggedIn = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       const userRatings = await API.getData(`ratings`, user.id);
+      this.getUserFavorites()
       this.convertRatingsToStarValues(userRatings)
       this.setState({
         user: user,
         isLoggedIn: true,
         userRatings: userRatings,
       });
+      this.setState({ ratedMovies: this.filterRatedMovies() });
       return true;
     } else {
       return false;
@@ -183,14 +180,6 @@ class App extends Component {
   return rating ? rating : { rating: 0 };
  };
  // this is doubled in Main.js
-
- filterFavoriteMovies = () => {
-  const favoriteMovies = this.state.movies.filter((movie) => {
-   return this.state.userRatings.some((rating) => rating.movie_id === movie.id);
-  });
-  return this.sortByRating(favoriteMovies);
- };
-
   filterRatedMovies = () => {
     const ratedMovies = this.state.movies.filter((movie) => {
       return this.state.userRatings.some(
@@ -336,9 +325,9 @@ class App extends Component {
       API.deleteData(userID, ratingID)
         .then(() => API.getData(`ratings`, this.state.user.id))
         .then((ratings) => {
-          console.log(ratings);
-          this.setState({ userRatings: ratings });
-          this.showRatingsPage();
+          this.convertRatingsToStarValues(ratings)
+          this.setState({ userRatings: ratings })
+          this.showRatingsPage()
         });
     } catch (error) {
       this.setState({

@@ -60,9 +60,6 @@ Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie
 ![gif of viewing alert when username is incorrect](./src/images/overlook-wronglogin.gif)</br>
 *Alert when username is incorrect*
 
-![gif of accessibility score](./src/images/overlook-accessibility.gif)</br>
-*Tabbing through elements on page, 100% Lighthouse score*
-
 ![gif of mobile view login](./src/images/overlook-mobile.gif)</br>
 *Mobile view*
 

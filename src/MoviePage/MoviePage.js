@@ -35,9 +35,9 @@ const MoviePage = ({
           <h1 className="movie-title">{movie.title}</h1>
           <span className="ratings-box">
             <h3 className="avg-rating">
-              🍅 {(movie.average_rating * 10).toFixed(0)}%
+        🍅 {(movie.average_rating * 10).toFixed(0)}%
             </h3>
-            |
+            {isLoggedIn && "|"}
             {isLoggedIn && (
               <Rating
                 userRating={userRating}
@@ -45,7 +45,7 @@ const MoviePage = ({
                 movie_id={movie.id}
               />
             )}
-            |
+            {isLoggedIn && "|"}
             {isLoggedIn && (
               <FavoriteButton
                 movie={movie}
@@ -59,9 +59,7 @@ const MoviePage = ({
       <section className="movie-content">
         <div className="movie-graphics">
           <img src={movie.poster_path} alt={altText} />
-          {trailers.length > 0 && (
-            <div className="trailerList">{trailerClips}</div>
-          )}
+          {trailers.length > 0 && <div className="trailerList">{trailerClips}</div>}
         </div>
         <article className="movie-information">
           <Overview movie={movie} />
@@ -69,8 +67,7 @@ const MoviePage = ({
             <b>Genre(s):</b> {movie.genres.join(", ")}
           </p>
           <p className="movie-release-date">
-            <b>Release Date:</b>{" "}
-            {moment(movie.release_date).format("MMMM DD, YYYY")}
+            <b>Release Date:</b> {moment(movie.release_date).format("MMMM DD, YYYY")}
           </p>
           <p className="movie-budget">
             <b>Budget:</b> ${movie.budget}

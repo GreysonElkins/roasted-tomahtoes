@@ -16,6 +16,7 @@
   "typescript": "^4.0.2"
  },
  "scripts": {
+   "eslint": "./node_modules/eslint/bin/eslint yourfile.js",
   "start": "react-scripts start",
   "build": "react-scripts build",
   "test": "react-scripts test --env=jest-environment-jsdom-sixteen",

@@ -10,7 +10,7 @@ Mod 3 Paired Project
 
 ## Abstract 
 
-Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie review app. The user can log-in, read about movies, watch movie trailers, and rate movies the user loved or hated. 
+Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie review app. The user can log-in, read about movies, watch movie trailers, rate movies the user loved or hated, and search by a variety of criteria. 
 
 ## Technologies / Systems
 
@@ -39,14 +39,14 @@ Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie
 
 ## Gif Showcase
 
-<!-- ![gif of viewing manager dashboard](./src/images/overlook-mgr-dash.gif)</br>
-*Viewing manager login and dashboard, including daily metrics and search functionality*
+[gif of homeview, incorrect login, correct login](./src/images/home-login.gif)</br>
+*Viewing guest home view, incorrect & correct login*
 
-![gif of manager view all guests info](./src/images/overlook-mgr-view-guests.gif)</br>
-*Viewing manager dashboard, reviewing guest information*
+[gif of single movie page](./src/images/showMovie.gif)</br>
+*Viewing single movie page with trailers, info, and comment section*
 
-![gif of logging in and viewing as guest](./src/images/overlook-guestview.gif)</br>
-*Logging in and viewing as guest*
+[gif of search functionality](./src/images/search.gif)</br>
+*Searching various movies*
 
 ![gif of filtering rooms](./src/images/overlook-filter-rms.gif)</br>
 *Default date, cost, and all rooms returned, unless otherwise selected*
@@ -64,7 +64,7 @@ Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie
 *Tabbing through elements on page, 100% Lighthouse score*
 
 ![gif of mobile view login](./src/images/overlook-mobile.gif)</br>
-*Mobile view* -->
+*Mobile view*
 
 ## Reflections
 

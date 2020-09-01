@@ -334,7 +334,7 @@ class App extends Component {
       API.deleteData(userID, ratingID)
         .then(() => API.getData(`ratings`, this.state.user.id))
         .then((ratings) => {
-          console.log(ratings);
+          this.convertRatingsToStarValues(ratings);
           this.setState({ userRatings: ratings });
           this.showRatingsPage();
         });

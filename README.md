@@ -5,7 +5,7 @@ Mod 3 Paired Project
 - [Repo](https://github.com/GreysonElkins/roasted-tomahtoes)
 - [Project Board](https://github.com/GreysonElkins/roasted-tomahtoes/projects)
 - [Project Spec](https://frontend.turing.io/projects/module-3/rancid-tomatillos-v2.html)
-<!-- - [Deployed Pages](https://leighlars.github.io/overlook-solo/) -->
+- [Deployed Pages](https://roastedtomahtoes.herokuapp.com/)
 
 ## Abstract 
 
@@ -28,7 +28,7 @@ Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie
 
 ## Set Up 
 
-<!-- To interact with the app without cloning / downloading the file, click [here](https://leighlars.github.io/overlook-solo/). -->
+To interact with the app without cloning / downloading the file, click [here](https://roastedtomahtoes.herokuapp.com/). 
 
 1. Fork and clone down this repo
 2. Once you have cloned the repo, change into the directory and install the project dependencies by running `npm install`.

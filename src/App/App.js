@@ -48,17 +48,17 @@ class App extends Component {
         error: "Oops, something went wrong! 🙁 Please try again.",
       });
     }
-  };
+  }
 
   setCurrentPage = () => {
     const currentPage = this.props.history.location.pathname;
     this.checkIfLoggedIn().then((user) => {
-      this.getUserFavorites()
+      user && this.getUserFavorites()
       if (currentPage === "/") {
         this.setState({ movies: this.sortMoviesByTitle(this.state.movies) });
       } else if (user && currentPage === "/user-ratings") {
         this.showRatingsPage();
-      }  else if (currentPage === '/sort-by/genres' || currentPage === '/sort-by/genres')
+      } else if (currentPage === '/sort-by/genres' || currentPage === '/sort-by/genres')
         this.showHomePage();
         this.props.history.push("/");
     })
@@ -336,9 +336,9 @@ class App extends Component {
       API.deleteData(userID, ratingID)
         .then(() => API.getData(`ratings`, this.state.user.id))
         .then((ratings) => {
-          console.log(ratings);
-          this.setState({ userRatings: ratings });
-          this.showRatingsPage();
+          this.convertRatingsToStarValues(ratings)
+          this.setState({ userRatings: ratings })
+          this.showRatingsPage()
         });
     } catch (error) {
       this.setState({

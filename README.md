@@ -37,6 +37,8 @@ Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie
 5. Rate stars, read about movies, watch movie trailers-- explore! 
 6. Enter `control + c` in your terminal to stop the server at any time.
 
+Part of this project relies on a local server. Go [here](https://github.com/turingschool-examples/rancid-tomatillos-microservice) and follow the directions in the ReadMe to run the local server for full project functionality.
+
 ## Gif Showcase
 
 ![gif of homeview, incorrect login, correct login](./src/images/home-login.gif)</br>

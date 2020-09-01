@@ -48,11 +48,11 @@ Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie
 [gif of search functionality](./src/images/search.gif)</br>
 *Searching various movies*
 
-![gif of filtering rooms](./src/images/overlook-filter-rms.gif)</br>
-*Default date, cost, and all rooms returned, unless otherwise selected*
+[gif of favoring movies](./src/images/favoringMovies.gif)</br>
+*Display user's movies, favoriting and unfavoriting movies*
 
-![gif of searching, adding, deleting reservations](./src/images/overlook-add-delete-reserv.gif)</br>
-*Searching, adding, and deleting reservations*
+[gif of sorting by genre and loading gif](./src/images/sortByGenre.gif)</br>
+*Sort by genre and show loading gif*
 
 ![gif of error message search results not found](./src/images/overlook-error.gif)</br>
 *Viewing error message when rooms are unavailable*

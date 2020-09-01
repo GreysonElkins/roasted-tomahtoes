@@ -1,4 +1,5 @@
 import { render, getByPlaceholderText, getByText, getByRole, screen, within } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import React from "react";
 import MoviePage from "./MoviePage";
 import "@testing-library/jest-dom";
@@ -24,28 +25,34 @@ describe('MoviePage', () => {
         "tagline": "",
         "average_rating": 9
     }
-    render(
-     <MoviePage
-      rateMovie={jest.fn()}
-      userRating={{ rating: 5 }}
-      trailers={[
-       {
-        id: 1,
-        movie_id: 1,
-        key: "SUXWAEX2jlg",
-        site: "YouTube",
-        type: "Trailer",
-       },
-      ]}
-      movie={movie}
-      error={"No movie found. Please try again."}
-      user={{ name: "Charlie", email: "charlie@turing.io" }}
-      isLoggedIn={true}
-     />
-    );
+
+    
   })
 
    it('should render poster and information about the selected movie', () => {
+         render(
+      <MemoryRouter>
+        <MoviePage
+          checkIfFavorite={jest.fn()}
+          rateMovie={jest.fn()}
+          userRating={{ rating: 5 }}
+          trailers={[
+            {
+            id: 1,
+            movie_id: 1,
+            key: "SUXWAEX2jlg",
+            site: "YouTube",
+            type: "Trailer",
+            },
+          ]}
+          movie={movie}
+          error={"No movie found. Please try again."}
+          user={{ name: "Charlie", email: "charlie@turing.io" }}
+          isLoggedIn={true}
+          userComments={[]}
+        />
+      </MemoryRouter>
+      )
     expect(screen.getByAltText(`${movie.title} movie poster`)).toBeInTheDocument()
     expect(screen.getByRole('heading', {name: 'Greenland'})).toBeInTheDocument();
     screen.getByText((content, node) => {

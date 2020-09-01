@@ -5,7 +5,6 @@ main {
   flex-wrap: wrap;
   justify-content: space-around;
   overflow-y: scroll;
-  margin-top: 25px;
   width: 100%;
   h2 {
     @include fontStyle();

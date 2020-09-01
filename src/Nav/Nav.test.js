@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
+import { MemoryRouter } from "react-router-dom";
 import React from 'react'
 import Nav from './Nav'
 import '@testing-library/jest-dom'
@@ -10,53 +11,49 @@ describe('Nav', () => {
      mockShowHomePage = jest.fn();
      mockShowLoginPage = jest.fn();
      mockSearchMovies = jest.fn();
-    render(<Nav
-    isLoggedIn={true}
-    searchMovies={mockSearchMovies}
-    showLoginPage={mockShowLoginPage}
-    showHomePage={mockShowHomePage}
-    user={{id:1, name: 'John', email: 'john@turing.io' }}
-    logout={mockLogout}
-    />);
+    render(
+    <MemoryRouter>
+      <Nav
+        isLoggedIn={true}
+        searchMovies={mockSearchMovies}
+        showLoginPage={mockShowLoginPage}
+        showHomePage={mockShowHomePage}
+        user={{id:1, name: 'John', email: 'john@turing.io' }}
+        logout={mockLogout}
+      />
+    </MemoryRouter>
+    );
   })
 
-  it('should display a Home button', () => {
-   expect(screen.getByRole('button', {name:'Home'})).toBeInTheDocument()
+  it('should display a Home link', () => {
+   expect(screen.getByRole('link', {name:'Home'})).toBeInTheDocument()
   });
 
-  it('should display a Your Ratings button', () => {
-   expect(screen.getByRole('button', {name:'Your Ratings'})).toBeInTheDocument()
+  it('should display a Your Ratings link', () => {
+   expect(screen.getByRole('link', {name:'Your Ratings'})).toBeInTheDocument()
   });
 
-  it('should display a Login button', () => {
-    expect(screen.getByRole('button', {name:'Login'})).toBeInTheDocument()
+  it('should display a Login link', () => {
+    expect(screen.getByRole('link', {name:'Login'})).toBeInTheDocument()
   });
 
-  it('should display a Logout button', () => {
-   expect(screen.getByRole('button', {name:'Logout'})).toBeInTheDocument()
+  it('should display a Logout link', () => {
+   expect(screen.getByRole('link', {name:'Logout'})).toBeInTheDocument()
   });
   
   it('should greet the user after log in',() => {
     expect(screen.getByText('Welcome, John!')).toBeInTheDocument();
   })
   
-  it("should fire event when Home button is clicked", () => {
-   const homeBtn = screen.getByRole("button", { name: "Home" })
+  it("should fire event when Home link is clicked", () => {
+   const homeBtn = screen.getByRole("link", { name: "Home" })
    expect(homeBtn).toBeInTheDocument();
    fireEvent.click(homeBtn);
    expect(mockShowHomePage).toBeCalledTimes(1);
   })
 
-  it("should fire event when Login button is clicked", () => {
-   const loginBtn = screen.getByRole("button", { name: "Login" });
-   expect(loginBtn).toBeInTheDocument();
-   fireEvent.click(loginBtn);
-   expect(mockShowLoginPage).toBeCalledTimes(1);
-  });
-
-
-  it("should fire event when Logout button is clicked", () => {
-    const logoutBtn = screen.getByRole("button", { name: "Logout" })
+  it("should fire event when Logout link is clicked", () => {
+    const logoutBtn = screen.getByRole("link", { name: "Logout" })
     expect(logoutBtn).toBeInTheDocument();
     fireEvent.click(logoutBtn);
     expect(mockLogout).toBeCalledTimes(1);

@@ -1,30 +1,32 @@
 import { render, screen, fireEvent, getByRole } from "@testing-library/react";
 import React from "react";
-// import React-DOM from 'react-dom';
+import { MemoryRouter } from "react-router-dom";
 import MovieCard from "./MovieCard";
 import "@testing-library/jest-dom";
 
 
 describe('MovieCard', () => {
-  let mockShowMoviePage
+  let mockGetSingleMovie
   beforeEach(() => {
-    mockShowMoviePage = jest.fn()
+    mockGetSingleMovie = jest.fn()
     render(
-     <MovieCard
-      showMoviePage={mockShowMoviePage}
-      isLoggedIn={true}
-      userRating={{rating: 5}}
-      movie={{
-       id: 1,
-       title: "Donkey Kong",
-       poster_path: "someURL",
-       backdrop_path: "someURL",
-       release_date: "2019-12-04",
-       overview: "Some overview",
-       average_rating: 6,
-      }}
-      error={"No movie found. Please try again."}
-     />
+      <MemoryRouter>
+        <MovieCard
+          getSingleMovie={mockGetSingleMovie}
+          isLoggedIn={true}
+          userRating={{rating: 5}}
+            movie={{
+            id: 1,
+            title: "Donkey Kong",
+            poster_path: "someURL",
+            backdrop_path: "someURL",
+            release_date: "2019-12-04",
+            overview: "Some overview",
+            average_rating: 6,
+          }}
+          error={"No movie found. Please try again."}
+        />
+      </MemoryRouter>
     )
   })
 
@@ -42,8 +44,8 @@ describe('MovieCard', () => {
   it('should fire an event when card is clicked', () => {
     const poster = screen.getByAltText('Donkey Kong movie poster')
     fireEvent.click(poster)
-    expect(mockShowMoviePage).toBeCalledTimes(1)
-    expect(mockShowMoviePage).toBeCalledWith(1)
+    expect(mockGetSingleMovie).toBeCalledTimes(1)
+    expect(mockGetSingleMovie).toBeCalledWith(1)
   })
 
 

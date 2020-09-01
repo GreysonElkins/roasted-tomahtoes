@@ -1,16 +1,20 @@
 import { render, getByPlaceholderText, getByText, screen, fireEvent } from '@testing-library/react'
 import React from 'react'
 import Login from './Login'
+import { MemoryRouter } from "react-router-dom";
 import '@testing-library/jest-dom'
 
 describe('Login', () => {
   let mockLoginTest
   beforeEach(() => {
     mockLoginTest = jest.fn()
-    render(<Login 
-    error='Username or password incorrect. Please try again.'
-    login={mockLoginTest}
-    />);
+    render(<MemoryRouter>  
+      <Login 
+        error='Username or password incorrect. Please try again.'
+        login={mockLoginTest}
+      />
+    </MemoryRouter>
+    );
   })
 
   it('should render a login page', () => {

@@ -17,9 +17,9 @@ class Comments extends Component {
   };
 
   displayComments = () => {
-    return this.props.userComments.map((comment) => {
+    return this.props.userComments.map((comment, i) => {
       return (
-        <p className="user-comment">
+        <p className="user-comment" key={`comment-${i}`}>
           {" "}
           "{comment.comment}"<br />
           <i>-{comment.author}</i>

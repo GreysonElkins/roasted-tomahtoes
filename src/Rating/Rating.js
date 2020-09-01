@@ -1,28 +1,28 @@
-import './Star.scss'
-import React, {Component} from 'react'
+import "./Star.scss";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import selectedStar from "../images/selected-star.png";
 import emptyStar from "../images/empty-star.png";
-import PropTypes from 'prop-types'
 
 class Rating extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      currentValue: undefined
-    }
+      currentValue: undefined,
+    };
   }
 
   makeStars = (props, numberOfStars = props.userRating.rating) => {
     let stars = [];
     for (let i = 0; i < 5; i++) {
-      let starSource = emptyStar
-      let starAltText = 'empty star icon'
+      let starSource = emptyStar;
+      let starAltText = "empty star icon";
       if (i < numberOfStars) {
-        starSource = selectedStar
-        starAltText = 'selected star icon'
+        starSource = selectedStar;
+        starAltText = "selected star icon";
       }
       stars.push(
-        <div className="stars-box" key={i} tabIndex='0'>
+        <div className="stars-box" key={i} tabIndex="0">
           <img
             key={i}
             className="star-image"
@@ -39,24 +39,24 @@ class Rating extends Component {
             }}
           />
         </div>
-      ); 
+      );
     }
-    return stars
-  }
+    return stars;
+  };
 
   render = () => {
     return (
       <div className="stars-box">
         {this.makeStars(this.props, this.state.currentValue)}
-       </div>
-    )
-  }
+      </div>
+    );
+  };
 }
 
-export default Rating
+export default Rating;
 
 Rating.propTypes = {
   movie_id: PropTypes.number,
   rateMovie: PropTypes.func,
-  userRating: PropTypes.object
-}
+  userRating: PropTypes.object,
+};

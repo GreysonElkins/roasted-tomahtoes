@@ -1,111 +1,106 @@
-
-const apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
+const apiHead = "https://rancid-tomatillos.herokuapp.com/api/v2";
 const localHost = `http://localhost:3001/api/v1`;
 class API {
-  // constructor() {
-    // this.apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
-    // can I not use this in static methods because the API wasn't constructed?
-  // }
-
   static getData = async (location, id) => {
-    let pathAndData = this.findRelevantPathAndData(location, id);
+    const pathAndData = this.findRelevantPathAndData(location, id);
     try {
-      let response = await fetch(pathAndData.path)
-      let data = await response.json()
-      return data[pathAndData.data]
+      const response = await fetch(pathAndData.path);
+      const data = await response.json();
+      return data[pathAndData.data];
     } catch (error) {
-      return error
+      return error;
     }
-  }
+  };
 
   static findRelevantPathAndData = (location, id) => {
-    const pathAndData = {path: '', data: ''}
+    const pathAndData = { path: "", data: "" };
     if (location === "movies") {
-      pathAndData.path = `${apiHead}/movies/${id ? id : ''}`
-      pathAndData.data = id ? `movie` : `movies`
+      pathAndData.path = `${apiHead}/movies/${id ? id : ""}`;
+      pathAndData.data = id ? `movie` : `movies`;
     } else if (location === "videos" && id) {
-      pathAndData.path = `${apiHead}/movies/${id}/videos`
-      pathAndData.data = `videos`
+      pathAndData.path = `${apiHead}/movies/${id}/videos`;
+      pathAndData.data = `videos`;
     } else if (location === `ratings` && id) {
-      pathAndData.path = `${apiHead}/users/${id}/ratings`
-      pathAndData.data = `ratings`
+      pathAndData.path = `${apiHead}/users/${id}/ratings`;
+      pathAndData.data = `ratings`;
     } else if (location === `favorites`) {
-      pathAndData.path = `${localHost}/favorites`
-      pathAndData.data = `favorites`
-    } else if (location === 'comments' && id) {
+      pathAndData.path = `${localHost}/favorites`;
+      pathAndData.data = `favorites`;
+    } else if (location === "comments" && id) {
       pathAndData.path = `${localHost}/movies/${id}/comments`;
       pathAndData.data = `comments`;
-    }
-    else {
+    } else {
       throw new Error("A bad path was provided for fetching data");
     }
-    return pathAndData
-  }
+    return pathAndData;
+  };
 
   static postData = async (info, id) => {
-    const path = this.findPostPath(info, id)
+    const path = this.findPostPath(info, id);
     try {
       const response = await fetch(path, {
-        method: 'POST',
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(
-          info
-        )
-      })
-      return response
+        body: JSON.stringify(info),
+      });
+      return response;
     } catch (error) {
-      return error
+      return error;
     }
-  }
-  
+  };
+
   static findPostPath = (info, id) => {
-    const acceptableUserInfo = ['email', 'password']
-    const acceptableRatingInfo = ['rating', 'movie_id']
-    const acceptableFavoriteInfo = ['id']
-    const acceptableCommentsInfo = ['comment', 'author']
-    const infoValues = Object.keys(info)
-    if (id && infoValues.every(
-        value=> acceptableRatingInfo.includes(value))) {
-        return `${apiHead}/users/${id}/ratings`
-    } else if (infoValues.every(
-        value => acceptableUserInfo.includes(value))) {
-        return `${apiHead}/login`
-    } else if (infoValues.every(
-        value => acceptableFavoriteInfo.includes(value))) {
-        return `${localHost}/favorites`
-    } else if (infoValues.every(
-        value => acceptableCommentsInfo.includes(value))) {
-      return `${localHost}/movies/${id}/comments`
+    const acceptableUserInfo = ["email", "password"];
+    const acceptableRatingInfo = ["rating", "movie_id"];
+    const acceptableFavoriteInfo = ["id"];
+    const acceptableCommentsInfo = ["comment", "author"];
+    const infoValues = Object.keys(info);
+    if (
+      id &&
+      infoValues.every((value) => acceptableRatingInfo.includes(value))
+    ) {
+      return `${apiHead}/users/${id}/ratings`;
+    } else if (
+      infoValues.every((value) => acceptableUserInfo.includes(value))
+    ) {
+      return `${apiHead}/login`;
+    } else if (
+      infoValues.every((value) => acceptableFavoriteInfo.includes(value))
+    ) {
+      return `${localHost}/favorites`;
+    } else if (
+      infoValues.every((value) => acceptableCommentsInfo.includes(value))
+    ) {
+      return `${localHost}/movies/${id}/comments`;
     } else {
-      throw new Error ('Something is wrong with the data for POST')
+      throw new Error("Something is wrong with the data for POST");
     }
-  }
+  };
 
   static deleteData = async (id, ratingID) => {
-    const path = this.findDeletePath(id, ratingID)
+    const path = this.findDeletePath(id, ratingID);
     try {
       const response = await fetch(path, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
-        }
-      })  
-      return response
-    } catch(error) {
-      return error
+          "Content-Type": "application/json",
+        },
+      });
+      return response;
+    } catch (error) {
+      return error;
     }
-  }
-  
+  };
+
   static findDeletePath = (id, ratingID) => {
     if (ratingID) {
       return `${apiHead}/users/${id}/ratings/${ratingID}`;
     } else {
-      return `${localHost}/favorites/${id}`
+      return `${localHost}/favorites/${id}`;
     }
-  }
+  };
 }
 
-
-export default API
+export default API;

@@ -42,7 +42,7 @@ class Comments extends Component {
           <div className="comment-box">{this.displayComments()}</div>
         )}
         {this.props.isLoggedIn && (
-          <form className="comment-form" onSubmit={this.submitMovieComment}>
+          <form onSubmit={this.submitMovieComment}>
             <input
               aria-label="comment-input"
               name="comment"

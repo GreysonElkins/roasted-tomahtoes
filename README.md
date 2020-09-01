@@ -57,54 +57,12 @@ Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie
 [gif of commenting on movies](./src/images/commenting.gif)</br>
 *Viewing comments added to movie*
 
-![gif of viewing alert when username is incorrect](./src/images/overlook-wronglogin.gif)</br>
-*Alert when username is incorrect*
-
-![gif of mobile view login](./src/images/overlook-mobile.gif)</br>
-*Mobile view*
+[gif of different views on guest and user login](./src/images/guestView.gif)</br>
+*When logged in, user can rate and comment, but cannot as a guest*
 
 ## Reflections
 
+This project introduced our paired team to React.js and Router. We feel we have demonstrated our understanding of these technologies by satisfying all demands of the spec, as well as completing all extensions, and even adding our own features, all while maintaining a 97% Accessibility score. We implemented TDD using Jest to test for UX and async elements. If we had more time, we would have styled the app mobile-friendly, fixed a bug that caused our page to load the home page when the refresh button is clicked, added more tests, and displayed all comments about movies from the community (not just the user).  Our project documentation can be viewed on [Project Board](https://github.com/GreysonElkins/roasted-tomahtoes/projects) and in the aforementioned gif section. We worked well together and really crushed this introductory React project. 
 
 
 
-<!-- ## React Information
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify -->

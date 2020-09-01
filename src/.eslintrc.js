@@ -1,32 +1,29 @@
 module.exports = {
  env: {
   browser: true,
+  commonjs: true,
   es6: true,
+  mocha: true,
  },
- parser: "babel-eslint",
- extends: ["airbnb", "prettier", "prettier/react"],
- globals: {
-  Atomics: "readonly",
-  SharedArrayBuffer: "readonly",
- },
- parserOptions: {
-  ecmaFeatures: {
-   jsx: true,
-   modules: true,
-  },
-  ecmaVersion: 2018,
-  sourceType: "module",
- },
- plugins: ["react", "prettier"],
+ extends: "eslint:recommended",
+ parserOptions: { sourceType: "module" },
  rules: {
-  "prettier/prettier": "error",
-  "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
-  "react/forbid-prop-types": [0, { forbid: ["any"] }],
-  "react/prop-types": 0,
- },
- env: {
-  jest: true,
-  browser: true,
-  node: true,
+  eqeqeq: ["error", "always"],
+  "brace-style": "error",
+  "comma-spacing": ["warn", { before: false, after: true }],
+  curly: "error",
+  "semi-spacing": ["error", { before: false, after: true }],
+  indent: ["warn", 2],
+  "key-spacing": ["error", { beforeColon: false, afterColon: true }],
+  "keyword-spacing": ["error", { before: true, after: true }],
+  "linebreak-style": ["error", "unix"],
+  "max-len": ["warn", 80],
+  "new-cap": ["error", { newIsCap: true }],
+  "object-shorthand": ["error", "always"],
+  "space-before-blocks": [
+   "error",
+   { functions: "always", keywords: "always", classes: "always" },
+  ],
+  "space-infix-ops": ["error", { int32Hint: false }],
  },
 };

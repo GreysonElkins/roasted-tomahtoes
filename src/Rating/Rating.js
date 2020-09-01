@@ -13,7 +13,7 @@ class Rating extends Component {
   }
 
   makeStars = (props, numberOfStars = props.userRating.rating) => {
-    let stars = [];
+    const stars = [];
     for (let i = 0; i < 5; i++) {
       let starSource = emptyStar;
       let starAltText = "empty star icon";

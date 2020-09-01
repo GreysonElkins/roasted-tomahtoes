@@ -14,6 +14,7 @@ nav {
     @include rowDisplay();
     justify-content: flex-end;
     width: 250px;
+    margin-right: 5px;
     .nav-btn {
       background: $slateBlack;
       border-top: 1px solid white;

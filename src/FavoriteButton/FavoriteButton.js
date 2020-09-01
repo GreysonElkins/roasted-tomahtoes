@@ -9,18 +9,20 @@ class FavoriteButton extends Component {
   }
 
   makeHeart = (props, heartIsSelected = props.isFavorite) => {
-    let heart = `🤍`
-    let altText = 'unselected heart icon'
+    let heart = `🤍`;
+    let altText = "unselected heart icon";
     if (heartIsSelected) {
-      heart = `❤️`
-      altText = 'selected heart icon'
+      heart = `❤️`;
+      altText = "selected heart icon";
     }
     return (
       <span
         id="emptyFavoriteIcon"
-        tabIndex='0'
+        tabIndex="0"
         alt={altText}
-        onClick={() => {props.toggleFavorite(props.movie.id)}}
+        onClick={() => {
+          props.toggleFavorite(props.movie.id);
+        }}
         onMouseEnter={() => this.setState({ currentValue: true })}
         onMouseLeave={() => this.setState({ currentValue: undefined })}
       >

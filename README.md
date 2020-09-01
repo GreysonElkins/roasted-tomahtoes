@@ -54,8 +54,8 @@ Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie
 [gif of sorting by genre and loading gif](./src/images/sortByGenre.gif)</br>
 *Sort by genre and show loading gif*
 
-![gif of error message search results not found](./src/images/overlook-error.gif)</br>
-*Viewing error message when rooms are unavailable*
+[gif of commenting on movies](./src/images/commenting.gif)</br>
+*Viewing comments added to movie*
 
 ![gif of viewing alert when username is incorrect](./src/images/overlook-wronglogin.gif)</br>
 *Alert when username is incorrect*

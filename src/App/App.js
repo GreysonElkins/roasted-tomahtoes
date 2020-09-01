@@ -9,7 +9,6 @@ import API from '../API/API'
 import { Route, withRouter, NavLink } from 'react-router-dom'
 import '../HorizontalGallery/HorizontalGallery.scss'
 import loadingTom from '../images/loading-tomato.gif'
-import { array } from 'prop-types' // I didn't add this, did you add this @Leigh?
 
 const loadingSection = (
   <div className="loading-img">

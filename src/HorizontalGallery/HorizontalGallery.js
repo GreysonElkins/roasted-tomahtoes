@@ -4,7 +4,7 @@ import './HorizontalGallery.scss'
 import PropTypes from 'prop-types'
 
 
-https: const HorizontalGallery = ({
+const HorizontalGallery = ({
   movieSelection,
   galleryTitle,
   isLoggedIn,

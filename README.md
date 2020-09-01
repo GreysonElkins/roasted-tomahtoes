@@ -1,8 +1,8 @@
 # Roasted Tomahtoes 
 Mod 3 Paired Project
 
-- [Leigh Larson](https://github.com/leighlars)
 - [Greyson Elkins](https://github.com/GreysonElkins)
+- [Leigh Larson](https://github.com/leighlars)
 - [Repo](https://github.com/GreysonElkins/roasted-tomahtoes)
 - [Project Board](https://github.com/GreysonElkins/roasted-tomahtoes/projects)
 - [Project Spec](https://frontend.turing.io/projects/module-3/rancid-tomatillos-v2.html)

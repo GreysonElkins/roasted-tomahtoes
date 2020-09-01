@@ -16,8 +16,15 @@ class Overview extends Component {
   render() {
     return(
       <span className='overview-box'>
-          <p className={this.state.collapsed ? 'movie-overview' : 'movie-overview-exp'}>{this.props.movie.overview}</p>
-          <button className='overview-display-btn' onClick={this.toggleOverview}>{this.state.collapsed ? 'Show More' : 'Show Less'}</button>
+          <p 
+            className={this.state.collapsed ? 'movie-overview' : 'movie-overview-exp'}>
+            {this.props.movie.overview}
+            </p>
+          <button 
+            className='overview-display-btn' 
+            onClick={this.toggleOverview}>{
+              this.state.collapsed ? 'Show More' : 'Show Less'}
+          </button>
       </span>
 
     )

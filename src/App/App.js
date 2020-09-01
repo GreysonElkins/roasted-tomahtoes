@@ -446,9 +446,10 @@ class App extends Component {
               <>
                 <span className="spacer"></span>
                 <div id="sortByLinks">
-                  Sort by:
+                  Sort By:
                   <NavLink
                     to="/sort-by/genres"
+                    className='sort-link'
                     onClick={() => {
                       this.createCategoricalMovieGalleries("genres");
                     }}
@@ -458,6 +459,7 @@ class App extends Component {
                   |
                   <NavLink
                     to="/sort-by/release_date"
+                    className='sort-link'
                     onClick={() => {
                       this.createCategoricalMovieGalleries("release_date");
                     }}
@@ -577,6 +579,7 @@ class App extends Component {
                   Sort by:
                   <NavLink
                     to="/sort-by/genres"
+                    className='sort-link'
                     onClick={() => {
                       this.createCategoricalMovieGalleries("genres");
                     }}
@@ -586,6 +589,7 @@ class App extends Component {
                   |
                   <NavLink
                     to="/sort-by/release_date"
+                    className='sort-link'
                     onClick={() => {
                       this.createCategoricalMovieGalleries("release_date");
                     }}

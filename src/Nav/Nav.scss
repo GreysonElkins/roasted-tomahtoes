@@ -13,6 +13,7 @@ nav {
 
   .button-box {
     @include rowDisplay();
+    justify-content: flex-end;
     width: 250px;
     .nav-btn {
       background: $slateBlack;

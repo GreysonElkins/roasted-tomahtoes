@@ -10,8 +10,6 @@ class FavoriteButton extends Component {
   }
 
 
-
-
   makeHeart = (props, heartIsSelected = props.isFavorite) => {
     let heart = `🤍`
     if (heartIsSelected) heart = `❤️`

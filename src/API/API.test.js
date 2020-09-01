@@ -20,19 +20,19 @@ describe('API methods', () => {
     it(`should be able to determine which key to use on
     a fetch response based on the end of the URL`, () => {
       const movies = API.findRelevantPathAndData('movies')
-      const singleMovie = API.findRelevantPathAndData('movies/:movie_id')
-      const videos = API.findRelevantPathAndData('movies/:movie_id/videos')
-      const ratings = API.findRelevantPathAndData("users/:user_id/ratings")
+      const singleMovie = API.findRelevantPathAndData('movies', 7)
+      const videos = API.findRelevantPathAndData('videos', 7)
+      const ratings = API.findRelevantPathAndData("ratings", 7)
 
-      expect(movies).toBe('movies')
-      expect(singleMovie).toBe('movie')
-      expect(videos).toBe('videos')
-      expect(ratings).toBe('ratings')
+      expect(movies.data).toBe('movies')
+      expect(singleMovie.data).toBe("movie");
+      expect(videos.data).toBe("videos");
+      expect(ratings.data).toBe("ratings");
     })
 
     // it(`should return an error if it gets a bad path`, () => {
     //   const getItWrong = () => {
-    //     API.findRelevantData('Birdman')
+    //     API.findRelevantPathAndData('Birdman')
     //   }
     //   expect(getItWrong("Birdman")).toThrowError('bad path')
     // })
@@ -43,12 +43,16 @@ describe('API methods', () => {
       const goodRating = {rating: 0, movie_id: 1}
       const goodFavorite = {id: 1}
       const goodComment = {comment: 'This movie sux', author: 'Germaine'}
-      expect(API.findPostPath(goodUser)).toBe(`http://localhost:3001/api/v1/login`)
-      expect(API.findPostPath(goodRating, 7)).toBe(
-        `http://localhost:3001/api/v1/users/7/ratings`
+      expect(API.findPostPath(goodUser)).toBe(
+        `https://rancid-tomatillos.herokuapp.com/api/v2/login`
       );
-      expect(API.findPostPath(goodFavorite)).toBe('http://localhost:3000/favorites')
-      expect(API.findPostPath(goodComment, 7)).toBe('http://localhost:3000/movies/7/comments')
+      expect(API.findPostPath(goodRating, 7)).toBe(
+        `https://rancid-tomatillos.herokuapp.com/api/v2/users/7/ratings`
+      );
+      expect(API.findPostPath(goodFavorite)).toBe('http://localhost:3001/api/v1/favorites')
+      expect(API.findPostPath(goodComment, 7)).toBe(
+        "http://localhost:3001/api/v1/movies/7/comments"
+      );
     })
 
     // it(`should return an error if the post is bad`, () => {
@@ -106,26 +110,26 @@ describe('API methods', () => {
     it('should get data from a given location', async () => {
       API.getData('movies')
       await waitFor(() => expect(global.fetch).toBeCalledWith(
-        "https://rancid-tomatillos.herokuapp.com/api/v2/movies"));
+        "https://rancid-tomatillos.herokuapp.com/api/v2/movies/"));
     })
 
-    it('should call findRelevantData with that location when getting data', () => {
+    it('should call findRelevantPathAndData with that location when getting data', async () => {
       API.getData('movies')
-      expect(API.findRelevantData).toBeCalledTimes(1)
-      expect(API.findRelevantData).toBeCalledWith('movies')
+      await waitFor(() => expect(API.findRelevantPathAndData).toBeCalledTimes(1))
+      await waitFor(() => expect(API.findRelevantPathAndData).toBeCalledWith('movies', undefined))
     })
 
     it(`should return a key from the response 
       depending on the argument`, async () => {
       const allMovies = await API.getData('movies')
-      const movie = await API.getData("movie/1")
+      const movie = await API.getData("movies", 1)
       expect(allMovies).toBe('Birdman')
       expect(movie).toBe('Batman')
     }) 
 
     it(`should return an error if the get is bad`, () => {
 
-    })
+    })   
   })
 
   describe('Fetch POST', () => {

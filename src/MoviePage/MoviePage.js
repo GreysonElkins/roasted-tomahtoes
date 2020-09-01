@@ -96,5 +96,8 @@ MoviePage.propTypes = {
   userRating: PropTypes.object,
   userComments: PropTypes.array,
   user: PropTypes.object,
-  submitMovieComment: PropTypes.func
+  submitMovieComment: PropTypes.func,
+  isLoggedIn: PropTypes.bool,
+  checkIfFavorite: PropTypes.func,
+  toggleFavorite: PropTypes.func
 }

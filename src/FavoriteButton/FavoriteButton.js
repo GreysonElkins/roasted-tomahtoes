@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import PropTypes, { object } from "prop-types";
+import Rating from '../Rating/Rating';
 
 
 class FavoriteButton extends Component {
@@ -8,9 +10,6 @@ class FavoriteButton extends Component {
       currentValue: undefined
     }
   }
-
-
-
 
   makeHeart = (props, heartIsSelected = props.isFavorite) => {
     let heart = `🤍`
@@ -43,3 +42,9 @@ class FavoriteButton extends Component {
 }
 
 export default FavoriteButton
+
+FavoriteButton.propTypes = {
+  movie: PropTypes.object,
+  isFavorite: PropTypes.bool,
+  toggleFavorite: PropTypes.func
+}

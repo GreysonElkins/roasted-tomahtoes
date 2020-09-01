@@ -9,6 +9,7 @@
     overflow: scroll;
     height: 150px;
     width: 500px;
+    margin: 5px;
     .user-comment {
       border: 1px solid $tomahtoRed;
       border-radius: 5px;
@@ -18,7 +19,8 @@
     }
   }
   form {
-    @include rowDisplay()
+    @include rowDisplay();
+    align-items: center;
   }
    input { 
     @include input();
@@ -30,7 +32,6 @@
     color: white;
     background: red;
     border-radius: 6px;
-    margin-top: 5px;
     @include fontStyle();
     font-size: 1em;
     &:hover {

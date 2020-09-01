@@ -1,13 +1,13 @@
-import React from 'react'
-import './MovieCard.scss'
-import PropTypes from "prop-types"
-import Rating from '../Rating/Rating'
-import FavoriteButton from '../FavoriteButton/FavoriteButton'
-import {Link} from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import "./MovieCard.scss";
+import Rating from "../Rating/Rating";
+import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import "../FavoriteButton/FavoriteButton.scss";
 
 const MovieCard = (props) => {
-  const altText = `${props.movie.title} movie poster`
+  const altText = `${props.movie.title} movie poster`;
 
   return (
     <article className="card" tabIndex="0">
@@ -21,20 +21,21 @@ const MovieCard = (props) => {
           </button>
         )}
         <div className="FavoriteButton">
-        {props.isLoggedIn 
-          && <FavoriteButton 
-            movie={props.movie}
-            isFavorite={props.isFavorite}
-            toggleFavorite={props.toggleFavorite}
-          />
-        }
+          {props.isLoggedIn && (
+            <FavoriteButton
+              movie={props.movie}
+              isFavorite={props.isFavorite}
+              toggleFavorite={props.toggleFavorite}
+            />
+          )}
         </div>
-        <Link to={`/movies/${props.movie.id}`} onClick={()=> {props.getSingleMovie(props.movie.id)}}>
-          <img
-            className="poster"
-            src={props.movie.poster_path}
-            alt={altText}
-          />
+        <Link
+          to={`/movies/${props.movie.id}`}
+          onClick={() => {
+            props.getSingleMovie(props.movie.id);
+          }}
+        >
+          <img className="poster" src={props.movie.poster_path} alt={altText} />
         </Link>
       </div>
       <span className="card-info-box">
@@ -54,9 +55,9 @@ const MovieCard = (props) => {
       </span>
     </article>
   );
-}
+};
 
-export default MovieCard
+export default MovieCard;
 
 MovieCard.propTypes = {
   getSingleMovie: PropTypes.func,
@@ -68,5 +69,5 @@ MovieCard.propTypes = {
   movie: PropTypes.object,
   showMoviePage: PropTypes.func,
   userRating: PropTypes.object,
-  isLoggedIn: PropTypes.bool
-}
+  isLoggedIn: PropTypes.bool,
+};

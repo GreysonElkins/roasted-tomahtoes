@@ -1,43 +1,44 @@
 import React, {Component} from 'react'
 import PropTypes from "prop-types";
-// import Rating from '../Rating/Rating';
 
 class FavoriteButton extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      currentValue: undefined
-    }
+      currentValue: undefined,
+    };
   }
 
   makeHeart = (props, heartIsSelected = props.isFavorite) => {
-    let heart = `🤍`
-    let altText = 'unselected heart icon'
+    let heart = `🤍`;
+    let altText = "unselected heart icon";
     if (heartIsSelected) {
-      heart = `❤️`
-      altText = 'selected heart icon'
+      heart = `❤️`;
+      altText = "selected heart icon";
     }
     return (
-      <span 
+      <span
         id="emptyFavoriteIcon"
-        tabIndex='0'
+        tabIndex="0"
         alt={altText}
-        onClick={() => {props.toggleFavorite(props.movie.id)}}
+        onClick={() => {
+          props.toggleFavorite(props.movie.id);
+        }}
         onMouseEnter={() => this.setState({ currentValue: true })}
-        onMouseLeave={() => this.setState({ currentValue: undefined })}>
-          {heart}
+        onMouseLeave={() => this.setState({ currentValue: undefined })}
+      >
+        {heart}
       </span>
-    )
-  }
+    );
+  };
 
   render = () => {
     return (
-    <span id="favorite-icon">
-      {this.makeHeart(this.props, this.state.currentValue)}
-    </span>
-    )
-  }
-
+      <span id="favorite-icon">
+        {this.makeHeart(this.props, this.state.currentValue)}
+      </span>
+    );
+  };
 }
 
 export default FavoriteButton

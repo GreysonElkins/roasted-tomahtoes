@@ -7,6 +7,7 @@ $slateBlack: #121212;
 @mixin fontStyle() {
   font-family: $bangersFont;
   color: #f5f3f2;
+  font-weight: 400;
 }
 
 @mixin columnDisplay() {

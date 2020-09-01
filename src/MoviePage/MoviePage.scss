@@ -17,11 +17,13 @@
       line-height: 35px;
     }
     .ratings-box {
-      @include columnDisplay();
-      width: 150px;
-      margin-bottom: 10px;
+      @include rowDisplay();
+      width: 200px;
       h3 {
         margin: 0 auto;
+      }
+      #favorite-icon {
+        margin-left: 5px;
       }
     }
 }

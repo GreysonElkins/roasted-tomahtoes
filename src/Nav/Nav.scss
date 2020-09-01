@@ -2,7 +2,6 @@
 
 nav {
   @include columnDisplay();
-  margin-right: 40px;
 
   h3 {
     font-family: $bangersFont;
@@ -13,7 +12,9 @@ nav {
 
   .button-box {
     @include rowDisplay();
+    justify-content: flex-end;
     width: 250px;
+    margin-right: 5px;
     .nav-btn {
       background: $slateBlack;
       border-top: 1px solid white;

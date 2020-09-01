@@ -33,7 +33,6 @@ const HorizontalGallery = ({
     );
   }
 
-  // let relevantMovies = findRelevantMovies(movieSelection, allMovies);
   const movieCards = movieSelection.map((movie, i) => {
     let rating = matchUserRatingWithMovie(movie);
     let isFavorite = checkIfFavorite(movie);
@@ -69,13 +68,13 @@ const HorizontalGallery = ({
 export default HorizontalGallery
 
 HorizontalGallery.propTypes = {
-    getSingleMovie: PropTypes.func,
-    movieSelection: PropTypes.array,
-    checkIfFavorite: PropTypes.func,
-    toggleFavorite: PropTypes.func,
-    galleryTitle: PropTypes.string,
-    isLoggedIn: PropTypes.bool,
-    rateMovie: PropTypes.func,
-    userRatings: PropTypes.array,
-    deleteRatings: PropTypes.func
+  getSingleMovie: PropTypes.func,
+  movieSelection: PropTypes.array,
+  checkIfFavorite: PropTypes.func,
+  toggleFavorite: PropTypes.func,
+  galleryTitle: PropTypes.string,
+  isLoggedIn: PropTypes.bool,
+  rateMovie: PropTypes.func,
+  userRatings: PropTypes.array,
+  deleteRatings: PropTypes.func
 }

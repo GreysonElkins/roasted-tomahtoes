@@ -1,20 +1,20 @@
-import React from 'react'
-import './Error.scss'
-import PropTypes from "prop-types"
-import sadTomato from '../images/sadtomatoes1.jpg'
+import React from "react";
+import "./Error.scss";
+import PropTypes from "prop-types";
+import sadTomato from "../images/sadtomatoes1.jpg";
 
-const Error = ({error}) => {
+const Error = ({ error }) => {
   return (
-    <div className='error-box'>
-      <h2 className='error-header'>Uh Oh!</h2>
-      <p className='error-text'>{error}</p>
-      <img src={sadTomato} alt='Cartoon tomato frowning'></img>
+    <div className="error-box">
+      <h2 className="error-header">Uh Oh!</h2>
+      <p className="error-text">{error}</p>
+      <img src={sadTomato} alt="Cartoon tomato frowning" />
     </div>
-  )
-}
+  );
+};
 
-export default Error
+export default Error;
 
 Error.propTypes = {
-  error: PropTypes.string
-}
+  error: PropTypes.string,
+};

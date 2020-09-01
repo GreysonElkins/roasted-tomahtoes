@@ -5,6 +5,33 @@
   flex-direction: column;
 }
 
+#sortByLinks {
+  @include rowDisplay();
+  justify-content: left;
+  margin-left: 2em;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.sort-link {
+  text-decoration: none;
+  background: $tomahtoRed;
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-radius: 6px;
+  @include fontStyle();
+  font-size: .75em;
+  text-decoration: none;
+  font-weight: normal;
+  text-align: center;
+  margin: 10px;
+  padding: .25%;
+    &:hover {
+      box-shadow: 1px 1px 35px rgb(255, 255, 255);
+    }
+
+}
+
 .loading-img {
   margin-top: 5em;
   display: flex;

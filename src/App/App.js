@@ -1,21 +1,21 @@
-import React, { Component } from 'react'
-import './App.scss'
-import Header from '../Header/Header'
-import Login from '../Login/Login'
-import Main from '../Main/Main'
-import HorizontalGallery from '../HorizontalGallery/HorizontalGallery'
-import MoviePage from '../MoviePage/MoviePage'
-import API from '../API/API'
-import { Route, withRouter, NavLink } from 'react-router-dom'
-import '../HorizontalGallery/HorizontalGallery.scss'
-import loadingTom from '../images/loading-tomato.gif'
+import React, { Component } from "react";
+import { Route, withRouter, NavLink } from "react-router-dom";
+import "./App.scss";
+import Header from "../Header/Header";
+import Login from "../Login/Login";
+import Main from "../Main/Main";
+import HorizontalGallery from "../HorizontalGallery/HorizontalGallery";
+import MoviePage from "../MoviePage/MoviePage";
+import API from "../API/API";
+import "../HorizontalGallery/HorizontalGallery.scss";
+import loadingTom from "../images/loading-tomato.gif";
 
 const loadingSection = (
   <div className="loading-img">
     <img src={loadingTom} alt="A tomato being inflated, the page is loading" />
     <p>Pardon us while we sort these tomahtoes</p>
   </div>
-)
+);
 
 class App extends Component {
   constructor() {
@@ -33,9 +33,10 @@ class App extends Component {
       trailers: [],
       singleMovieUserRating: {},
       moviesByCategory: {},
-      categoricalGalleries: [loadingSection]
+      categoricalGalleries: [loadingSection],
     };
   }
+
   // ONLOAD and RELOAD
   componentDidMount = async () => {
     try {
@@ -50,7 +51,6 @@ class App extends Component {
 
   setCurrentPage = (movies) => {
     const currentPage = this.props.history.location.pathname;
-    console.log(this.props.history.location.pathname);
     this.setState({ movies: this.sortMoviesByTitle(movies) });
     this.checkIfLoggedIn()
     if (currentPage.includes('/movies/')) {
@@ -66,24 +66,24 @@ class App extends Component {
       this.getUserFavorites()
       this.convertRatingsToStarValues(userRatings)
       this.setState({
-        user: user,
+        user,
         isLoggedIn: true,
-        userRatings: userRatings,
+        userRatings,
       });
       this.setState({ ratedMovies: this.filterRatedMovies() });
       return true;
-    } else {
-      return false;
     }
+    return false;
   };
+
   // PAGE VIEWS
   showHomePage = async () => {
     try {
       const movies = await API.getData("movies");
-        this.setState({ movies: this.sortMoviesByTitle(movies), error: "" });
-        this.props.history.push("/");
+      this.setState({ movies: this.sortMoviesByTitle(movies), error: "" });
+      this.props.history.push("/");
     } catch (error) {
-      this.setState({ error: error });
+      this.setState({ error });
     }
   };
 
@@ -107,6 +107,7 @@ class App extends Component {
     this.setState({ userFavorites: favoriteMovies })
   }
   // USER HANDLING
+
   login = async (loginState) => {
     const response = await API.postData(loginState);
     const user = await response.json();
@@ -123,7 +124,7 @@ class App extends Component {
             user: user.user,
             error: "",
           });
-          this.showHomePage()
+          this.showHomePage();
           localStorage.setItem(`user`, JSON.stringify(this.state.user));
         });
     } else {
@@ -139,39 +140,48 @@ class App extends Component {
     this.showHomePage();
   };
 
- //MOVIE HANDLING and SORTING
- getSingleMovie = async (movie_id) => {
-  try {
-   this.setState({
-    singleMovie: {genres:[]},
-    trailers: [],
-    singleMovieUserRating: {},
-    error: "",
-    userComments: [],
-   }); 
-   const movie = await API.getData(`movies`, movie_id);
-   const rating = this.findMovieUserRating(movie_id);
-   const trailers = await API.getData(`videos`, movie_id);
-   const comments = await API.getData(`comments`, movie_id);
-   this.setState({
-    singleMovie: movie,
-    trailers: trailers,
-    singleMovieUserRating: rating,
-    error: "",
-    userComments: comments,
-   });
-  } catch (error) {
-   this.setState({ error: error });
-  }
- };
+  // MOVIE HANDLING and SORTING
 
- submitMovieComment = async (info, movie_id) => {
+  getSingleMovie = async (movie_id) => {
+    try {
+      this.setState({
+        singleMovie: { genres: [] },
+        trailers: [],
+        singleMovieUserRating: {},
+        error: "",
+        userComments: [],
+      });
+      const movie = await API.getData(`movies`, movie_id);
+      const rating = this.findMovieUserRating(movie_id);
+      const trailers = await API.getData(`videos`, movie_id);
+      const comments = await API.getData(`comments`, movie_id);
+      this.setState({
+        singleMovie: movie,
+        trailers,
+        singleMovieUserRating: rating,
+        error: "",
+        userComments: comments,
+      });
+    } catch (error) {
+      this.setState({ error });
+    }
+  };
+
+  submitMovieComment = async (info, movie_id) => {
     API.postData(info, movie_id)
-   .then(() => API.getData(`comments`, movie_id))
-   .then((comments) => {
-    this.setState({ userComments: comments });
-   });
- };
+
+      .then(() => API.getData(`comments`, movie_id))
+      .then((comments) => {
+        this.setState({ userComments: comments });
+      });
+  };
+
+  findMovieUserRating = (movie_id) => {
+    const rating = this.state.userRatings.find(
+      (rating) => rating.movie_id === movie_id
+    );
+    return rating || { rating: 0 };
+  };
 
  findMovieUserRating = (movie_id) => {
   let rating = this.state.userRatings.find(
@@ -179,7 +189,8 @@ class App extends Component {
   );
   return rating ? rating : { rating: 0 };
  };
- // this is doubled in Main.js
+
+
   filterRatedMovies = () => {
     const ratedMovies = this.state.movies.filter((movie) => {
       return this.state.userRatings.some(
@@ -188,55 +199,55 @@ class App extends Component {
     });
     return this.sortByRating(ratedMovies);
   };
-  
- sortMoviesByTitle = (movies) => {
-  return movies.sort((a, b) => {
-   if (a.title < b.title) {
-    return -1;
-   }
-   if (a.title > b.title) {
-    return 1;
-   } else {
-    return 0;
-   }
-  })
- }
 
-
- // SEARCH
- searchMovies = async (query) => {
-  query = query.toLowerCase();
-  const searchQueries = query.split(" ");
-  const allMovies = await this.refreshMoviesForSearch();
-  const checkedMovies = [];
-  await allMovies.forEach(async (movie) => {
-   let fullMovie;
-   try {
-    fullMovie = await API.getData(`movies`, movie.id);
-    fullMovie.year = fullMovie ? fullMovie.release_date.substring(0, 4) : null;
-    if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
-     checkedMovies.push(fullMovie);
-    }
-    if (checkedMovies.length > 0) {
-     this.setState({
-      movies: this.sortMoviesByTitle(checkedMovies),
-      error: "",
-     });
-     this.props.history.push("/search-results");
-    } else {
-     this.setState({
-      movies: checkedMovies,
-      error: "No movies were found. Please refine your search.",
-     });
-     this.props.history.push("/search-results");
-    }
-   } catch (error) {
-    this.setState({
-     error: "No movies were found. Please refine your search.",
+  sortMoviesByTitle = (movies) => {
+    return movies.sort((a, b) => {
+      if (a.title < b.title) {
+        return -1;
+      }
+      if (a.title > b.title) {
+        return 1;
+      }
+      return 0;
     });
-   }
-  });
- };
+  };
+
+  // SEARCH
+  searchMovies = async (query) => {
+    query = query.toLowerCase();
+    const searchQueries = query.split(" ");
+    const allMovies = await this.refreshMoviesForSearch();
+    const checkedMovies = [];
+    await allMovies.forEach(async (movie) => {
+      let fullMovie;
+      try {
+        fullMovie = await API.getData(`movies`, movie.id);
+        fullMovie.year = fullMovie
+          ? fullMovie.release_date.substring(0, 4)
+          : null;
+        if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
+          checkedMovies.push(fullMovie);
+        }
+        if (checkedMovies.length > 0) {
+          this.setState({
+            movies: this.sortMoviesByTitle(checkedMovies),
+            error: "",
+          });
+          this.props.history.push("/search-results");
+        } else {
+          this.setState({
+            movies: checkedMovies,
+            error: "No movies were found. Please refine your search.",
+          });
+          this.props.history.push("/search-results");
+        }
+      } catch (error) {
+        this.setState({
+          error: "No movies were found. Please refine your search.",
+        });
+      }
+    });
+  };
 
   sortByRating = (movies) => {
     movies.forEach((movie) => {
@@ -248,49 +259,49 @@ class App extends Component {
       return b.userRating.rating - a.userRating.rating;
     });
   };
+
   // SEARCH
-  
- changeDataToLowerCase(data) {
-  let args = data;
-  let changedData = [];
-  args.forEach((info) => {
-   if (isNaN(info) && Array.isArray(info) === false) {
-    changedData.push(info.toLowerCase());
-   } else if (Array.isArray(info)) {
-    changedData = changedData.concat(this.changeDataToLowerCase(info));
-   } else {
-    changedData.push(info);
-   }
-  });
-  return changedData;
- }
 
- checkAllQueriesAgainstMovie(searchQueries, movie) {
-  movie = Object.values(movie);
-  let movieInfo = this.changeDataToLowerCase(movie);
-  if (
-   searchQueries.every((query) =>
-    movieInfo.some(
-     (movieDetail) => isNaN(movieDetail) && movieDetail.includes(query)
-    )
-   )
-  ) {
-   return true;
+  changeDataToLowerCase(data) {
+    const args = data;
+    let changedData = [];
+    args.forEach((info) => {
+      if (isNaN(info) && Array.isArray(info) === false) {
+        changedData.push(info.toLowerCase());
+      } else if (Array.isArray(info)) {
+        changedData = changedData.concat(this.changeDataToLowerCase(info));
+      } else {
+        changedData.push(info);
+      }
+    });
+    return changedData;
   }
- }
 
- refreshMoviesForSearch = async () => {
-  try {
-   this.setState({ pageView: "SearchResults" });
-   return await API.getData("movies");
-  } catch (error) {
-   this.setState({
-    pageView: "SearchResults",
-    error: "No movies were found. Please refine your search.",
-   });
+  checkAllQueriesAgainstMovie(searchQueries, movie) {
+    movie = Object.values(movie);
+    const movieInfo = this.changeDataToLowerCase(movie);
+    if (
+      searchQueries.every((query) =>
+        movieInfo.some(
+          (movieDetail) => isNaN(movieDetail) && movieDetail.includes(query)
+        )
+      )
+    ) {
+      return true;
+    }
   }
- };
- 
+
+  refreshMoviesForSearch = async () => {
+    try {
+      this.setState({ pageView: "SearchResults" });
+      return await API.getData("movies");
+    } catch (error) {
+      this.setState({
+        pageView: "SearchResults",
+        error: "No movies were found. Please refine your search.",
+      });
+    }
+  };
 
   // HANDLE RATING
   rateMovie = async (rating) => {
@@ -301,7 +312,7 @@ class App extends Component {
       .then((ratings) => {
         this.convertRatingsToStarValues(ratings);
         this.setState({ userRatings: ratings });
-        this.filterRatedMovies()
+        this.filterRatedMovies();
         if (this.state.singleMovieUserRating !== {}) {
           const newRating = this.findMovieUserRating(
             this.state.singleMovieUserRating.movie_id
@@ -338,66 +349,69 @@ class App extends Component {
   };
 
   convertRatingsToStarValues = (ratings) => {
-    ratings.forEach((rating) => (rating.rating = rating.rating / 2));
+    ratings.forEach((rating) => (rating.rating /= 2));
   };
+
   // HANDLE FAVORITES
   checkIfFavorite = (movie) => {
-    return this.state.userFavorites.some(favorite => favorite.id === movie.id)
-  }
+    return this.state.userFavorites.some(
+      (favorite) => favorite.id === movie.id
+    );
+  };
 
   toggleFavorite = (movie_id) => {
-      const body = {id: movie_id}
-      API.postData(body)
-        .then(() => this.getUserFavorites())
-    
-  } 
-  //SORT CATEGORICALLY
+    const body = { id: movie_id };
+    API.postData(body).then(() => this.getUserFavorites());
+  };
+
+  // SORT CATEGORICALLY
   storeMoviesWithAllData = async () => {
-    // const allMovies = await API.getData(`movies`)
-    // return await allMovies.reduce(async (allMoviesWithData, movie) => {
     return this.state.movies.reduce(async (allMoviesWithData, movie) => {
-      const moviesData = await allMoviesWithData
-      const newMovie = await API.getData(`movies`, movie.id)
-      newMovie && moviesData.push(newMovie)
-      return moviesData
-    }, Promise.resolve([]))
-  }
+      const moviesData = await allMoviesWithData;
+      const newMovie = await API.getData(`movies`, movie.id);
+      newMovie && moviesData.push(newMovie);
+      return moviesData;
+    }, Promise.resolve([]));
+  };
 
   findSortingCategories = async (movies, sortValue) => {
-      const categories = await movies.reduce(async (categories, movie) => {
-          let fetchData = await categories
-          const allMovieData = await API.getData(`movies`, movie.id)
-          let category = await allMovieData && allMovieData[sortValue]
-          if(sortValue === 'release_date' && category) category = category.substring(0, 4)
-          // if(allMovieData === undefined) console.log('broken', movie)
-          if(category) fetchData = fetchData.concat(category)
-          return fetchData
-        }, Promise.resolve([]))
-  
-      let sortCategories = await categories.filter((category, i) => categories.indexOf(category) === i)
-      sortValue === 'release_date' 
-        && sortCategories.sort((a, b) => +a - +b)
-      console.log(sortCategories)
-      return sortCategories
-  }
-  
+    const categories = await movies.reduce(async (categories, movie) => {
+      let fetchData = await categories;
+      const allMovieData = await API.getData(`movies`, movie.id);
+      let category = (await allMovieData) && allMovieData[sortValue];
+      if (sortValue === "release_date" && category)
+        category = category.substring(0, 4);
+      if (category) fetchData = fetchData.concat(category);
+      return fetchData;
+    }, Promise.resolve([]));
+
+    const sortCategories = await categories.filter(
+      (category, i) => categories.indexOf(category) === i
+    );
+    sortValue === "release_date" && sortCategories.sort((a, b) => +a - +b);
+    return sortCategories;
+  };
 
   sortMoviesByCategory = async (sortValue) => {
-    const allMoviesWithData = await this.storeMoviesWithAllData()
-    const sortCategories = await this.findSortingCategories(allMoviesWithData, sortValue)
+    const allMoviesWithData = await this.storeMoviesWithAllData();
+    const sortCategories = await this.findSortingCategories(
+      allMoviesWithData,
+      sortValue
+    );
     const sortedMovies = sortCategories.reduce((sortedMovies, category) => {
-      sortedMovies[category] = allMoviesWithData.filter(movie => movie[sortValue].includes(category))
-      return sortedMovies
-    }, {})
-    this.setState({moviesByCategory: sortedMovies})
-  }
+      sortedMovies[category] = allMoviesWithData.filter((movie) =>
+        movie[sortValue].includes(category)
+      );
+      return sortedMovies;
+    }, {});
+    this.setState({ moviesByCategory: sortedMovies });
+  };
 
   createCategoricalMovieGalleries = async (category) => {
     this.setState({ categoricalGalleries: loadingSection });
     await this.sortMoviesByCategory(category);
-    let galleries = Object.keys(this.state.moviesByCategory);
-    category === "release_date" &&
-      galleries.sort((a, b) => +b - +a);
+    const galleries = Object.keys(this.state.moviesByCategory);
+    category === "release_date" && galleries.sort((a, b) => +b - +a);
     // let categoricalGalleries = []
     const loadedGalleries = galleries.map((gallery, i) => {
       return (
@@ -414,9 +428,10 @@ class App extends Component {
           deleteRating={this.deleteRating}
         />
       );
-      })
+    });
     this.setState({ categoricalGalleries: loadedGalleries });
-  }
+  };
+
   // APP
   render() {
     return (
@@ -435,11 +450,12 @@ class App extends Component {
           render={() => {
             return (
               <>
-                <span className="spacer"></span>
+                <span className="spacer" />
                 <div id="sortByLinks">
-                  Sort by:
+                  Sort By:
                   <NavLink
                     to="/sort-by/genres"
+                    className="sort-link"
                     onClick={() => {
                       this.createCategoricalMovieGalleries("genres");
                     }}
@@ -449,6 +465,7 @@ class App extends Component {
                   |
                   <NavLink
                     to="/sort-by/release_date"
+                    className="sort-link"
                     onClick={() => {
                       this.createCategoricalMovieGalleries("release_date");
                     }}
@@ -499,30 +516,34 @@ class App extends Component {
               />
             );
           }}
-          />
+        />
         <Route
           exact
           path="/search-results"
           render={() => {
             return (
-              <Main
-                getSingleMovie={this.getSingleMovie}
-                isLoggedIn={this.state.isLoggedIn}
-                checkIfFavorite={this.checkIfFavorite}
-                toggleFavorite={this.toggleFavorite}
-                movies={this.state.movies}
-                rateMovie={this.rateMovie}
-                userRatings={this.state.userRatings}
-                deleteRating={this.deleteRating}
-                error={this.state.error}
-              />
+              <>
+                <span className="spacer" />
+                <Main
+                  getSingleMovie={this.getSingleMovie}
+                  isLoggedIn={this.state.isLoggedIn}
+                  checkIfFavorite={this.checkIfFavorite}
+                  toggleFavorite={this.toggleFavorite}
+                  movies={this.state.movies}
+                  rateMovie={this.rateMovie}
+                  userRatings={this.state.userRatings}
+                  deleteRating={this.deleteRating}
+                  error={this.state.error}
+                />
+              </>
             );
           }}
         />
         <Route
-          exact path="/user-ratings"
+          exact
+          path="/user-movies"
           render={() => {
-            let ratingGalleries = []
+            const ratingGalleries = [];
             for (let i = 5; i > 0; i--) {
               ratingGalleries.push(
                 <HorizontalGallery
@@ -540,13 +561,13 @@ class App extends Component {
             }
             return (
               <>
-                <span className="spacer"></span>
+                <span className="spacer" />
                 <HorizontalGallery
                   getSingleMovie={this.getSingleMovie}
                   movieSelection={this.state.userFavorites}
                   checkIfFavorite={this.checkIfFavorite}
                   toggleFavorite={this.toggleFavorite}
-                  galleryTitle={"favorites"}
+                  galleryTitle="favorites"
                   isLoggedIn={this.state.isLoggedIn}
                   rateMovie={this.rateMovie}
                   userRatings={this.state.userRatings}
@@ -557,17 +578,18 @@ class App extends Component {
             );
           }}
         />
-        <Route 
-          exact path="/sort-by/:category"
-          render={({ match }) => {
-            // this.createCategoricalMovieGalleries(match.params.category)
+        <Route
+          exact
+          path="/sort-by/:category"
+          render={() => {
             return (
               <>
-                <span className="spacer"></span>
+                <span className="spacer" />
                 <div id="sortByLinks">
                   Sort by:
                   <NavLink
                     to="/sort-by/genres"
+                    className="sort-link"
                     onClick={() => {
                       this.createCategoricalMovieGalleries("genres");
                     }}
@@ -577,6 +599,7 @@ class App extends Component {
                   |
                   <NavLink
                     to="/sort-by/release_date"
+                    className="sort-link"
                     onClick={() => {
                       this.createCategoricalMovieGalleries("release_date");
                     }}
@@ -590,7 +613,7 @@ class App extends Component {
           }}
         />
       </div>
-    )
+    );
   }
 }
 

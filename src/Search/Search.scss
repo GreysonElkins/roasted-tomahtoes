@@ -4,12 +4,13 @@
   @include rowDisplay();
   box-shadow: 2px 2px 1px #000;
   border-radius: 6px;
-  width: 350px;
+  width: 300px;
   
   input {
     @include input();
+    padding: 3%;
     border-radius: 6px 0px 0px 6px;
-    width: 350px;
+    width: 300px;
   }
   
   .search-btn {
@@ -17,7 +18,7 @@
     border: none;
     border-radius: 0px 6px 6px 0px;
     font-size: 22px;
-    height: 33px;
+    height: 36px;
     &:hover {
       box-shadow: 1px 1px 35px rgb(255, 255, 255);
     }

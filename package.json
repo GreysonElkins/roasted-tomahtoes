@@ -37,6 +37,7 @@
    "last 1 safari version"
   ]
  },
+ "engines" : { "node" : ">=0.12" } 
  "devDependencies": {
   "@sheerun/mutationobserver-shim": "^0.3.3",
   "@testing-library/dom": "^7.22.6",

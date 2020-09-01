@@ -552,7 +552,7 @@ class App extends Component {
         />
         <Route
           exact
-          path="/user-ratings"
+          path="/user-movies"
           render={() => {
             const ratingGalleries = [];
             for (let i = 5; i > 0; i--) {

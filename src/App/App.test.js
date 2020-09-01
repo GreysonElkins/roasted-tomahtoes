@@ -40,7 +40,7 @@ describe("App", () => {
     );
     const homeBtn = screen.getByText("Home");
     expect(homeBtn).toBeInTheDocument();
-    const ratingsBtn = screen.getByText("Your Ratings");
+    const ratingsBtn = screen.getByText("Your Movies");
     expect(ratingsBtn).toBeInTheDocument();
     const loginBtn = screen.getByText("Login");
     expect(loginBtn).toBeInTheDocument();

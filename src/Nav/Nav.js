@@ -18,11 +18,11 @@ const Nav = ({ isLoggedIn, logout, user, showRatingsPage, showHomePage }) => {
           Login
         </NavLink>
         <NavLink
-          to="/user-ratings"
+          to="/user-movies"
           className={`nav-btn ${isLoggedIn ? "" : "hidden"}`}
           onClick={showRatingsPage}
         >
-          Your Ratings
+          Your Movies
         </NavLink>
         <NavLink
           to="/"

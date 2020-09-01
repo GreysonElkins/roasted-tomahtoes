@@ -1,5 +1,5 @@
 const apiHead = "https://rancid-tomatillos.herokuapp.com/api/v2";
-const localHost = `http://tomato-micro-service.herokuapp.com/api/v1`;
+const localHost = `https://tomato-micro-service.herokuapp.com/api/v1`;
 class API {
   static getData = async (location, id) => {
     const pathAndData = this.findRelevantPathAndData(location, id);

@@ -1,8 +1,7 @@
-# Roasted Tomahtoes 
+# Roasted Tomahtoes - Readme
 Mod 3 Paired Project
+### Authors: [Greyson Elkins](https://github.com/GreysonElkins) & [Leigh Larson](https://github.com/leighlars)
 
-- [Greyson Elkins](https://github.com/GreysonElkins)
-- [Leigh Larson](https://github.com/leighlars)
 - [Repo](https://github.com/GreysonElkins/roasted-tomahtoes)
 - [Project Board](https://github.com/GreysonElkins/roasted-tomahtoes/projects)
 - [Project Spec](https://frontend.turing.io/projects/module-3/rancid-tomatillos-v2.html)
@@ -40,30 +39,30 @@ Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie
 
 ## Gif Showcase
 
-[gif of homeview, incorrect login, correct login](./src/images/home-login.gif)</br>
+![gif of homeview, incorrect login, correct login](./src/images/home-login.gif)</br>
 *Viewing guest home view, incorrect & correct login*
 
-[gif of single movie page](./src/images/showMovie.gif)</br>
+![gif of single movie page](./src/images/showMovie.gif)</br>
 *Viewing single movie page with trailers, info, and comment section*
 
-[gif of search functionality](./src/images/search.gif)</br>
+![gif of search functionality](./src/images/search.gif)</br>
 *Searching various movies*
 
-[gif of favoring movies](./src/images/favoringMovies.gif)</br>
+![gif of favoring movies](./src/images/favoringMovies.gif)</br>
 *Display user's movies, favoriting and unfavoriting movies*
 
-[gif of sorting by genre and loading gif](./src/images/sortByGenre.gif)</br>
+![gif of sorting by genre and loading gif](./src/images/sortByGenre.gif)</br>
 *Sort by genre and show loading gif*
 
-[gif of commenting on movies](./src/images/commenting.gif)</br>
+![gif of commenting on movies](./src/images/commenting.gif)</br>
 *Viewing comments added to movie*
 
-[gif of different views on guest and user login](./src/images/guestView.gif)</br>
+![gif of different views on guest and user login](./src/images/guestView.gif)</br>
 *When logged in, user can rate and comment, but cannot as a guest*
 
 ## Reflections
 
-This project introduced our paired team to React.js and Router. We feel we have demonstrated our understanding of these technologies by satisfying all demands of the spec, as well as completing all extensions, and even adding our own features, all while maintaining a 97% Accessibility score. We implemented TDD using Jest to test for UX and async elements. If we had more time, we would have styled the app mobile-friendly, fixed a bug that caused our page to load the home page when the refresh button is clicked, added more tests, and displayed all comments about movies from the community (not just the user).  Our project documentation can be viewed on [Project Board](https://github.com/GreysonElkins/roasted-tomahtoes/projects) and in the aforementioned gif section. We worked well together and really crushed this introductory React project. 
+This project introduced our paired team to React.js and Router. We feel we have demonstrated our understanding of these technologies by satisfying all demands of the spec, as well as completing all extensions, and even adding our own features to the UI (like the horizontal scrolling components), all while maintaining a 97% Accessibility score. We implemented TDD using Jest to test for UX and async elements. If we had more time, we would have styled the app mobile-friendly, made the emoji's accessible, fixed a bug that caused our page to load the home page when the refresh button is clicked, added more tests, and displayed all comments about movies from the community (not just the user).  Our project documentation can be viewed on [Project Board](https://github.com/GreysonElkins/roasted-tomahtoes/projects) and in the aforementioned gif section. We worked well together and really crushed this introductory React project. 
 
 
 

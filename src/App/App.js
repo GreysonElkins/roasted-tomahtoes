@@ -28,6 +28,7 @@ class App extends Component {
       isLoggedIn: false,
       user: { id: "", email: "", name: "" },
       userRatings: [],
+      userComments: [],
       userFavorites: [],
       singleMovie: { genres: [] },
       trailers: [],
@@ -43,7 +44,6 @@ class App extends Component {
       this.setState({ movies: this.sortMoviesByTitle(movies) });
       this.setCurrentPage();
     } catch (error) {
-      console.log(error)
       this.setState({
         error: "Oops, something went wrong! 🙁 Please try again.",
       });
@@ -61,15 +61,14 @@ class App extends Component {
       }  else if (currentPage === '/sort-by/genres' || currentPage === '/sort-by/genres')
         this.showHomePage();
         this.props.history.push("/");
-    });
-  };
-
+    })
+  }
+ // USER HANDLING
   checkIfLoggedIn = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       const userRatings = await API.getData(`ratings`, user.id);
       this.convertRatingsToStarValues(userRatings)
-      // this.getUserFavorites()
       this.setState({
         user: user,
         isLoggedIn: true,
@@ -141,30 +140,54 @@ class App extends Component {
     this.showHomePage();
   };
 
-  //MOVIE HANDLING and SORTING
-  getSingleMovie = async (movie_id) => {
-    try {
-      const movie = await API.getData(`movies`, movie_id);
-      const rating = this.findMovieUserRating(movie_id);
-      const trailers = await API.getData(`videos`, movie_id);
-      this.setState({
-        singleMovie: movie,
-        trailers: trailers,
-        singleMovieUserRating: rating,
-        error: "",
-      });
-    } catch (error) {
-      this.setState({ error: error });
-    }
-  };
+ //MOVIE HANDLING and SORTING
+ getSingleMovie = async (movie_id) => {
+  try {
+   this.setState({
+    singleMovie: {genres:[]},
+    trailers: [],
+    singleMovieUserRating: {},
+    error: "",
+    userComments: [],
+   }); 
+   const movie = await API.getData(`movies`, movie_id);
+   const rating = this.findMovieUserRating(movie_id);
+   const trailers = await API.getData(`videos`, movie_id);
+   const comments = await API.getData(`comments`, movie_id);
+   this.setState({
+    singleMovie: movie,
+    trailers: trailers,
+    singleMovieUserRating: rating,
+    error: "",
+    userComments: comments,
+   });
+  } catch (error) {
+   this.setState({ error: error });
+  }
+ };
 
-  findMovieUserRating = (movie_id) => {
-    let rating = this.state.userRatings.find(
-      (rating) => rating.movie_id === movie_id
-    );
-    return rating ? rating : { rating: 0 };
-  };
-  // this is doubled in Main.js
+ submitMovieComment = async (info, movie_id) => {
+    API.postData(info, movie_id)
+   .then(() => API.getData(`comments`, movie_id))
+   .then((comments) => {
+    this.setState({ userComments: comments });
+   });
+ };
+
+ findMovieUserRating = (movie_id) => {
+  let rating = this.state.userRatings.find(
+   (rating) => rating.movie_id === movie_id
+  );
+  return rating ? rating : { rating: 0 };
+ };
+ // this is doubled in Main.js
+
+ filterFavoriteMovies = () => {
+  const favoriteMovies = this.state.movies.filter((movie) => {
+   return this.state.userRatings.some((rating) => rating.movie_id === movie.id);
+  });
+  return this.sortByRating(favoriteMovies);
+ };
 
   filterRatedMovies = () => {
     const ratedMovies = this.state.movies.filter((movie) => {
@@ -174,19 +197,55 @@ class App extends Component {
     });
     return this.sortByRating(ratedMovies);
   };
+  
+ sortMoviesByTitle = (movies) => {
+  return movies.sort((a, b) => {
+   if (a.title < b.title) {
+    return -1;
+   }
+   if (a.title > b.title) {
+    return 1;
+   } else {
+    return 0;
+   }
+  })
+ }
 
-  sortMoviesByTitle(movies) {
-    return movies.sort((a, b) => {
-      if (a.title < b.title) {
-        return -1;
-      }
-      if (a.title > b.title) {
-        return 1;
-      } else {
-        return 0;
-      }
+
+ // SEARCH
+ searchMovies = async (query) => {
+  query = query.toLowerCase();
+  const searchQueries = query.split(" ");
+  const allMovies = await this.refreshMoviesForSearch();
+  const checkedMovies = [];
+  await allMovies.forEach(async (movie) => {
+   let fullMovie;
+   try {
+    fullMovie = await API.getData(`movies`, movie.id);
+    fullMovie.year = fullMovie ? fullMovie.release_date.substring(0, 4) : null;
+    if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
+     checkedMovies.push(fullMovie);
+    }
+    if (checkedMovies.length > 0) {
+     this.setState({
+      movies: this.sortMoviesByTitle(checkedMovies),
+      error: "",
+     });
+     this.props.history.push("/search-results");
+    } else {
+     this.setState({
+      movies: checkedMovies,
+      error: "No movies were found. Please refine your search.",
+     });
+     this.props.history.push("/search-results");
+    }
+   } catch (error) {
+    this.setState({
+     error: "No movies were found. Please refine your search.",
     });
-  }
+   }
+  });
+ };
 
   sortByRating = (movies) => {
     movies.forEach((movie) => {
@@ -199,82 +258,49 @@ class App extends Component {
     });
   };
   // SEARCH
-  searchMovies = async (query) => {
-    query = query.toLowerCase();
-    const searchQueries = query.split(" ");
-    const allMovies = await this.refreshMoviesForSearch();
-    const checkedMovies = [];
-    await allMovies.forEach(async (movie) => {
-      let fullMovie;
-      try {
-        fullMovie = await API.getData(`movies`, movie.id);
-        fullMovie.year = fullMovie
-          ? fullMovie.release_date.substring(0, 4)
-          : null;
-        if (this.checkAllQueriesAgainstMovie(searchQueries, fullMovie)) {
-          checkedMovies.push(fullMovie);
-        }
-        if (checkedMovies.length > 0) {
-          this.setState({
-            movies: this.sortMoviesByTitle(checkedMovies),
-            error: "",
-          });
-          this.props.history.push("/search-results");
-        } else {
-          this.setState({
-            movies: checkedMovies,
-            error: "No movies were found. Please refine your search.",
-          });
-          this.props.history.push("/search-results");
-        }
-      } catch (error) {
-        this.setState({
-          error: "No movies were found. Please refine your search.",
-        });
-      }
-    });
-  };
+  
+ changeDataToLowerCase(data) {
+  let args = data;
+  let changedData = [];
+  args.forEach((info) => {
+   if (isNaN(info) && Array.isArray(info) === false) {
+    changedData.push(info.toLowerCase());
+   } else if (Array.isArray(info)) {
+    changedData = changedData.concat(this.changeDataToLowerCase(info));
+   } else {
+    changedData.push(info);
+   }
+  });
+  return changedData;
+ }
 
-  changeDataToLowerCase(data) {
-    let args = data;
-    let changedData = [];
-    args.forEach((info) => {
-      if (isNaN(info) && Array.isArray(info) === false) {
-        changedData.push(info.toLowerCase());
-      } else if (Array.isArray(info)) {
-        changedData = changedData.concat(this.changeDataToLowerCase(info));
-      } else {
-        changedData.push(info);
-      }
-    });
-    return changedData;
+ checkAllQueriesAgainstMovie(searchQueries, movie) {
+  movie = Object.values(movie);
+  let movieInfo = this.changeDataToLowerCase(movie);
+  if (
+   searchQueries.every((query) =>
+    movieInfo.some(
+     (movieDetail) => isNaN(movieDetail) && movieDetail.includes(query)
+    )
+   )
+  ) {
+   return true;
   }
+ }
 
-  checkAllQueriesAgainstMovie(searchQueries, movie) {
-    movie = Object.values(movie);
-    let movieInfo = this.changeDataToLowerCase(movie);
-    if (
-      searchQueries.every((query) =>
-        movieInfo.some(
-          (movieDetail) => isNaN(movieDetail) && movieDetail.includes(query)
-        )
-      )
-    ) {
-      return true;
-    }
+ refreshMoviesForSearch = async () => {
+  try {
+   this.setState({ pageView: "SearchResults" });
+   return await API.getData("movies");
+  } catch (error) {
+   this.setState({
+    pageView: "SearchResults",
+    error: "No movies were found. Please refine your search.",
+   });
   }
+ };
+ 
 
-  refreshMoviesForSearch = async () => {
-    try {
-      this.setState({ pageView: "SearchResults" });
-      return await API.getData("movies");
-    } catch (error) {
-      this.setState({
-        pageView: "SearchResults",
-        error: "No movies were found. Please refine your search.",
-      });
-    }
-  };
   // HANDLE RATING
   rateMovie = async (rating) => {
     const userId = this.state.user.id;
@@ -385,6 +411,7 @@ class App extends Component {
     const loadedGalleries = galleries.map((gallery, i) => {
       return (
         <HorizontalGallery
+          getSingleMovie={this.getSingleMovie}
           key={`${category}-row-${i}`}
           movieSelection={this.state.moviesByCategory[gallery]}
           checkIfFavorite={this.checkIfFavorite}
@@ -420,18 +447,26 @@ class App extends Component {
                 <span className="spacer"></span>
                 <div id="sortByLinks">
                   Sort by:
-                  <NavLink 
+                  <NavLink
                     to="/sort-by/genres"
-                    onClick={() => {this.createCategoricalMovieGalleries('genres')}}  
-                  >Genre</NavLink> |
-                  <NavLink 
+                    onClick={() => {
+                      this.createCategoricalMovieGalleries("genres");
+                    }}
+                  >
+                    Genre
+                  </NavLink>{" "}
+                  |
+                  <NavLink
                     to="/sort-by/release_date"
-                    onClick={() => {this.createCategoricalMovieGalleries('release_date')}}
+                    onClick={() => {
+                      this.createCategoricalMovieGalleries("release_date");
+                    }}
                   >
                     Year
                   </NavLink>
                 </div>
                 <Main
+                  getSingleMovie={this.getSingleMovie}
                   showDeleteBtns={false}
                   isLoggedIn={this.state.isLoggedIn}
                   checkIfFavorite={this.checkIfFavorite}
@@ -456,28 +491,31 @@ class App extends Component {
         <Route
           exact
           path="/movies/:id"
-          render={({ match }) => {
-            this.getSingleMovie(+match.params.id);
+          render={() => {
             return (
               <MoviePage
                 isLoggedIn={this.state.isLoggedIn}
-                checkIfFavorite={this.checkIfFavorite}
-                toggleFavorite={this.toggleFavorite}
                 movie={this.state.singleMovie}
                 error={this.state.error}
+                checkIfFavorite={this.checkIfFavorite}
+                toggleFavorite={this.toggleFavorite}
                 rateMovie={this.rateMovie}
                 userRating={this.state.singleMovieUserRating}
                 trailers={this.state.trailers}
+                userComments={this.state.userComments}
+                user={this.state.user}
+                submitMovieComment={this.submitMovieComment}
               />
             );
           }}
-        />
+          />
         <Route
           exact
           path="/search-results"
           render={() => {
             return (
               <Main
+                getSingleMovie={this.getSingleMovie}
                 isLoggedIn={this.state.isLoggedIn}
                 checkIfFavorite={this.checkIfFavorite}
                 toggleFavorite={this.toggleFavorite}
@@ -497,6 +535,7 @@ class App extends Component {
             for (let i = 5; i > 0; i--) {
               ratingGalleries.push(
                 <HorizontalGallery
+                  getSingleMovie={this.getSingleMovie}
                   movieSelection={this.state.ratedMovies}
                   checkIfFavorite={this.checkIfFavorite}
                   toggleFavorite={this.toggleFavorite}
@@ -512,6 +551,7 @@ class App extends Component {
               <>
                 <span className="spacer"></span>
                 <HorizontalGallery
+                  getSingleMovie={this.getSingleMovie}
                   movieSelection={this.state.userFavorites}
                   checkIfFavorite={this.checkIfFavorite}
                   toggleFavorite={this.toggleFavorite}

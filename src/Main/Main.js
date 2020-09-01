@@ -13,7 +13,8 @@ const Main = ({
   userRatings,
   deleteRating,
   showDeleteBtns,
-  toggleFavorite
+  toggleFavorite,
+  getSingleMovie
   }) => {
     
   const matchUserRatingWithMovie = (movie) => {
@@ -31,6 +32,7 @@ const Main = ({
         <MovieCard
           key={i}
           movie={movie}
+          checkIfFavorite={checkIfFavorite}
           isLoggedIn={isLoggedIn}
           toggleFavorite={toggleFavorite}
           rateMovie={rateMovie}
@@ -38,6 +40,7 @@ const Main = ({
           userRating={matchingUserRating}
           deleteRating={deleteRating}
           showDeleteBtns={showDeleteBtns}
+          getSingleMovie={getSingleMovie}
         />
       );
   })

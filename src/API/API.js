@@ -1,4 +1,3 @@
-import React from 'react'
 
 const apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
 const localHost = `http://localhost:3001/api/v1`;
@@ -33,7 +32,11 @@ class API {
     } else if (location === `favorites`) {
       pathAndData.path = `${localHost}/favorites`
       pathAndData.data = `favorites`
-    } else {
+    } else if (location === 'comments' && id) {
+      pathAndData.path = `${localHost}/movies/${id}/comments`;
+      pathAndData.data = `comments`;
+    }
+    else {
       throw new Error("A bad path was provided for fetching data");
     }
     return pathAndData
@@ -61,6 +64,7 @@ class API {
     const acceptableUserInfo = ['email', 'password']
     const acceptableRatingInfo = ['rating', 'movie_id']
     const acceptableFavoriteInfo = ['id']
+    const acceptableCommentsInfo = ['comment', 'author']
     const infoValues = Object.keys(info)
     if (id && infoValues.every(
         value=> acceptableRatingInfo.includes(value))) {
@@ -71,6 +75,9 @@ class API {
     } else if (infoValues.every(
         value => acceptableFavoriteInfo.includes(value))) {
         return `${localHost}/favorites`
+    } else if (infoValues.every(
+        value => acceptableCommentsInfo.includes(value))) {
+      return `${localHost}/movies/${id}/comments`
     } else {
       throw new Error ('Something is wrong with the data for POST')
     }

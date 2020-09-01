@@ -3,9 +3,10 @@
 .trailerList {
   @include rowDisplay();
   justify-content: initial;
+  align-items: center;
   overflow: scroll;
-  width: 400px;
-  height: 220px;
+  width: 375px;
+  height: 252px;
 }
 
 .movie-trailer {

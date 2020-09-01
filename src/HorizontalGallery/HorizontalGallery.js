@@ -11,7 +11,8 @@ const HorizontalGallery = ({
   userRatings,
   deleteRating,
   checkIfFavorite,
-  toggleFavorite
+  toggleFavorite,
+  getSingleMovie
   }) => {
   
   const matchUserRatingWithMovie = (movie) => {
@@ -36,6 +37,7 @@ const HorizontalGallery = ({
     let isFavorite = checkIfFavorite(movie)
       return (
         <MovieCard
+          getSingleMovie={getSingleMovie}
           key={`${galleryTitle}${i}`}
           movie={movie}
           isFavorite={isFavorite}

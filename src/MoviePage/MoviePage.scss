@@ -2,32 +2,37 @@
 
 .movie-page {
   @include columnDisplay();
-  margin-top: 170px;
+  margin-top: 140px;
   width: 100%;
-  h1 {
-    @include fontStyle();
-    font-size: 40px;
-    text-align: center;
-    text-shadow: 2px 2px 0px #000;
-    margin-bottom: 5px;
-    line-height: 35px;
-  }
-  .ratings-box {
-    @include columnDisplay();
-      width: 150px;
-      margin-bottom: 10px;
-    h3 {
-      margin: 0 auto;
-    }
-  }
 }
 
-.all-movie-info {
+.movie-header {
+  @include columnDisplay();
+    h1 {
+      @include fontStyle();
+      font-size: 40px;
+      text-align: center;
+      text-shadow: 2px 2px 0px #000;
+      margin: 0px;
+      line-height: 35px;
+    }
+    .ratings-box {
+      @include columnDisplay();
+      width: 150px;
+      margin-bottom: 10px;
+      h3 {
+        margin: 0 auto;
+      }
+    }
+}
+
+.movie-graphics {
   @include rowDisplay();
+  margin: 10px;
   img {
     border: 2px solid rgb(139, 138, 138);    
     margin-right: 20px;
-    width: 25em;
+    width: 10.5em;
   }
 }
 

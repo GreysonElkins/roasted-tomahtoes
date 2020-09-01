@@ -8,9 +8,6 @@ import "../FavoriteButton/FavoriteButton.scss";
 
 const MovieCard = (props) => {
   const altText = `${props.movie.title} movie poster`
-    // const showMoviePage = () => {
-    //   props.showMoviePage(props.movie.id);
-    // }; 
 
   return (
     <article className="card" tabIndex="0">
@@ -32,10 +29,9 @@ const MovieCard = (props) => {
           />
         }
         </div>
-        <Link to={`/movies/${props.movie.id}`}>
+        <Link to={`/movies/${props.movie.id}`} onClick={()=> {props.getSingleMovie(props.movie.id)}}>
           <img
             className="poster"
-            // onClick={showMoviePage}
             src={props.movie.poster_path}
             alt={altText}
           />

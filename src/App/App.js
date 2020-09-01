@@ -104,7 +104,9 @@ class App extends Component {
 
   getUserFavorites = async () => {
     const userFavIds = await API.getData("favorites", this.state.user.id)
-    const favoriteMovies = this.state.movies.filter(movie => userFavIds.includes(movie.id))
+    const favoriteMovies = this.state.movies.filter(movie => {
+      return userFavIds && userFavIds.includes(movie.id)
+    })
     this.setState({ userFavorites: favoriteMovies })
   }
   // USER HANDLING

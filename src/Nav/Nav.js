@@ -7,7 +7,7 @@ const Nav = ({
   isLoggedIn, 
   logout, 
   user,
-  showUserFavoritesPage,
+  showRatingsPage,
   showHomePage
   }) => {
   return (
@@ -23,7 +23,7 @@ const Nav = ({
      <NavLink
       to="/user-ratings"
       className={`nav-btn ${isLoggedIn ? "" : "hidden"}`}
-      onClick={showUserFavoritesPage}
+      onClick={showRatingsPage}
      >
       Your Ratings
      </NavLink>
@@ -34,7 +34,7 @@ const Nav = ({
      >
       Logout
      </NavLink>
-    </div>
+    </div> 
    </nav>
   );
 }

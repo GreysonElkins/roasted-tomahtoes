@@ -1,6 +1,20 @@
+@import '../styles/_variables.scss';
+
 .App {
   display: flex;
   flex-direction: column;
+}
+
+.loading-img {
+  margin-top: 5em;
+  display: flex;
+  justify-content: column;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  img {
+    width: 20em;
+  }
 }
 
 

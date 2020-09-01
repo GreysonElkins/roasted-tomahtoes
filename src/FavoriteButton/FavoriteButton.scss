@@ -1,0 +1,11 @@
+@import '../styles/_variables.scss';
+
+.FavoriteButton {
+  position: relative;
+  z-index: 2;
+  bottom: -14.75em;
+  left: 88%;
+  font-size: 1.5em;
+  width: min-content;
+  text-shadow: 0 0 0.3em $slateBlack;
+}

@@ -1,6 +1,6 @@
 
 const apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
-const localHost = "http://localhost:3001/api/v1";
+const localHost = `http://localhost:3001/api/v1`;
 class API {
   // constructor() {
     // this.apiHead = 'https://rancid-tomatillos.herokuapp.com/api/v2'
@@ -21,14 +21,17 @@ class API {
   static findRelevantPathAndData = (location, id) => {
     const pathAndData = {path: '', data: ''}
     if (location === "movies") {
-      pathAndData.path = `${apiHead}/movies/${id ? id : ''}`;
-      pathAndData.data = id ? `movie` : `movies`;
+      pathAndData.path = `${apiHead}/movies/${id ? id : ''}`
+      pathAndData.data = id ? `movie` : `movies`
     } else if (location === "videos" && id) {
-      pathAndData.path = `${apiHead}/movies/${id}/videos`;
-      pathAndData.data = `videos`;
+      pathAndData.path = `${apiHead}/movies/${id}/videos`
+      pathAndData.data = `videos`
     } else if (location === `ratings` && id) {
-      pathAndData.path = `${apiHead}/users/${id}/ratings`;
-      pathAndData.data = `ratings`;
+      pathAndData.path = `${apiHead}/users/${id}/ratings`
+      pathAndData.data = `ratings`
+    } else if (location === `favorites`) {
+      pathAndData.path = `${localHost}/favorites`
+      pathAndData.data = `favorites`
     } else if (location === 'comments' && id) {
       pathAndData.path = `${localHost}/movies/${id}/comments`;
       pathAndData.data = `comments`;
@@ -60,14 +63,18 @@ class API {
   static findPostPath = (info, id) => {
     const acceptableUserInfo = ['email', 'password']
     const acceptableRatingInfo = ['rating', 'movie_id']
+    const acceptableFavoriteInfo = ['id']
     const acceptableCommentsInfo = ['comment', 'author']
     const infoValues = Object.keys(info)
     if (id && infoValues.every(
         value=> acceptableRatingInfo.includes(value))) {
-      return `${apiHead}/users/${id}/ratings`
+        return `${apiHead}/users/${id}/ratings`
     } else if (infoValues.every(
         value => acceptableUserInfo.includes(value))) {
-      return `${apiHead}/login`
+        return `${apiHead}/login`
+    } else if (infoValues.every(
+        value => acceptableFavoriteInfo.includes(value))) {
+        return `${localHost}/favorites`
     } else if (infoValues.every(
         value => acceptableCommentsInfo.includes(value))) {
       return `${localHost}/movies/${id}/comments`
@@ -76,9 +83,10 @@ class API {
     }
   }
 
-  static deleteData = async (userID, ratingID) => {
+  static deleteData = async (id, ratingID) => {
+    const path = this.findDeletePath(id, ratingID)
     try {
-      const response = await fetch(`${apiHead}/users/${userID}/ratings/${ratingID}`, {
+      const response = await fetch(path, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -89,6 +97,15 @@ class API {
       return error
     }
   }
+  
+  static findDeletePath = (id, ratingID) => {
+    if (ratingID) {
+      return `${apiHead}/users/${id}/ratings/${ratingID}`;
+    } else {
+      return `${localHost}/favorites/${id}`
+    }
+  }
 }
+
 
 export default API

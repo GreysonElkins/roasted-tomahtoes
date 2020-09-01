@@ -6,22 +6,43 @@ import moment from 'moment'
 import Trailer from '../Trailer/Trailer'
 import Rating from '../Rating/Rating'
 import Overview from '../Overview/Overview'
+import FavoriteButton from '../FavoriteButton/FavoriteButton'
 import Comments from '../Comments/Comments'
 
-
-const MoviePage = ({error, movie, isLoggedIn, trailers, rateMovie, userRating, userComments, submitMovieComment, user}) => {
+const MoviePage = ({
+  error, 
+  movie, 
+  isLoggedIn, 
+  trailers, 
+  rateMovie, 
+  userRating, 
+  toggleFavorite,
+  checkIfFavorite, 
+  userComments, 
+  submitMovieComment, 
+  user
+}) => {
   const altText = `${movie.title} movie poster`
   let trailerClips = trailers.map((trailer, i) => {
     return (
      <Trailer trailer={trailer} key={i} />
     )
   })
+  const isFavorite = checkIfFavorite(movie)
     return (
       <section className="movie-page">
         {error && <Error error={error} />}
         <section className='all-movie-info'>
             <div className='movie-header'>
-              <h1 className="movie-title">{movie.title}</h1>
+              <h1 className="movie-title">
+                {movie.title} 
+                {isLoggedIn 
+                  && <FavoriteButton 
+                      movie={movie}
+                      isFavorite={isFavorite}
+                      toggleFavorite={toggleFavorite}
+                    />
+            }</h1>
               <span className='ratings-box'>
                 <h3 className="avg-rating">🍅 {(movie.average_rating * 10).toFixed(0)}% </h3>
                 {isLoggedIn 

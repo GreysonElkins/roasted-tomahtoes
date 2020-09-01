@@ -7,14 +7,22 @@ window.MutationObserver = MutationObserver;
 
 
 describe('API methods', () => {
+
+  let mockResponse, apiHead, localHost
+
+  beforeEach(() => {
+    apiHead = "https://rancid-tomatillos.herokuapp.com/api/v2";
+    localHost = `http://localhost:3001/api/v1`;
+  })
+
   describe('Helper Functions', () => {
 
     it(`should be able to determine which key to use on
     a fetch response based on the end of the URL`, () => {
-      const movies = API.findRelevantData('movies')
-      const singleMovie = API.findRelevantData('movies/:movie_id')
-      const videos = API.findRelevantData('movies/:movie_id/videos')
-      const ratings = API.findRelevantData("users/:user_id/ratings")
+      const movies = API.findRelevantPathAndData('movies')
+      const singleMovie = API.findRelevantPathAndData('movies/:movie_id')
+      const videos = API.findRelevantPathAndData('movies/:movie_id/videos')
+      const ratings = API.findRelevantPathAndData("users/:user_id/ratings")
 
       expect(movies).toBe('movies')
       expect(singleMovie).toBe('movie')
@@ -29,11 +37,18 @@ describe('API methods', () => {
     //   expect(getItWrong("Birdman")).toThrowError('bad path')
     // })
 
-    it('should be able to check an input for POST requirements', () => {
+    it(`should identify the path for fetch based on the body`, 
+    () => {
       const goodUser = {email: '@yahoo', password: 'qwerty'}
       const goodRating = {rating: 0, movie_id: 1}
-      expect(API.postInfoIsOk(goodUser)).toBe(true)
-      expect(API.postInfoIsOk(goodRating, 7)).toBe(true)
+      const goodFavorite = {id: 1}
+      const goodComment = {comment: 'This movie sux', author: 'Germaine'}
+      expect(API.findPostPath(goodUser)).toBe(`http://localhost:3001/api/v1/login`)
+      expect(API.findPostPath(goodRating, 7)).toBe(
+        `http://localhost:3001/api/v1/users/7/ratings`
+      );
+      expect(API.findPostPath(goodFavorite)).toBe('http://localhost:3000/favorites')
+      expect(API.findPostPath(goodComment, 7)).toBe('http://localhost:3000/movies/7/comments')
     })
 
     // it(`should return an error if the post is bad`, () => {
@@ -48,8 +63,6 @@ describe('API methods', () => {
   })
 
   describe('Fetch GET', () => {
- 
-    let mockResponse
 
     beforeEach(() => {
 
@@ -59,23 +72,38 @@ describe('API methods', () => {
         }
       }
 
+
+
       global.fetch = jest.fn(() => {
         return mockResponse
-        })
+      })
       
-        API.findRelevantData = jest.fn(location => {
-          const apiPath = location.split("/");
-          if (apiPath.length === 3) {
-            return apiPath[2];
-          } else if (apiPath.length === 2) {
-            return "movie";
-          } else {
-            return "movies";
-          }
-        })
+      API.findRelevantPathAndData = jest.fn((location, id) => {
+        const pathAndData = {path: '', data: ''}
+        if (location === "movies") {
+          pathAndData.path = `${apiHead}/movies/${id ? id : ''}`
+          pathAndData.data = id ? `movie` : `movies`
+        } else if (location === "videos" && id) {
+          pathAndData.path = `${apiHead}/movies/${id}/videos`
+          pathAndData.data = `videos`
+        } else if (location === `ratings` && id) {
+          pathAndData.path = `${apiHead}/users/${id}/ratings`
+          pathAndData.data = `ratings`
+        } else if (location === `favorites`) {
+          pathAndData.path = `${localHost}/favorites`
+          pathAndData.data = `favorites`
+        } else if (location === 'comments' && id) {
+          pathAndData.path = `${localHost}/movies/${id}/comments`;
+          pathAndData.data = `comments`;
+        }
+        else {
+          throw new Error("A bad path was provided for fetching data");
+        }
+        return pathAndData
+      })
     })
 
-    it('should get data from a given location', async ()=> {
+    it('should get data from a given location', async () => {
       API.getData('movies')
       await waitFor(() => expect(global.fetch).toBeCalledWith(
         "https://rancid-tomatillos.herokuapp.com/api/v2/movies"));
@@ -87,8 +115,8 @@ describe('API methods', () => {
       expect(API.findRelevantData).toBeCalledWith('movies')
     })
 
-    it(`should return different aspects of the 
-    response depending on the argument`, async () => {
+    it(`should return a key from the response 
+      depending on the argument`, async () => {
       const allMovies = await API.getData('movies')
       const movie = await API.getData("movie/1")
       expect(allMovies).toBe('Birdman')
@@ -104,55 +132,50 @@ describe('API methods', () => {
 
     beforeEach(() => {
       JSON.stringify = jest.fn()
-      API.postInfoIsOk = jest.fn(() => true)
+
+      API.findPostPath = jest.fn((info, id) => {
+        const acceptableUserInfo = ["email", "password"];
+        const acceptableRatingInfo = ["rating", "movie_id"];
+        const acceptableFavoriteInfo = ["id"];
+        const acceptableCommentsInfo = ["comment", "author"];
+        const infoValues = Object.keys(info);
+        if (
+          id &&
+          infoValues.every((value) => acceptableRatingInfo.includes(value))
+        ) {
+          return `${apiHead}/users/${id}/ratings`;
+        } else if (
+          infoValues.every((value) => acceptableUserInfo.includes(value))
+        ) {
+          return `${apiHead}/login`;
+        } else if (
+          infoValues.every((value) => acceptableFavoriteInfo.includes(value))
+        ) {
+          return `${localHost}/favorites`;
+        } else if (
+          infoValues.every((value) => acceptableCommentsInfo.includes(value))
+        ) {
+          return `${localHost}/movies/${id}/comments`;
+        } else {
+          throw new Error("Something is wrong with the data for POST");
+        }
+      });
     })
 
     afterEach(() => {
       global.fetch.mockClear()
-      API.postInfoIsOk.mockClear()
+      API.findPostPath.mockClear()
     })
-
-    it(`should fetch to the login API if no id is provided`, async () => {
-      API.postData('info')
-      await waitFor(() =>
-        expect(global.fetch).toBeCalledWith(
-          `https://rancid-tomatillos.herokuapp.com/api/v2/login`, 
-          {
-            "body": undefined, 
-            "headers": {"Content-Type": "application/json"}, 
-            "method": "POST"
-          }
-        )
-      );
-
-    })
-
-    it(`should fetch to the users rating api if an id is provided`, 
-    async () => {
-      API.postData('info', '7')
-      await waitFor(() =>
-        expect(global.fetch).toBeCalledWith(
-          `https://rancid-tomatillos.herokuapp.com/api/v2/users/7/ratings`, 
-          {
-            "body": undefined, 
-            "headers": {"Content-Type": "application/json"}, 
-            "method": "POST"
-          }
-        )
-      );
-    })
-
-
 
     it(`should stringify the passed in first parameter`, () => {
-      API.postData({name: `object`})
+      API.postData({email: '@yahoo', password:'qwerty'})
       expect(JSON.stringify).toBeCalledTimes(1)
     })
 
     it(`should call a helper method to check 
     the body has the right content`, () => {
       API.postData({})
-      expect(API.postInfoIsOk).toBeCalledTimes(1)
+      expect(API.findPostPath).toBeCalledTimes(1)
     })
 
   })

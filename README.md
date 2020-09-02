@@ -12,14 +12,14 @@ Mod 3 Paired Project
 
 Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie review app. The user can log-in, read about movies, watch movie trailers, rate movies the user loved or hated, and search by a variety of criteria. 
 
-## Technologies / Systems
+## Technologies / Systems 
 
 - React
 - React Router
 - JSX
 - ECMAScript 6 
 - ESLint
-- TDD with Mocha/Chai & Spies
+- TDD with Jest
 - VSCode 
 - git / Version control
 - SCSS / SASS

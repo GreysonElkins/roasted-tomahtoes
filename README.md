@@ -1,11 +1,12 @@
-# Roasted Tomahtoes - Readme
+# [Roasted Tomahtoes](https://roastedtomahtoes.herokuapp.com/) - Readme
 Mod 3 Paired Project
 ### Authors: [Greyson Elkins](https://github.com/GreysonElkins) & [Leigh Larson](https://github.com/leighlars)
 
+- [Deployed Pages](https://roastedtomahtoes.herokuapp.com/)
 - [Repo](https://github.com/GreysonElkins/roasted-tomahtoes)
 - [Project Board](https://github.com/GreysonElkins/roasted-tomahtoes/projects)
 - [Project Spec](https://frontend.turing.io/projects/module-3/rancid-tomatillos-v2.html)
-- [Deployed Pages](https://roastedtomahtoes.herokuapp.com/)
+
 
 ## Abstract 
 

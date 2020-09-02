@@ -24,8 +24,6 @@ Roasted Tomahtoes is a sensible, aesthetically engaging, and user friendly movie
 - git / Version control
 - SCSS / SASS
 - API Fetch
-- Webpack & Babel
-
 
 ## Set Up 
 

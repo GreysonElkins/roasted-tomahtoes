@@ -37,6 +37,8 @@ To interact with the app without cloning / downloading the file, click [here](ht
 5. Rate stars, read about movies, watch movie trailers-- explore! 
 6. Enter `control + c` in your terminal to stop the server at any time.
 
+If you'd like to work on the server-side of the project (which handles favorites and comments) - a repo for the server can be found [here](https://github.com/GreysonElkins/roasted-tomhatoes-suplemental-server). It is not routed to heroku and any changes to the live version will have to be made by Greyson Elkins, but has room for improvements. To use the repo version in the app, reassign `localHost` to `https://localHost:5000/api/v1` and follow the instructions in the readme for the repo linked above. 
+
 ## Gif Showcase
 
 ![gif of homeview, incorrect login, correct login](./src/images/home-login.gif)</br>

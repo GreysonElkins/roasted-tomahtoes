@@ -13,14 +13,17 @@
   "react-player": "^2.6.1",
   "react-router-dom": "^5.2.0",
   "react-scripts": "3.4.3",
+  "serve": "^11.3.2",
   "typescript": "^4.0.2"
  },
  "scripts": {
-   "eslint": "./node_modules/eslint/bin/eslint yourfile.js",
+  "eslint": "./node_modules/eslint/bin/eslint yourfile.js",
   "start": "react-scripts start",
   "build": "react-scripts build",
+  "start": "serve -s build",
   "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
-  "eject": "react-scripts eject"
+  "eject": "react-scripts eject",
+  "heroku-postbuild": "npm run build"
  },
  "eslintConfig": {
   "extends": "react-app"
@@ -37,7 +40,9 @@
    "last 1 safari version"
   ]
  },
- "engines" : { "node" : ">=0.12" } 
+ "engines": {
+  "node": "^13.10.1"
+ },
  "devDependencies": {
   "@sheerun/mutationobserver-shim": "^0.3.3",
   "@testing-library/dom": "^7.22.6",
